@@ -4,7 +4,7 @@
 
 - docker (Read docs on setuping docker)
 - kubectl
-- kind (kubernetes in docker)
+- kind (kubernetes in docker [Docs](https://kind.sigs.k8s.io/))
 - kubelet
 - ctlptl
 - java 17 jdk
