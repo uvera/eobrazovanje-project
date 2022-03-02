@@ -3,15 +3,15 @@ kind: Deployment
 metadata:
   name: java-backend 
   labels:
-    app.backend: java-backend 
+    app: java-backend 
 spec:
   selector:
     matchLabels:
-      app.backend: java-backend 
+      app: java-backend 
   template:
     metadata:
       labels:
-        app.backend: java-backend 
+        app: java-backend 
     spec:
       containers:
       - name: java-backend 
@@ -24,15 +24,15 @@ kind: Deployment
 metadata:
   name: angular-frontend
   labels:
-    app.frontend: angular-frontend 
+    app: angular-frontend 
 spec:
   selector:
     matchLabels:
-      app.frontend: angular-frontend 
+      app: angular-frontend 
   template:
     metadata:
       labels:
-        app.frontend: angular-frontend 
+        app: angular-frontend 
     spec:
       containers:
       - name: angular-frontend 
