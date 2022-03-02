@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-backend 
+  labels:
+    app.backend: java-backend 
+spec:
+  selector:
+    matchLabels:
+      app.backend: java-backend 
+  template:
+    metadata:
+      labels:
+        app.backend: java-backend 
+    spec:
+      containers:
+      - name: java-backend 
+        image: java-backend-image-tilt_docker_build_with_restart_base 
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-frontend
+  labels:
+    app.frontend: angular-frontend 
+spec:
+  selector:
+    matchLabels:
+      app.frontend: angular-frontend 
+  template:
+    metadata:
+      labels:
+        app.frontend: angular-frontend 
+    spec:
+      containers:
+      - name: angular-frontend 
+        image: angular-frontend-image
+        ports:
+        - containerPort: 4200
