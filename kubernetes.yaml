@@ -1,41 +1,86 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-svc
+  labels:
+    app: java-svc
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: java-svc
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-backend 
+  name: java-backend
   labels:
-    app: java-backend 
+    app: java-backend
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: java-backend 
+      app: java-svc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
-        app: java-backend 
+        app: java-svc
     spec:
       containers:
-      - name: java-backend 
-        image: java-backend-image-tilt_docker_build_with_restart_base 
-        ports:
-        - containerPort: 8080
+        - name: java-backend
+          image: java-backend-image-tilt_docker_build_with_restart_base
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular-svc
+  labels:
+    app: angular-svc
+spec:
+  ports:
+    - port: 4200
+      protocol: TCP
+      targetPort: 4200
+  selector:
+    app: angular-svc
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: angular-frontend
   labels:
-    app: angular-frontend 
+    app: angular-frontend
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: angular-frontend 
+      app: angular-svc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
-        app: angular-frontend 
+        app: angular-svc
     spec:
       containers:
-      - name: angular-frontend 
-        image: angular-frontend-image
-        ports:
-        - containerPort: 4200
+        - name: angular-frontend
+          image: angular-frontend-image 
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 4200
