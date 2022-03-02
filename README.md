@@ -2,8 +2,9 @@
 
 ### Packages needed
 
+- docker (Read docs on setuping docker)
 - kubectl
-- minikube
+- kind (kubernetes in docker)
 - kubelet
 - ctlptl
 - java 17 jdk
@@ -12,6 +13,6 @@
 
 ```console
 systemctl enable --now kubelet.service
-ctlptl create cluster minicube
+ctlptl create cluster kind --registry=ctlptl-registry
 tilt up
 ```
