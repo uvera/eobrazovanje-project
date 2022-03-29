@@ -10,7 +10,6 @@ spec:
   selector:
     matchLabels:
       app: postgresql-db
-  replicas: 2
   template:
     metadata:
       labels:
