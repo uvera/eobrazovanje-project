@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.uvera.eobrazovanje.api.user.auth.dto.AuthenticationRequestDTO
 import io.uvera.eobrazovanje.api.user.auth.dto.RefreshRequestDTO
@@ -77,6 +78,7 @@ class AuthController(
     //region SwaggerDoc
     @Operation(
         summary = "Get your own info",
+        security = [SecurityRequirement(name = "bearerAuth")]
     )
     @ApiResponses(
         ApiResponse(

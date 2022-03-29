@@ -2,11 +2,11 @@ package io.uvera.eobrazovanje.security.service
 
 
 import io.jsonwebtoken.*
-import io.jsonwebtoken.security.Keys
-import io.uvera.eobrazovanje.configuration.properties.Base64Secret
+import io.uvera.eobrazovanje.util.loggerDelegate
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*
+import javax.crypto.SecretKey
 
 interface JwtService {
     fun generateToken(userDetails: UserDetails): String
@@ -19,16 +19,18 @@ interface JwtService {
  */
 @Service
 class GenericTokenService {
+
+    val logger by loggerDelegate()
     /**
-     * Generates token from [userDetails] using [base64Secret] [String]
+     * Generates token from [userDetails] using [secret] [SecretKey]
      *
      * @param userDetails instance of [UserDetails] implementation
      * @param expirationInMinutes expiration in minutes as [Int]
-     * @param base64Secret used for signing the JWT
+     * @param secret used for signing the JWT
      *
      * @return generated token [String]
      */
-    fun generateToken(userDetails: UserDetails, expirationInMinutes: Int, base64Secret: Base64Secret): String {
+    fun generateToken(userDetails: UserDetails, expirationInMinutes: Int, secret: SecretKey): String {
         val subject = userDetails.username
         val claims = mutableMapOf<String, Any>()
         claims["roles"] = userDetails.authorities.map { it.toString() }
@@ -44,24 +46,23 @@ class GenericTokenService {
                 Date(millis)
             }
 
-        val key = Keys.hmacShaKeyFor(base64Secret.value.toByteArray())
         return Jwts
             .builder()
             .setClaims(claims)
             .setSubject(subject)
             .setIssuedAt(issuedAt)
             .setExpiration(expiration)
-            .signWith(key)
+            .signWith(secret)
             .compact()
     }
 
     /**
-     * Validates [token] against [base64Secret]
+     * Validates [token] against [secret]
      * @return [Boolean] indicating if validation passed
      */
-    fun validateToken(token: String, base64Secret: Base64Secret): Boolean = try {
+    fun validateToken(token: String, secret: SecretKey): Boolean = try {
         Jwts.parserBuilder()
-            .setSigningKey(base64Secret.value)
+            .setSigningKey(secret)
             .build()
             .parseClaimsJws(token)
         true
@@ -81,9 +82,9 @@ class GenericTokenService {
      * Parses claims from tokens
      * @return nullable instance of [Claims]
      */
-    fun getClaimsFromToken(token: String, base64Secret: Base64Secret): Claims? = try {
+    fun getClaimsFromToken(token: String, secret: SecretKey): Claims? = try {
         Jwts.parserBuilder()
-            .setSigningKey(base64Secret.value)
+            .setSigningKey(secret)
             .build()
             .parseClaimsJws(token)
             .body
