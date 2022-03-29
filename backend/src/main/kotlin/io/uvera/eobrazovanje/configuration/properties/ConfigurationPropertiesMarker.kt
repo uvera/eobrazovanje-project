@@ -1,0 +1,3 @@
+package io.uvera.eobrazovanje.configuration.properties
+
+interface ConfigurationPropertiesMarker
