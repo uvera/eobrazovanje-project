@@ -12,7 +12,7 @@ local_resource(
   'java-backend-compile',
   gradlew + ' -p backend bootJar && ' +
   'rm -rf backend/build/jar-staging && ' +
-  'java -Djarmode=layertools -jar backend/build/libs/eobrazovanje-0.0.1-SNAPSHOT.jar extract --destination backend/build/jar-extracted && ' +
+  'java -Djarmode=layertools -jar backend/build/libs/e-obrazovanje-0.1.0.jar extract --destination backend/build/jar-extracted && ' +
   'rsync --delete --inplace --checksum -r backend/build/jar-extracted/ backend/build/jar',
   deps=['backend/src', 'backend/build.gradle'],
   )
@@ -47,3 +47,4 @@ k8s_resource('java-backend', port_forwards=8080,
              resource_deps=['java-backend-compile', 'postgresql-db'],
              )
 k8s_resource('angular-frontend', port_forwards=4200)
+k8s_resource('postgresql-db', port_forwards=5432)
