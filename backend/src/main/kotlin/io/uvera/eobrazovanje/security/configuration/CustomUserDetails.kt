@@ -1,6 +1,6 @@
 package io.uvera.eobrazovanje.security.configuration
 
-import io.uvera.eobrazovanje.common.repository.user.User
+import io.uvera.eobrazovanje.common.repository.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

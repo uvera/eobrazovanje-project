@@ -3,7 +3,7 @@ package io.uvera.eobrazovanje.api.user.auth
 import io.uvera.eobrazovanje.api.user.auth.dto.AuthenticationRequestDTO
 import io.uvera.eobrazovanje.api.user.auth.dto.TokenResponseDTO
 import io.uvera.eobrazovanje.api.user.auth.dto.WhoAmIDTO
-import io.uvera.eobrazovanje.common.repository.user.UserRepository
+import io.uvera.eobrazovanje.common.repository.UserRepository
 import io.uvera.eobrazovanje.error.exception.UserNotFoundException
 import io.uvera.eobrazovanje.security.service.JwtAccessService
 import io.uvera.eobrazovanje.security.service.JwtRefreshService

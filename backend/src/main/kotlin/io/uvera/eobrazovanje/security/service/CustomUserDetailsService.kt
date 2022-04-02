@@ -1,6 +1,6 @@
 package io.uvera.eobrazovanje.security.service
 
-import io.uvera.eobrazovanje.common.repository.user.UserRepository
+import io.uvera.eobrazovanje.common.repository.UserRepository
 import io.uvera.eobrazovanje.security.configuration.CustomUserDetails
 import org.springframework.context.annotation.Primary
 import org.springframework.security.core.userdetails.UserDetails
