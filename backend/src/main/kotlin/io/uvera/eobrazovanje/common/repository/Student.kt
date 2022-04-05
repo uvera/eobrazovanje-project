@@ -1,6 +1,10 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 import java.math.BigDecimal
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -24,7 +28,7 @@ class Student(
     @OneToMany(mappedBy = "student", orphanRemoval = true)
     var payments: MutableList<Payments> = mutableListOf(),
 
-    @OneToOne(optional = false, orphanRemoval = true)
+    @OneToOne(optional = false, orphanRemoval = true, cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "user_id", nullable = false)
     var user: User,
 
@@ -40,3 +44,8 @@ class Student(
     @OneToMany(mappedBy = "student", orphanRemoval = true)
     var heldExamResults: MutableList<HeldExamResult> = mutableListOf(),
 ) : BaseEntity()
+
+@Repository
+interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
+    fun findByTranscriptNumber(value: String): Student?
+}

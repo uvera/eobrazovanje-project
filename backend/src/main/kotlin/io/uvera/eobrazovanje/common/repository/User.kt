@@ -1,7 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
-import org.springframework.data.jpa.repository.JpaRepository
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.stereotype.Repository
 import java.util.*
 import javax.persistence.*
@@ -36,6 +36,6 @@ class User(
 ) : BaseEntity()
 
 @Repository
-interface UserRepository : JpaRepository<User, UUID> {
+interface UserRepository : JpaSpecificationRepository<User, UUID> {
     fun findByEmail(email: String): User?
 }
