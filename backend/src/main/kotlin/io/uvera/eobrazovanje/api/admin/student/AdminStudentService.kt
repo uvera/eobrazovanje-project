@@ -17,19 +17,18 @@ class AdminStudentService(
     protected val repo: StudentRepository,
     protected val digitGenerationService: DigitGenerationService,
 ) {
-    fun createStudents(students: AdminCreateStudentsDTO): List<CreatedStudentDTO> =
+    fun createStudents(students: AdminCreateStudentsDTO): List<CreatedStudentDTO> = repo {
         students.convertToStudents().let { list ->
-            repo {
-                list.saveAll().map {
-                    CreatedStudentDTO(
-                        firstName = it.user.firstName,
-                        lastName = it.user.lastName,
-                        transcriptNumber = it.transcriptNumber,
-                        email = it.user.email,
-                    )
-                }
+            list.saveAll().map {
+                CreatedStudentDTO(
+                    firstName = it.user.firstName,
+                    lastName = it.user.lastName,
+                    transcriptNumber = it.transcriptNumber,
+                    email = it.user.email,
+                )
             }
         }
+    }
 
     fun AdminCreateStudentsDTO.convertToStudents() = this.data.map {
         User(

@@ -21,7 +21,7 @@ fun <ID, T : BaseEntity> T.save(): T {
 
 
 context(JpaRepository<T, ID>)
-fun <ID, T : BaseEntity> List<T>.saveAll(): List<T> {
+fun <ID, T : BaseEntity> Collection<T>.saveAll(): List<T> {
     return this@JpaRepository.saveAll(this@saveAll)
 }
 
