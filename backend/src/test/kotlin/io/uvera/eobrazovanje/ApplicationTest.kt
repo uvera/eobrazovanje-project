@@ -9,10 +9,13 @@ import io.uvera.eobrazovanje.security.service.JwtAccessService
 import org.junit.Before
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.servlet.MockHttpServletRequestDsl
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -29,6 +32,9 @@ abstract class ApplicationTest {
     lateinit var context: WebApplicationContext
 
     lateinit var mockMvc: MockMvc
+
+    @Autowired
+    lateinit var restTemplate: TestRestTemplate
 
     @Autowired
     lateinit var studentRepository: StudentRepository

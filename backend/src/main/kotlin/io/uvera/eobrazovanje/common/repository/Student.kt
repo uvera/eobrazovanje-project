@@ -1,7 +1,6 @@
 package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 import java.util.*

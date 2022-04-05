@@ -4,9 +4,11 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.uvera.eobrazovanje.ApplicationTest
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
+import org.springframework.boot.test.web.client.postForEntity
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
 
@@ -14,6 +16,9 @@ class AdminStudentTests : ApplicationTest() {
 
     @Test
     fun `test creation with one student in list`() {
+        val response = restTemplate.postForEntity<List<CreatedStudentDTO>>("/admin/student")
+        assert(response.statusCode == HttpStatus.OK)
+
         mockMvc.post("/admin/student") {
             withAdminAuthorizationHeader()
             contentType = MediaType.APPLICATION_JSON
