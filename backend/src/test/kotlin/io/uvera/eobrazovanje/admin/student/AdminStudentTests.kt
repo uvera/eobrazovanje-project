@@ -8,13 +8,14 @@ import io.uvera.eobrazovanje.error.dto.ApiError
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.HttpStatus
+import javax.validation.constraints.NotBlank
 
 class AdminStudentTests : ApplicationTest() {
 
     @Test
     fun `test creation with one student in list`() {
         val response = restTemplate.postForEntity<List<CreatedStudentDTO>>(
-            "/admin/student",
+            "/api/admin/student",
             entityWithAuth(
                 AdminCreateStudentsDTO(
                     data =
@@ -37,7 +38,7 @@ class AdminStudentTests : ApplicationTest() {
     @Test
     fun `test creation failure`() {
         val response = restTemplate.postForEntity<ApiError>(
-            "/admin/student",
+            "/api/admin/student",
             entityWithAuth(
                 AdminCreateStudentsDTO(
                     data =
@@ -55,5 +56,6 @@ class AdminStudentTests : ApplicationTest() {
             )
         )
         assert(response.statusCode == HttpStatus.BAD_REQUEST)
+        assert(response.body!!.errors.map { it.code }.any { it == NotBlank::class.simpleName.toString() })
     }
 }
