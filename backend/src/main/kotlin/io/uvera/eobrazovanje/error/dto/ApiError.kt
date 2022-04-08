@@ -5,11 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.uvera.eobrazovanje.util.extensions.compact
 import org.springframework.http.HttpStatus
 import org.springframework.validation.BindingResult
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.support.WebExchangeBindException
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import javax.servlet.http.HttpServletRequest
-
 
 /**
  * Class representing error returned from this API.
@@ -66,5 +66,17 @@ class ApiError(
                 message = exception.localizedMessage,
                 errors = exception.bindingResult.allErrors.compact
             )
+
+        fun fromMethodArgsNotValidException(
+            exception: MethodArgumentNotValidException,
+            request: HttpServletRequest,
+            status: HttpStatus,
+        ) = ApiError(
+            path = request.requestURI,
+            status = status.value(),
+            error = status.reasonPhrase,
+            message = exception.localizedMessage,
+            errors = exception.allErrors.compact
+        )
     }
 }

@@ -3,6 +3,7 @@ package io.uvera.eobrazovanje.error.exception
 import io.uvera.eobrazovanje.error.dto.ApiError
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -33,4 +34,8 @@ class ExceptionHandlers {
     @ExceptionHandler(WebExchangeBindException::class)
     fun webExchangeBindException(ex: WebExchangeBindException, req: HttpServletRequest) =
         exceptionEntity(ex, req, HttpStatus.BAD_REQUEST)
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun methodArgumentNotValidException(ex: MethodArgumentNotValidException, req: HttpServletRequest) =
+        ResponseEntity<ApiError>(ApiError.fromMethodArgsNotValidException(ex, req, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST)
 }

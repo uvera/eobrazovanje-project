@@ -7,7 +7,6 @@ import io.uvera.eobrazovanje.security.configuration.CustomUserDetails
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.security.service.JwtAccessService
 import liquibase.pro.packaged.T
-import liquibase.pro.packaged.it
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -20,14 +19,15 @@ import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@EnableWebMvc
 abstract class ApplicationTest {
     @Autowired
     lateinit var context: WebApplicationContext
