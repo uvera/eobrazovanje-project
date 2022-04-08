@@ -29,6 +29,7 @@ repositories {
 
 val jjwtVersion: String by project
 val springDocVersion: String by project
+val blazeVersion: String by project
 val testcontainersVersion: String by project
 
 dependencies {
@@ -60,6 +61,10 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-data-rest:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+    // region blaze
+    implementation("com.blazebit:blaze-persistence-integration-entity-view-spring:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-entity-view-impl:$blazeVersion")
+    // endregion blaze
     testImplementation("org.apache.httpcomponents:httpclient:4.5.13")
 
 }
