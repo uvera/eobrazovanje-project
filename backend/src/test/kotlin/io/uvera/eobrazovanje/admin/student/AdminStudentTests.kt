@@ -16,18 +16,16 @@ class AdminStudentTests : ApplicationTest() {
     fun `test creation with one student in list`() {
         val response = restTemplate.postForEntity<List<CreatedStudentDTO>>(
             "/api/admin/student",
-            entityWithAuth(
-                AdminCreateStudentsDTO(
-                    data =
-                    listOf(
-                        AdminCreateStudentDTO(
-                            transcriptNumber = "1234",
-                            identificationNumber = "12313",
-                            currentYear = 1231,
-                            firstName = "Marko",
-                            lastName = "Petrovic",
-                            email = "marko@petrovic.com"
-                        )
+            AdminCreateStudentsDTO(
+                data =
+                listOf(
+                    AdminCreateStudentDTO(
+                        transcriptNumber = "1234",
+                        identificationNumber = "12313",
+                        currentYear = 1231,
+                        firstName = "Marko",
+                        lastName = "Petrovic",
+                        email = "marko@petrovic.com"
                     )
                 )
             )
@@ -39,18 +37,16 @@ class AdminStudentTests : ApplicationTest() {
     fun `test creation failure`() {
         val response = restTemplate.postForEntity<ApiError>(
             "/api/admin/student",
-            entityWithAuth(
-                AdminCreateStudentsDTO(
-                    data =
-                    listOf(
-                        AdminCreateStudentDTO(
-                            transcriptNumber = "",
-                            identificationNumber = "",
-                            currentYear = 1231,
-                            firstName = "",
-                            lastName = "",
-                            email = ""
-                        )
+            AdminCreateStudentsDTO(
+                data =
+                listOf(
+                    AdminCreateStudentDTO(
+                        transcriptNumber = "",
+                        identificationNumber = "",
+                        currentYear = 1231,
+                        firstName = "",
+                        lastName = "",
+                        email = ""
                     )
                 )
             )
