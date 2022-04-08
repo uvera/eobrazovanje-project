@@ -1,28 +1,21 @@
 package io.uvera.eobrazovanje.admin.student
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.uvera.eobrazovanje.ApplicationTest
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
-import org.hamcrest.CoreMatchers.containsString
+import io.uvera.eobrazovanje.error.dto.ApiError
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.post
 
 class AdminStudentTests : ApplicationTest() {
 
     @Test
     fun `test creation with one student in list`() {
-        val response = restTemplate.postForEntity<List<CreatedStudentDTO>>("/admin/student")
-        assert(response.statusCode == HttpStatus.OK)
-
-        mockMvc.post("/admin/student") {
-            withAdminAuthorizationHeader()
-            contentType = MediaType.APPLICATION_JSON
-            content = jacksonObjectMapper().writeValueAsString(
+        val response = restTemplate.postForEntity<List<CreatedStudentDTO>>(
+            "/admin/student",
+            entityWithAuth(
                 AdminCreateStudentsDTO(
                     data =
                     listOf(
@@ -37,20 +30,15 @@ class AdminStudentTests : ApplicationTest() {
                     )
                 )
             )
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            status { isOk() }
-            content { contentType(MediaType.APPLICATION_JSON) }
-        }
-        assert(studentRepository.count() == 1L)
+        )
+        assert(response.statusCode == HttpStatus.OK)
     }
 
     @Test
     fun `test creation failure`() {
-        mockMvc.post("/admin/student") {
-            withAdminAuthorizationHeader()
-            contentType = MediaType.APPLICATION_JSON
-            content = jacksonObjectMapper().writeValueAsString(
+        val response = restTemplate.postForEntity<ApiError>(
+            "/admin/student",
+            entityWithAuth(
                 AdminCreateStudentsDTO(
                     data =
                     listOf(
@@ -65,11 +53,7 @@ class AdminStudentTests : ApplicationTest() {
                     )
                 )
             )
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            status { isBadRequest() }
-            content { string(containsString("error")) }
-        }
-        assert(studentRepository.count() == 0L)
+        )
+        assert(response.statusCode == HttpStatus.BAD_REQUEST)
     }
 }
