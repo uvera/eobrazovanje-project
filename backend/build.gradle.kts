@@ -60,6 +60,8 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-data-rest:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+    testImplementation("org.apache.httpcomponents:httpclient:4.5.13")
+
 }
 
 tasks.withType<KotlinCompile> {
