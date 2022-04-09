@@ -63,10 +63,18 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
     // region blaze
     implementation("com.blazebit:blaze-persistence-integration-entity-view-spring:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-integration-spring-data-base:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-entity-view-impl:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-entity-view-api:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-core-api:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-core-impl:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-integration-hibernate-5.6:$blazeVersion")
     // endregion blaze
     testImplementation("org.apache.httpcomponents:httpclient:4.5.13")
-
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.module:jackson-module-mrbean")
+    implementation("com.fasterxml.jackson.module:jackson-module-no-ctor-deser")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2.2")
 }
 
 tasks.withType<KotlinCompile> {
@@ -86,7 +94,7 @@ val bootJarTask = tasks.bootJar.get()
 val archivePath = bootJarTask.archiveFileName.get()
 val dockerFilePath = "${projectDir.path}/docker/Dockerfile"
 val appName = project.name.toLowerCase()
-val projectName = "${project.group}/${appName}"
+val projectName = "${project.group}/$appName"
 val fullName = "$projectName:${project.version}"
 val dockerBuildArgs = mapOf(
     "JAR_FILE" to archivePath
