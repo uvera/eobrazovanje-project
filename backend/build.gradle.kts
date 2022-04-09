@@ -66,6 +66,8 @@ dependencies {
     implementation("com.blazebit:blaze-persistence-integration-spring-data-base:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-entity-view-impl:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-entity-view-api:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-jpa-criteria-api:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-jpa-criteria-impl:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-core-api:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-core-impl:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-integration-hibernate-5.6:$blazeVersion")
