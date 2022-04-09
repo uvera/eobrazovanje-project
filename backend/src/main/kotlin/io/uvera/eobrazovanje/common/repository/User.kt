@@ -38,4 +38,5 @@ class User(
 @Repository
 interface UserRepository : JpaSpecificationRepository<User, UUID> {
     fun findByEmail(email: String): User?
+    fun deleteAllByEmailNotIn(email: MutableCollection<String>)
 }

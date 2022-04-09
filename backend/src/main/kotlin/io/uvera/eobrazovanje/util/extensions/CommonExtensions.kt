@@ -1,9 +1,12 @@
 package io.uvera.eobrazovanje.util.extensions
 
+import io.uvera.eobrazovanje.common.repository.BaseEntity
 import io.uvera.eobrazovanje.error.dto.ObjectErrorCompact
-import liquibase.pro.packaged.T
+import io.uvera.eobrazovanje.error.exception.EntityNotFoundException
+import io.uvera.eobrazovanje.util.AnyResponseEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.ObjectError
+import java.util.*
 
 /*
  * BindingResult's ObjectError in a compact form
@@ -24,3 +27,10 @@ fun ResponseEntity.BodyBuilder.empty(): ResponseEntity<Any> {
 
 val <T : Any> T.ok: ResponseEntity<T>
     get() = ResponseEntity.ok(this)
+
+val emptyOk: AnyResponseEntity
+    get() = ResponseEntity.ok(EmptyObject)
+
+inline fun <reified T : BaseEntity> notFoundById(id: UUID): Nothing {
+    throw EntityNotFoundException("${T::class.simpleName}: not found by id: $id")
+}

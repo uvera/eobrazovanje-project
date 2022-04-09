@@ -2,7 +2,11 @@
 
 package io.uvera.eobrazovanje.util.extensions
 
+import com.blazebit.persistence.criteria.BlazeCriteria
+import com.blazebit.persistence.spring.data.repository.BlazeSpecification
 import io.uvera.eobrazovanje.common.repository.BaseEntity
+import io.uvera.eobrazovanje.error.exception.EntityNotFoundException
+import liquibase.pro.packaged.T
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.data.repository.NoRepositoryBean
@@ -31,8 +35,9 @@ fun <ID, T : BaseEntity> Collection<T>.saveAll(): List<T> {
 }
 
 context(JpaRepository<T, UUID>)
-val <T : BaseEntity> T.reload: T?
+        inline val <reified T : BaseEntity> T.reload: T
     get() = this@JpaRepository.findByIdOrNull(this@reload.id)
+        ?: throw EntityNotFoundException("${T::class.simpleName}: not found by id: ${this@reload.id}")
 
 @NoRepositoryBean
 interface JpaSpecificationRepository<T, ID> : JpaRepository<T, ID>, JpaSpecificationExecutor<T>

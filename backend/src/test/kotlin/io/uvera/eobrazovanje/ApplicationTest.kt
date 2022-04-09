@@ -8,6 +8,8 @@ import io.uvera.eobrazovanje.common.repository.StudentRepository
 import io.uvera.eobrazovanje.common.repository.TeacherRepository
 import io.uvera.eobrazovanje.common.repository.User
 import io.uvera.eobrazovanje.common.repository.UserRepository
+import io.uvera.eobrazovanje.helper.PageJacksonModule
+import io.uvera.eobrazovanje.helper.SortJacksonModule
 import io.uvera.eobrazovanje.security.configuration.CustomUserDetails
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.security.service.JwtAccessService
@@ -97,6 +99,8 @@ abstract class ApplicationTest {
                             registerModule(kotlinModule())
                             registerModule(MrBeanModule())
                             registerModule(NoCtorDeserModule())
+                            registerModule(SortJacksonModule())
+                            registerModule(PageJacksonModule())
                         }
                     }
                 )
