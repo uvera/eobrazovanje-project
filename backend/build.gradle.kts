@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("org.springframework.boot")
@@ -6,6 +7,7 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
+    kotlin("kapt")
     id("com.palantir.docker")
 }
 
@@ -71,6 +73,8 @@ dependencies {
     implementation("com.blazebit:blaze-persistence-core-api:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-core-impl:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-integration-hibernate-5.6:$blazeVersion")
+    annotationProcessor("com.blazebit:blaze-persistence-entity-view-processor:$blazeVersion")
+    kapt("com.blazebit:blaze-persistence-entity-view-processor:$blazeVersion")
     // endregion blaze
     testImplementation("org.apache.httpcomponents:httpclient:4.5.13")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
