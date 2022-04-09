@@ -1,5 +1,9 @@
 package io.uvera.eobrazovanje
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.kotlinModule
+import com.fasterxml.jackson.module.mrbean.MrBeanModule
+import com.fasterxml.jackson.module.noctordeser.NoCtorDeserModule
 import io.uvera.eobrazovanje.common.repository.StudentRepository
 import io.uvera.eobrazovanje.common.repository.TeacherRepository
 import io.uvera.eobrazovanje.common.repository.User
@@ -21,6 +25,7 @@ import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
@@ -40,6 +45,8 @@ import javax.annotation.PostConstruct
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableWebMvc
 abstract class ApplicationTest {
+    val logger by loggerDelegate()
+
     @Autowired
     lateinit var context: WebApplicationContext
 
@@ -75,17 +82,25 @@ abstract class ApplicationTest {
 
     @PostConstruct
     fun initRestTemplate() {
-        if (!this::restTemplate.isInitialized) {
-            val customTemplate = restBuilder.rootUri("http://localhost:$localPort").customizers(JWTCustomizer(::adminToken))
-            customTemplate.requestFactory { HttpComponentsClientHttpRequestFactory() }
-            customTemplate.errorHandler(object : DefaultResponseErrorHandler() {
-                override fun hasError(response: ClientHttpResponse): Boolean {
-                    val statusCode = response.statusCode
-                    return statusCode.series() == HttpStatus.Series.SERVER_ERROR
-                }
-            })
-            restTemplate = TestRestTemplate(customTemplate)
-        }
+        val customTemplate =
+            restBuilder.rootUri("http://localhost:$localPort").customizers(JWTCustomizer(::adminToken))
+                .requestFactory { HttpComponentsClientHttpRequestFactory() }
+                .errorHandler(object : DefaultResponseErrorHandler() {
+                    override fun hasError(response: ClientHttpResponse): Boolean {
+                        val statusCode = response.statusCode
+                        return statusCode.series() == HttpStatus.Series.SERVER_ERROR
+                    }
+                })
+                .messageConverters(
+                    MappingJackson2HttpMessageConverter().also {
+                        it.objectMapper = ObjectMapper().apply {
+                            registerModule(kotlinModule())
+                            registerModule(MrBeanModule())
+                            registerModule(NoCtorDeserModule())
+                        }
+                    }
+                )
+        restTemplate = TestRestTemplate(customTemplate)
     }
 
     @BeforeEach
