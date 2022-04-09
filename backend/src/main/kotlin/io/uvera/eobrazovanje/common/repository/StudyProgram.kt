@@ -1,7 +1,6 @@
 package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherResponseDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository

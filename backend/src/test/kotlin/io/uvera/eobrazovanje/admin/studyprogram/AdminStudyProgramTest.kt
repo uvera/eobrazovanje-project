@@ -6,7 +6,6 @@ import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.common.repository.StudyProgram
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.util.extensions.invoke
-import io.uvera.eobrazovanje.util.extensions.ok
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -70,11 +69,13 @@ class AdminStudyProgramTest : ApplicationTest() {
                 )
             ).saveAll()
         }
-        val studyProgram = studyProgramRepository.save(StudyProgram(
-            codeName = "SF",
-            name = "Uveric",
-            subjects = subjects.toMutableList()
-        ))
+        val studyProgram = studyProgramRepository.save(
+            StudyProgram(
+                codeName = "SF",
+                name = "Uveric",
+                subjects = subjects.toMutableList()
+            )
+        )
         subjects.forEach {
             it.studyProgram = studyProgram
             subjectRepository.save(it)

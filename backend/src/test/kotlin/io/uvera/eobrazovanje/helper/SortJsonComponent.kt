@@ -60,9 +60,12 @@ class SortJsonComponent {
                 val arrayNode = treeNode as ArrayNode
                 val orders: MutableList<Sort.Order> = ArrayList()
                 for (jsonNode in arrayNode) {
-                    val order = Sort.Order(Sort.Direction.valueOf(
-                        jsonNode["direction"].textValue()),
-                        jsonNode["property"].textValue())
+                    val order = Sort.Order(
+                        Sort.Direction.valueOf(
+                            jsonNode["direction"].textValue()
+                        ),
+                        jsonNode["property"].textValue()
+                    )
                     orders.add(order)
                 }
                 return Sort.by(orders)

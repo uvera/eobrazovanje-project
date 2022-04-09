@@ -10,7 +10,6 @@ import java.util.*
 import javax.crypto.SecretKey
 import javax.validation.constraints.NotBlank
 
-
 @ConfigurationProperties(prefix = "app.jwt.token.access")
 @ConstructorBinding
 class JwtAccessTokenProperties(
@@ -32,5 +31,4 @@ class Base64SecretConverter : Converter<String, SecretKey> {
         val parsed = Base64.getEncoder().encodeToString(source.encodeToByteArray())
         return Keys.hmacShaKeyFor(parsed.toByteArray())
     }
-
 }

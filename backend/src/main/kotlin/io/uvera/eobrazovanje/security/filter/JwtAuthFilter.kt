@@ -39,7 +39,7 @@ class JwtAuthFilter(
                 jwtAccessService.getClaimsFromToken(token) ?: throw BadCredentialsException("Invalid token")
 
             val userDetails: UserDetails = userDetailsService.loadUserByUsername(claims.subject)
-           
+
             if (!userDetails.isEnabled) throw DisabledException("Account disabled")
 
             val usernameAndPasswordAuthenticationToken = UsernamePasswordAuthenticationToken(

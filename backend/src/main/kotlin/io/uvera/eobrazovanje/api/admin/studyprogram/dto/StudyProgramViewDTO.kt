@@ -22,4 +22,3 @@ interface StudyProgramViewDTO {
         var year: Int
     }
 }
-

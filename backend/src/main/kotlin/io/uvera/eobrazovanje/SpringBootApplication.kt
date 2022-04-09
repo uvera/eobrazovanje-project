@@ -19,7 +19,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 import javax.persistence.EntityManagerFactory
 import javax.persistence.PersistenceUnit
 
-
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling

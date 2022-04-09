@@ -37,9 +37,11 @@ class AuthController(
             responseCode = "200",
             description = "Successful authentication",
             content = [(Content(schema = Schema(implementation = TokenResponseDTO::class)))]
-        ), ApiResponse(
+        ),
+        ApiResponse(
             responseCode = "400", description = "Invalid DTO"
-        ), ApiResponse(
+        ),
+        ApiResponse(
             responseCode = "401",
             description = "Auth error",
         )
@@ -49,7 +51,6 @@ class AuthController(
     fun createAuthenticationToken(
         @Validated @RequestBody authenticationRequest: AuthenticationRequestDTO,
     ): AnyResponseEntity = authService.authenticate(authenticationRequest).ok
-
 
     //region SwaggerDoc
     @Operation(
@@ -61,9 +62,11 @@ class AuthController(
             responseCode = "200",
             description = "Successful refresh",
             content = [Content(schema = Schema(implementation = TokenResponseDTO::class))],
-        ), ApiResponse(
+        ),
+        ApiResponse(
             responseCode = "400", description = "Invalid DTO"
-        ), ApiResponse(
+        ),
+        ApiResponse(
             responseCode = "401",
             description = "Invalid token or account disabled",
         )
@@ -73,7 +76,6 @@ class AuthController(
     fun refreshToken(
         @Validated @RequestBody refreshRequest: RefreshRequestDTO,
     ): AnyResponseEntity = authService.generateTokensFromJwsRefreshToken(refreshRequest.token).ok
-
 
     //region SwaggerDoc
     @Operation(
@@ -85,7 +87,8 @@ class AuthController(
             responseCode = "200",
             description = "DTO Returned",
             content = [(Content(schema = Schema(implementation = WhoAmIDTO::class)))]
-        ), ApiResponse(
+        ),
+        ApiResponse(
             responseCode = "404",
             description = "User not found",
         )
@@ -95,5 +98,4 @@ class AuthController(
     @GetMapping("/whoami")
     fun whoAmI(): ResponseEntity<WhoAmIDTO> =
         authService.whoAmI().ok
-
 }

@@ -1,6 +1,5 @@
 package io.uvera.eobrazovanje.security.service
 
-
 import io.jsonwebtoken.*
 import io.uvera.eobrazovanje.util.loggerDelegate
 import org.springframework.security.core.userdetails.UserDetails

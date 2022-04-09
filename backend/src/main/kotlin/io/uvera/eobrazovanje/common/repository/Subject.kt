@@ -27,5 +27,4 @@ class Subject(
 ) : BaseEntity()
 
 @Repository
-interface SubjectRepository : JpaSpecificationRepository<Subject, UUID> {
-}
+interface SubjectRepository : JpaSpecificationRepository<Subject, UUID>

@@ -13,6 +13,7 @@ class StudentDocument(
     @Column(name = "valid_till", nullable = false) var validTill: LocalDate,
     @Column(name = "registered_at", nullable = false) var registeredAt: LocalDate,
     @Column(name = "type", nullable = false) var type: String,
-    @OneToMany(mappedBy = "studentDocument", orphanRemoval = true
+    @OneToMany(
+        mappedBy = "studentDocument", orphanRemoval = true
     ) var documentFiles: MutableList<DocumentFile> = mutableListOf()
 ) : BaseEntity()
