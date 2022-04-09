@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import com.fasterxml.jackson.module.mrbean.MrBeanModule
 import com.fasterxml.jackson.module.noctordeser.NoCtorDeserModule
-import io.uvera.eobrazovanje.common.repository.StudentRepository
-import io.uvera.eobrazovanje.common.repository.TeacherRepository
-import io.uvera.eobrazovanje.common.repository.User
-import io.uvera.eobrazovanje.common.repository.UserRepository
+import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.helper.PageJacksonModule
 import io.uvera.eobrazovanje.helper.SortJacksonModule
 import io.uvera.eobrazovanje.security.configuration.CustomUserDetails
@@ -67,10 +64,13 @@ abstract class ApplicationTest {
     lateinit var studentRepository: StudentRepository
 
     @Autowired
-    lateinit var subjectRepository: StudentRepository
+    lateinit var subjectRepository: SubjectRepository
 
     @Autowired
     lateinit var userRepository: UserRepository
+
+    @Autowired
+    lateinit var studyProgramRepository: StudyProgramRepository
 
     @Autowired
     lateinit var restBuilder: RestTemplateBuilder

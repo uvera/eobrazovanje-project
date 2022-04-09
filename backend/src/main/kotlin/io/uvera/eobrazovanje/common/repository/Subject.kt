@@ -1,5 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.stereotype.Repository
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -14,11 +17,15 @@ class Subject(
     @Column(name = "year", nullable = false)
     var year: Int,
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "study_program_id", nullable = false)
-    var studyProgram: StudyProgram,
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "study_program_id", nullable = true)
+    var studyProgram: StudyProgram? = null,
 
     @OneToMany(mappedBy = "subject", orphanRemoval = true)
     var subjectExecutions: MutableList<SubjectExecution> = mutableListOf(),
 
 ) : BaseEntity()
+
+@Repository
+interface SubjectRepository : JpaSpecificationRepository<Subject, UUID> {
+}

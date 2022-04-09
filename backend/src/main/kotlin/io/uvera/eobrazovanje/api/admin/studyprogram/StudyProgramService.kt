@@ -1,0 +1,40 @@
+package io.uvera.eobrazovanje.api.admin.studyprogram
+
+import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
+import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
+import io.uvera.eobrazovanje.common.repository.*
+import io.uvera.eobrazovanje.util.extensions.invoke
+import io.uvera.eobrazovanje.util.extensions.notFoundById
+import io.uvera.eobrazovanje.util.extensions.save
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
+import java.util.*
+
+@Service
+class StudyProgramService(
+    protected val repo: StudyProgramRepository,
+    protected val subjectRepo: SubjectRepository,
+) {
+    fun createStudyProgram(studyProgram: StudyProgramCreateDTO): StudyProgramViewDTO  = repo {
+            studyProgramDTOToEntity(studyProgram).save().asDTO()
+    }
+
+    fun getStudyProgram(studyProgramId: UUID): StudyProgramViewDTO  =
+        repo.findByIdAsDto(studyProgramId) ?: notFoundById<StudyProgram>(studyProgramId)
+
+    context(StudyProgramRepository)
+    fun StudyProgram.asDTO() = this.let { findByIdAsDto(it.id) ?: notFoundById<StudyProgram>(it.id) }
+
+    fun studyProgramDTOToEntity(dto: StudyProgramCreateDTO): StudyProgram {
+        return StudyProgram(
+            codeName = dto.codeName,
+            name = dto.name,
+            subjects = mapSubjectsFromDTO(dto.subjects).toMutableList()
+        )
+    }
+
+    fun mapSubjectsFromDTO(idList: List<UUID>): List<Subject> = subjectRepo {
+        findAllById(idList)
+    }
+}
