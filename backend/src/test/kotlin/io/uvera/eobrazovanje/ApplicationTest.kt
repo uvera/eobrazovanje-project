@@ -29,11 +29,13 @@ import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.DefaultResponseErrorHandler
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.context.WebApplicationContext
@@ -46,7 +48,9 @@ import javax.annotation.PostConstruct
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableWebMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 abstract class ApplicationTest {
+
     val logger by loggerDelegate()
 
     @Autowired
@@ -74,18 +78,23 @@ abstract class ApplicationTest {
     @LocalServerPort
     var localPort: Int = 0
 
-    @BeforeEach
-    fun clearDB() {
-        studentRepository.deleteAll()
-        subjectRepository.deleteAll()
-        userRepository.deleteAllByEmailNotIn(mutableListOf("admin"))
-        teacherRepository.deleteAll()
-    }
-
     @PostConstruct
+    @Transactional
     fun initRestTemplate() {
+        val adminToken: String = run {
+            val user = userRepository.findByEmail("admin") ?: userRepository.save(
+                User(
+                    firstName = "admin",
+                    lastName = "admin",
+                    email = "admin",
+                    password = "{noop}admin",
+                    roles = mutableListOf(RoleEnum.ADMIN),
+                )
+            )
+            jwtAccessService.generateToken(CustomUserDetails(user))
+        }
         val customTemplate =
-            restBuilder.rootUri("http://localhost:$localPort").customizers(JWTCustomizer(::adminToken))
+            restBuilder.rootUri("http://localhost:$localPort").customizers(JWTCustomizer(adminToken))
                 .requestFactory { HttpComponentsClientHttpRequestFactory() }
                 .errorHandler(object : DefaultResponseErrorHandler() {
                     override fun hasError(response: ClientHttpResponse): Boolean {
@@ -115,26 +124,13 @@ abstract class ApplicationTest {
     @Autowired
     lateinit var jwtAccessService: JwtAccessService
 
-    private val adminToken: String
-        get() = run {
-            val user = userRepository.findByEmail("admin") ?: userRepository.save(
-                User(
-                    firstName = "admin",
-                    lastName = "admin",
-                    email = "admin",
-                    password = "{noop}admin",
-                    roles = mutableListOf(RoleEnum.ADMIN),
-                )
-            )
-            jwtAccessService.generateToken(CustomUserDetails(user))
-        }
-
     companion object {
         @Container
         val container = PostgreSQLContainer("postgres:13").apply {
             withDatabaseName("testdb")
             withUsername("postgres")
             withPassword("postgres")
+                .withReuse(true)
         }
 
         @JvmStatic
@@ -168,8 +164,8 @@ class JWTHttpRequestInterceptor(private val token: String) : ClientHttpRequestIn
     }
 }
 
-class JWTCustomizer(private val token: () -> String) : RestTemplateCustomizer {
+class JWTCustomizer(private val token: String) : RestTemplateCustomizer {
     override fun customize(restTemplate: RestTemplate) {
-        restTemplate.interceptors.add(JWTHttpRequestInterceptor(token()))
+        restTemplate.interceptors.add(JWTHttpRequestInterceptor(token))
     }
 }

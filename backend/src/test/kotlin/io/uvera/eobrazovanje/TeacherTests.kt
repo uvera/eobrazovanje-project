@@ -12,6 +12,7 @@ import io.uvera.eobrazovanje.util.extensions.EmptyObject
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.reload
 import io.uvera.eobrazovanje.util.extensions.save
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.web.client.exchange
@@ -27,6 +28,9 @@ class TeacherTests : ApplicationTest() {
     val sampleMail = "Sample mail"
     val roles = mutableListOf(RoleEnum.TEACHER)
     val teacherType = TeacherType.PROFESSOR
+
+    @BeforeEach
+    fun beforeEachTest() = teacherRepository.deleteAll()
 
     @Test
     fun `test get teacher`() = teacherRepository {
@@ -88,6 +92,7 @@ class TeacherTests : ApplicationTest() {
                 roles = mutableListOf(RoleEnum.TEACHER),
             )
         )
+        teacher.save()
         restTemplate.put(
             "/api/teacher/${teacher.id}",
             TeacherUpdateDTO(

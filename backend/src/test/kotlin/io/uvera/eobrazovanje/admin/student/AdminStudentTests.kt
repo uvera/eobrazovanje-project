@@ -5,12 +5,16 @@ import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import io.uvera.eobrazovanje.error.dto.ApiError
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.HttpStatus
 import javax.validation.constraints.NotBlank
 
 class AdminStudentTests : ApplicationTest() {
+
+    @BeforeEach
+    fun beforeEachTest() = studentRepository.deleteAll()
 
     @Test
     fun `test creation with one student in list`() {
