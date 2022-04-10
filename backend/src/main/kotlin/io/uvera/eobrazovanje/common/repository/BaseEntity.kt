@@ -1,6 +1,5 @@
 package io.uvera.eobrazovanje.common.repository
 
-import io.uvera.eobrazovanje.error.exception.EntityStateException
 import org.hibernate.annotations.ColumnDefault
 import org.hibernate.annotations.GenericGenerator
 import java.util.*

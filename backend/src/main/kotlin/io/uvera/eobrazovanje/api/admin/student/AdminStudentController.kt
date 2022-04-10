@@ -35,5 +35,4 @@ class AdminStudentController(protected val service: AdminStudentService) {
         logger.info("Pagination ${Student::class.simpleName} with params: { page: $page, records: $records }")
         return service.getStudentsByPage(page, records).ok
     }
-
 }

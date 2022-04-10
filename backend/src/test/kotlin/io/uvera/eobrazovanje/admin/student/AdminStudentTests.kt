@@ -2,10 +2,7 @@ package io.uvera.eobrazovanje.admin.student
 
 import io.uvera.eobrazovanje.ApplicationTest
 import io.uvera.eobrazovanje.api.admin.student.dto.*
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
 import io.uvera.eobrazovanje.common.repository.Student
-import io.uvera.eobrazovanje.common.repository.Teacher
-import io.uvera.eobrazovanje.common.repository.TeacherType
 import io.uvera.eobrazovanje.common.repository.User
 import io.uvera.eobrazovanje.error.dto.ApiError
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
@@ -18,7 +15,6 @@ import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import java.math.BigDecimal
-import java.time.LocalDate
 import javax.validation.constraints.NotBlank
 
 class AdminStudentTests : ApplicationTest() {
@@ -83,7 +79,8 @@ class AdminStudentTests : ApplicationTest() {
     @Test
     fun `test creation with one student in list`() {
         val response = restTemplate.postForEntity<List<CreatedStudentDTO>>(
-            "/api/admin/student", AdminCreateStudentsDTO(
+            "/api/admin/student",
+            AdminCreateStudentsDTO(
                 data = listOf(
                     AdminCreateStudentDTO(
                         transcriptNumber = "1234",
@@ -102,7 +99,8 @@ class AdminStudentTests : ApplicationTest() {
     @Test
     fun `test creation failure`() {
         val response = restTemplate.postForEntity<ApiError>(
-            "/api/admin/student", AdminCreateStudentsDTO(
+            "/api/admin/student",
+            AdminCreateStudentsDTO(
                 data = listOf(
                     AdminCreateStudentDTO(
                         transcriptNumber = "",
