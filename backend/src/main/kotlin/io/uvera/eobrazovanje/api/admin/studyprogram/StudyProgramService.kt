@@ -2,8 +2,8 @@ package io.uvera.eobrazovanje.api.admin.studyprogram
 
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherResponseDTO
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherUpdateDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById

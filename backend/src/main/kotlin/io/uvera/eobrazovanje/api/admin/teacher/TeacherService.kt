@@ -1,5 +1,8 @@
-package io.uvera.eobrazovanje.api.teacher
+package io.uvera.eobrazovanje.api.admin.teacher
 
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.api.teacher.dto.*
 import io.uvera.eobrazovanje.common.repository.Teacher
 import io.uvera.eobrazovanje.common.repository.TeacherRepository

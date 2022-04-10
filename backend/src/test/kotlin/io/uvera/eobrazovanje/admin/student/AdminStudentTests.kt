@@ -2,7 +2,7 @@ package io.uvera.eobrazovanje.admin.student
 
 import io.uvera.eobrazovanje.ApplicationTest
 import io.uvera.eobrazovanje.api.admin.student.dto.*
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.Teacher
 import io.uvera.eobrazovanje.common.repository.TeacherType

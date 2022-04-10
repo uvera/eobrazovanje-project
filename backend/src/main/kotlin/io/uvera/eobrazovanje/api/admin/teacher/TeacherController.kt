@@ -1,9 +1,9 @@
-package io.uvera.eobrazovanje.api.teacher
+package io.uvera.eobrazovanje.api.admin.teacher
 
 import io.swagger.v3.oas.annotations.tags.Tag
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherDTO
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherResponseDTO
-import io.uvera.eobrazovanje.api.teacher.dto.TeacherUpdateDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.common.repository.Teacher
 import io.uvera.eobrazovanje.util.AnyResponseEntity
 import io.uvera.eobrazovanje.util.extensions.emptyOk

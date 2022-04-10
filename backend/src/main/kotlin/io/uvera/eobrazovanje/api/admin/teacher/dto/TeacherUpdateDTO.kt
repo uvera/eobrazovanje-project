@@ -1,4 +1,4 @@
-package io.uvera.eobrazovanje.api.teacher.dto
+package io.uvera.eobrazovanje.api.admin.teacher.dto
 
 import io.uvera.eobrazovanje.common.repository.TeacherType
 import javax.validation.constraints.NotBlank
