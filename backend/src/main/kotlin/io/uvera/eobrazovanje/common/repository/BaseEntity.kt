@@ -1,5 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
+import org.hibernate.annotations.ColumnDefault
+import org.hibernate.annotations.GenericGenerator
 import java.util.*
 import javax.persistence.*
 
@@ -10,7 +12,13 @@ abstract class BaseEntity {
 
     @Id
     @Column(name = "id", length = 16, unique = true, nullable = false, updatable = false)
-    open val id: UUID = UUID.randomUUID()
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @ColumnDefault("random_uuid()")
+    lateinit var id: UUID
 
     override fun equals(other: Any?) = when {
         this === other -> true
