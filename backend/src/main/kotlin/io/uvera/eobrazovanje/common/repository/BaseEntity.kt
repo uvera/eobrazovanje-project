@@ -19,9 +19,7 @@ abstract class BaseEntity {
         strategy = "org.hibernate.id.UUIDGenerator"
     )
     @ColumnDefault("random_uuid()")
-    private lateinit var _id: UUID
-    val id: UUID
-        get() = if (this::_id.isInitialized) _id else throw IDUninitializedException()
+    private lateinit var id: UUID
 
     override fun equals(other: Any?) = when {
         this === other -> true
@@ -32,5 +30,3 @@ abstract class BaseEntity {
 
     override fun hashCode(): Int = id.hashCode()
 }
-
-class IDUninitializedException : EntityStateException("ID not initialized")
