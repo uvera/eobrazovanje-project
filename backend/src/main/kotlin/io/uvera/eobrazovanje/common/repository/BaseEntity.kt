@@ -1,5 +1,6 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.error.exception.EntityStateException
 import org.hibernate.annotations.ColumnDefault
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
@@ -18,7 +19,9 @@ abstract class BaseEntity {
         strategy = "org.hibernate.id.UUIDGenerator"
     )
     @ColumnDefault("random_uuid()")
-    lateinit var id: UUID
+    private lateinit var _id: UUID
+    val id: UUID
+        get() = if (this::_id.isInitialized) _id else throw IDUninitializedException()
 
     override fun equals(other: Any?) = when {
         this === other -> true
@@ -29,3 +32,5 @@ abstract class BaseEntity {
 
     override fun hashCode(): Int = id.hashCode()
 }
+
+class IDUninitializedException : EntityStateException("ID not initialized")

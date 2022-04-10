@@ -9,7 +9,7 @@ open class NotFoundException(message: String) : ResponseStatusException(HttpStat
 
 // base entity
 class EntityNotFoundException(message: String) : NotFoundException(message)
-class EntityStateException(message: String) : BadRequestException(message)
+open class EntityStateException(message: String) : BadRequestException(message)
 
 // user entity
 class UserNotFoundException(message: String) : NotFoundException(message)
