@@ -6,6 +6,7 @@ import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.common.repository.StudyProgram
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.util.extensions.invoke
+import io.uvera.eobrazovanje.util.extensions.reload
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,7 +47,6 @@ class AdminStudyProgramTest : ApplicationTest() {
             )
         )
         val body = response.body!!
-        println(body)
         assert(response.statusCode == HttpStatus.OK)
         assert(body.subjects.map { it.id } == subjects.map { it.id })
         assert(body.name == "Study Program 1")
@@ -85,5 +85,81 @@ class AdminStudyProgramTest : ApplicationTest() {
         assert(response.statusCode == HttpStatus.OK)
         assert(body.id == studyProgram.id)
         assert(body.subjects.size == subjects.size)
+    }
+
+    @Test
+    fun `update one study program`() {
+        val subjects = subjectRepository {
+            listOf(
+                Subject(
+                    espb = 40,
+                    name = "XML",
+                    year = 2
+                ),
+                Subject(
+                    espb = 69,
+                    name = "Nije XML",
+                    year = 2
+                )
+            ).saveAll()
+        }
+        val studyProgram = studyProgramRepository.save(
+            StudyProgram(
+                codeName = "SF",
+                name = "Uveric",
+                subjects = subjects.toMutableList()
+            )
+        )
+        subjects.forEach {
+            it.studyProgram = studyProgram
+            subjectRepository.save(it)
+        }
+        restTemplate.put(
+            "/api/admin/study-program/${studyProgram.id}",
+            StudyProgramCreateDTO(
+                name = "Study Program 2",
+                codeName = "SG",
+                subjects = subjects.map { it.id }.dropLast(1)
+            )
+        )
+        studyProgramRepository {
+            studyProgram.reload.let {
+                assert(it.codeName == "SG")
+                assert(it.name == "Study Program 2")
+            }
+        }
+    }
+
+    @Test
+    fun `delete one study program`() {
+        val subjects = subjectRepository {
+            listOf(
+                Subject(
+                    espb = 40,
+                    name = "XML",
+                    year = 2
+                ),
+                Subject(
+                    espb = 69,
+                    name = "Nije XML",
+                    year = 2
+                )
+            ).saveAll()
+        }
+        val studyProgram = studyProgramRepository.save(
+            StudyProgram(
+                codeName = "SF",
+                name = "Uveric",
+                subjects = subjects.toMutableList()
+            )
+        )
+        subjects.forEach {
+            it.studyProgram = studyProgram
+            subjectRepository.save(it)
+        }
+        studyProgramRepository {
+            val res = restTemplate.delete("/api/study-program/${studyProgram.id}")
+            // works but don't know how to test it @uvera
+        }
     }
 }

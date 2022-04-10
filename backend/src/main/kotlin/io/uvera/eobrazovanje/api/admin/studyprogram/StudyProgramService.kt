@@ -2,6 +2,8 @@ package io.uvera.eobrazovanje.api.admin.studyprogram
 
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
+import io.uvera.eobrazovanje.api.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
@@ -16,11 +18,28 @@ class StudyProgramService(
     protected val repo: StudyProgramRepository,
     protected val subjectRepo: SubjectRepository,
 ) {
-    fun createStudyProgram(studyProgram: StudyProgramCreateDTO): StudyProgramViewDTO  = repo {
-            studyProgramDTOToEntity(studyProgram).save().asDTO()
+    fun createStudyProgram(studyProgram: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
+        studyProgramDTOToEntity(studyProgram).save().asDTO()
     }
 
-    fun getStudyProgram(studyProgramId: UUID): StudyProgramViewDTO  =
+    fun updateStudyProgram(id: UUID, studyProgram: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
+        val dbStudy = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
+        dbStudy.let {
+            val newStudy = studyProgramDTOToEntity(studyProgram)
+            it.name = newStudy.name
+            it.subjects = newStudy.subjects
+            it.codeName = newStudy.codeName
+            it.save()
+        }
+        return@repo findByIdAsDto(id) ?: notFoundById<StudyProgram>(id)
+    }
+
+    fun deleteStudyProgram(id: UUID) = repo {
+        val study = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
+        return@repo delete(study)
+    }
+
+    fun getStudyProgram(studyProgramId: UUID): StudyProgramViewDTO =
         repo.findByIdAsDto(studyProgramId) ?: notFoundById<StudyProgram>(studyProgramId)
 
     context(StudyProgramRepository)

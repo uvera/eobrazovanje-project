@@ -1,6 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTOImpl
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 import java.util.*
@@ -47,4 +49,6 @@ class Student(
 @Repository
 interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
     fun findByTranscriptNumber(value: String): Student?
+    @Query("select t from Student t where t.id = :id")
+    fun findByIdAsDto(id: UUID): StudentViewDTOImpl?
 }
