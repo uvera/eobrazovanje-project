@@ -2,8 +2,6 @@
 
 package io.uvera.eobrazovanje.util.extensions
 
-import com.blazebit.persistence.criteria.BlazeCriteria
-import com.blazebit.persistence.spring.data.repository.BlazeSpecification
 import io.uvera.eobrazovanje.common.repository.BaseEntity
 import io.uvera.eobrazovanje.error.exception.EntityNotFoundException
 import liquibase.pro.packaged.T
@@ -21,6 +19,17 @@ context(JpaRepository<T, ID>)
 fun <ID, T : BaseEntity> T.update(selfUpdateBlock: T.() -> Unit): T {
     selfUpdateBlock(this@update)
     return this@JpaRepository.save(this@update)
+}
+
+context(JpaRepository<T, ID>)
+fun <ID, T : BaseEntity> Collection<T>.updateEach(selfUpdateBlock: T.() -> Unit): MutableList<T> {
+    this@updateEach.forEach { it.selfUpdateBlock() }
+    return this@JpaRepository.saveAll(this@updateEach)
+}
+
+fun <T : BaseEntity> T.tap(selfTapBlock: T.() -> Unit): T {
+    selfTapBlock(this)
+    return this
 }
 
 context(JpaRepository<T, ID>)
