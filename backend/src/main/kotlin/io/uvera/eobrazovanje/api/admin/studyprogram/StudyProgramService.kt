@@ -2,13 +2,10 @@ package io.uvera.eobrazovanje.api.admin.studyprogram
 
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
-import io.uvera.eobrazovanje.common.repository.*
-import io.uvera.eobrazovanje.util.extensions.invoke
-import io.uvera.eobrazovanje.util.extensions.notFoundById
-import io.uvera.eobrazovanje.util.extensions.save
-import org.springframework.data.jpa.repository.JpaRepository
+import io.uvera.eobrazovanje.common.repository.StudyProgram
+import io.uvera.eobrazovanje.common.repository.StudyProgramRepository
+import io.uvera.eobrazovanje.common.repository.SubjectRepository
+import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.*
@@ -18,25 +15,36 @@ class StudyProgramService(
     protected val repo: StudyProgramRepository,
     protected val subjectRepo: SubjectRepository,
 ) {
-    fun createStudyProgram(studyProgram: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
-        studyProgramDTOToEntity(studyProgram).save().asDTO()
+    fun createStudyProgram(studyProgramDTO: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
+        studyProgramDTOToEntity(studyProgramDTO).save().also { studyProgramEntity ->
+            subjectRepo {
+                findAllById(studyProgramDTO.subjects).onEach { subject ->
+                    subject.tap {
+                        studyProgram = studyProgramEntity
+                    }
+                }.saveAll()
+            }
+        }.asDTO()
     }
 
-    fun updateStudyProgram(id: UUID, studyProgram: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
+    fun updateStudyProgram(id: UUID, dto: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
         val dbStudy = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
-        dbStudy.let {
-            val newStudy = studyProgramDTOToEntity(studyProgram)
-            it.name = newStudy.name
-            it.subjects = newStudy.subjects
-            it.codeName = newStudy.codeName
-            it.save()
+        dbStudy.update {
+            name = dto.name
+            codeName = dto.codeName
+        }.let { studyProgramEntity ->
+            subjectRepo {
+                findAllById(dto.subjects).updateEach {
+                    studyProgram = studyProgramEntity
+                }
+            }
         }
         return@repo findByIdAsDto(id) ?: notFoundById<StudyProgram>(id)
     }
 
     fun deleteStudyProgram(id: UUID) = repo {
-        val study = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
-        return@repo delete(study)
+        if (!existsById(id)) notFoundById<StudyProgram>(id)
+        return@repo deleteById(id)
     }
 
     fun getStudyProgram(studyProgramId: UUID): StudyProgramViewDTO =
@@ -48,12 +56,8 @@ class StudyProgramService(
     fun studyProgramDTOToEntity(dto: StudyProgramCreateDTO): StudyProgram {
         return StudyProgram(
             codeName = dto.codeName,
-            name = dto.name,
-            subjects = mapSubjectsFromDTO(dto.subjects).toMutableList()
+            name = dto.name
         )
     }
 
-    fun mapSubjectsFromDTO(idList: List<UUID>): List<Subject> = subjectRepo {
-        findAllById(idList)
-    }
 }

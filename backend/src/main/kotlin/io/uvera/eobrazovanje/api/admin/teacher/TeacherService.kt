@@ -1,15 +1,11 @@
 package io.uvera.eobrazovanje.api.admin.teacher
 
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
-import io.uvera.eobrazovanje.api.teacher.dto.*
+import io.uvera.eobrazovanje.api.admin.teacher.dto.*
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO_.teacherType
 import io.uvera.eobrazovanje.common.repository.Teacher
 import io.uvera.eobrazovanje.common.repository.TeacherRepository
 import io.uvera.eobrazovanje.common.repository.User
-import io.uvera.eobrazovanje.util.extensions.invoke
-import io.uvera.eobrazovanje.util.extensions.notFoundById
-import io.uvera.eobrazovanje.util.extensions.save
+import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
@@ -48,19 +44,19 @@ class TeacherService(
 
     fun updateTeacher(id: UUID, dto: TeacherUpdateDTO): TeacherResponseDTO = repo {
         val teacher = findByIdOrNull(id) ?: notFoundById<Teacher>(id)
-        teacher.teacherType = dto.teacherType
-        teacher.user.let {
-            it.firstName = dto.firstName
-            it.lastName = dto.lastName
+        teacher.update {
+            teacherType = dto.teacherType
+            user.tap {
+                firstName = dto.firstName
+                lastName = dto.lastName
+            }
         }
-
-        save(teacher)
         return@repo findByIdAsDto(teacher.id) ?: notFoundById<Teacher>(teacher.id)
     }
 
     fun deleteTeacher(id: UUID) = repo {
-        val teacher = findByIdOrNull(id) ?: notFoundById<Teacher>(id)
-        return@repo delete(teacher)
+        if (!existsById(id)) notFoundById<Teacher>(id)
+        return@repo deleteById(id)
     }
 }
 

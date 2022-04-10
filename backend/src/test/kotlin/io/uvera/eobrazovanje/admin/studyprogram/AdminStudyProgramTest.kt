@@ -46,6 +46,8 @@ class AdminStudyProgramTest : ApplicationTest() {
                 subjects = subjects.map { it.id }
             )
         )
+        println(subjects.map {it.id})
+        println(subjectRepository.count())
         val body = response.body!!
         assert(response.statusCode == HttpStatus.OK)
         assert(body.subjects.map { it.id } == subjects.map { it.id })
