@@ -1,6 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTOImpl
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
 import javax.persistence.*
@@ -27,4 +29,7 @@ class Subject(
 ) : BaseEntity()
 
 @Repository
-interface SubjectRepository : JpaSpecificationRepository<Subject, UUID>
+interface SubjectRepository : JpaSpecificationRepository<Subject, UUID> {
+    @Query("select t from Subject t where t.id = :id")
+    fun findByIdAsDto(id: UUID): SubjectViewDTOImpl?
+}
