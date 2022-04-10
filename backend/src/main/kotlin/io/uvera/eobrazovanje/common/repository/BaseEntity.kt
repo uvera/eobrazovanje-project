@@ -19,7 +19,7 @@ abstract class BaseEntity {
         strategy = "org.hibernate.id.UUIDGenerator"
     )
     @ColumnDefault("random_uuid()")
-    private lateinit var id: UUID
+    lateinit var id: UUID
 
     override fun equals(other: Any?) = when {
         this === other -> true
