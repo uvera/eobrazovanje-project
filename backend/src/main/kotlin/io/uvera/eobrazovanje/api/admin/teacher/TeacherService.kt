@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.util.*
 
@@ -36,12 +37,14 @@ class TeacherService(
         }
     }
 
+    @Transactional
     fun createTeacher(dto: TeacherDTO) = repo {
         teacherDTOToEntity(dto).save().let {
             findByIdAsDto(it.id) ?: notFoundById<User>(it.id)
         }
     }
 
+    @Transactional
     fun updateTeacher(id: UUID, dto: TeacherUpdateDTO): TeacherResponseDTO = repo {
         val teacher = findByIdOrNull(id) ?: notFoundById<Teacher>(id)
         teacher.update {
@@ -54,6 +57,7 @@ class TeacherService(
         return@repo findByIdAsDto(teacher.id) ?: notFoundById<Teacher>(teacher.id)
     }
 
+    @Transactional
     fun deleteTeacher(id: UUID) = repo {
         if (!existsById(id)) notFoundById<Teacher>(id)
         return@repo deleteById(id)

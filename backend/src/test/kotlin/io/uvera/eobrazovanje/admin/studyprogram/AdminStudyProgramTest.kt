@@ -46,8 +46,7 @@ class AdminStudyProgramTest : ApplicationTest() {
                 subjects = subjects.map { it.id }
             )
         )
-        println(subjects.map {it.id})
-        println(subjectRepository.count())
+
         val body = response.body!!
         assert(response.statusCode == HttpStatus.OK)
         assert(body.subjects.map { it.id } == subjects.map { it.id })
@@ -160,8 +159,8 @@ class AdminStudyProgramTest : ApplicationTest() {
             subjectRepository.save(it)
         }
         studyProgramRepository {
-            val res = restTemplate.delete("/api/study-program/${studyProgram.id}")
-            // works but don't know how to test it @uvera
+            restTemplate.delete("/api/admin/study-program/${studyProgram.id}")
+            assert(count() == 0L)
         }
     }
 }

@@ -17,7 +17,7 @@ class Subject(
     @Column(name = "year", nullable = false)
     var year: Int,
 
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = [CascadeType.MERGE])
     @JoinColumn(name = "study_program_id", nullable = true)
     var studyProgram: StudyProgram? = null,
 

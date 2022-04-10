@@ -25,7 +25,7 @@ class StudyProgram(
     @OneToMany(mappedBy = "studyProgram", orphanRemoval = true)
     var studyProgramEnrollments: MutableList<StudyProgramEnrollment> = mutableListOf(),
 
-    @OneToMany(mappedBy = "studyProgram", orphanRemoval = true, cascade = [CascadeType.MERGE])
+    @OneToMany(mappedBy = "studyProgram", orphanRemoval = true)
     var subjects: MutableList<Subject> = mutableListOf(),
 ) : BaseEntity()
 
