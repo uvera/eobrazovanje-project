@@ -1,7 +1,17 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
+import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTOImpl
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Query
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -18,3 +28,11 @@ class Payments(
     @JoinColumn(name = "student_id", nullable = false)
     var student: Student,
 ) : BaseEntity()
+
+interface PaymentRepository : JpaSpecificationRepository<Payments, UUID> {
+    @Query("select p from Payments p where p.id = :id")
+    fun findByIdAsDto(id: UUID): PaymentViewDTOImpl?
+
+    @Query("select p from Payments p where p.student.id = :id")
+    fun findAllByStudentId(id: UUID, req: PageRequest): Page<PaymentViewDTO>
+}
