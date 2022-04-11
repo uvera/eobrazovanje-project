@@ -51,7 +51,7 @@ class AdminStudentService(
             firstName = it.firstName,
             lastName = it.lastName,
             email = it.email,
-            password = digitGenerationService.getRandomPassword(10),
+            password = "{noop}" + digitGenerationService.getRandomPassword(10),
             roles = mutableListOf(RoleEnum.STUDENT)
         ).let { user ->
             Student(
