@@ -1,7 +1,9 @@
 package io.uvera.eobrazovanje.common.repository
 
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTOImpl
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
@@ -49,6 +51,10 @@ class Student(
 @Repository
 interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
     fun findByTranscriptNumber(value: String): Student?
+
     @Query("select t from Student t where t.id = :id")
-    fun findByIdAsDto(id: UUID): StudentViewDTOImpl?
+    fun findByIdAsDto(id: UUID): StudentViewDTO?
+
+    @Query("select s from Student s")
+    fun findAllAsDto(pageable: Pageable): Page<StudentViewDTO>
 }

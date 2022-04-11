@@ -14,7 +14,6 @@ import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -26,28 +25,12 @@ class AdminStudentService(
     protected val digitGenerationService: DigitGenerationService,
 ) {
 
-    fun getStudent(id: UUID): StudentViewDTOImpl =
-        repo.findByIdOrNull(id)?.let {
-            StudentViewDTOImpl(
-                it.user.email,
-                it.user.firstName,
-                it.id,
-                it.user.lastName,
-                it.transcriptNumber
-            )
-        } ?: notFoundById<Student>(id)
+    fun getStudent(id: UUID): StudentViewDTO =
+        repo.findByIdAsDto(id) ?: notFoundById<Student>(id)
 
     fun getStudentsByPage(page: Int, records: Int): Page<StudentViewDTO> = repo {
         val req = PageRequest.of(page - 1, records)
-        return@repo findAll(req).map {
-            StudentViewDTOImpl(
-                it.user.email,
-                it.user.firstName,
-                it.id,
-                it.user.lastName,
-                it.transcriptNumber
-            )
-        }
+        return@repo findAllAsDto(req)
     }
 
     @Transactional

@@ -47,7 +47,7 @@ class AdminStudentTests : ApplicationTest() {
         }.forEach {
             it.save()
         }
-        val res = restTemplate.getForEntity<Page<StudentViewDTOImpl>>("/api/admin/student/paged?page=${1}&records=${2}")
+        val res = restTemplate.getForEntity<Page<StudentViewDTO>>("/api/admin/student/paged?page=${1}&records=${2}")
         val body = res.body!!
         assert(body.content.size == 2)
         assert(body.totalElements == 4L)
@@ -74,6 +74,9 @@ class AdminStudentTests : ApplicationTest() {
         val body = response.body!!
         assert(response.statusCode == HttpStatus.OK)
         assert(body.id == student.id)
+        assert(body.user.email == "marko@marko.com")
+        assert(body.user.firstName == "Marko")
+        assert(body.user.lastName == "Markovic")
     }
 
     @Test
