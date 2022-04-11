@@ -1,7 +1,10 @@
 package io.uvera.eobrazovanje.admin.student
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.student.dto.*
+import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.User
 import io.uvera.eobrazovanje.error.dto.ApiError
@@ -70,7 +73,7 @@ class AdminStudentTests : ApplicationTest() {
             )
         )
         student = studentRepository.save(student)
-        val response = restTemplate.getForEntity<StudentViewDTOImpl>("/api/admin/student/${student.id}")
+        val response = restTemplate.getForEntity<StudentViewDTO>("/api/admin/student/${student.id}")
         val body = response.body!!
         assert(response.statusCode == HttpStatus.OK)
         assert(body.id == student.id)

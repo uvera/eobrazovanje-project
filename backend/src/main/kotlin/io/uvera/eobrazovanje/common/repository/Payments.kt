@@ -5,6 +5,7 @@ import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTOImpl
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -28,8 +29,8 @@ class Payments(
 
 interface PaymentRepository : JpaSpecificationRepository<Payments, UUID> {
     @Query("select p from Payments p where p.id = :id")
-    fun findByIdAsDto(id: UUID): PaymentViewDTOImpl?
+    fun findByIdAsDto(id: UUID): PaymentViewDTO?
 
     @Query("select p from Payments p where p.student.id = :id")
-    fun findAllByStudentId(id: UUID, req: PageRequest): Page<PaymentViewDTO>
+    fun findAllByStudentId(id: UUID, pageable: Pageable): Page<PaymentViewDTO>
 }
