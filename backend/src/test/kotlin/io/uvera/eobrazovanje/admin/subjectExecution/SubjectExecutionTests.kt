@@ -17,8 +17,8 @@ class SubjectExecutionTests : ApplicationTest() {
 
     @BeforeEach
     fun beforeEachTest() {
-        subjectRepository.deleteAll();
-        subjectExecutionRepository.deleteAll();
+        subjectRepository.deleteAll()
+        subjectExecutionRepository.deleteAll()
     }
 
     @Test
@@ -40,7 +40,7 @@ class SubjectExecutionTests : ApplicationTest() {
         val prexam = preExamActivityRepository {
             listOf(
                 PreExamActivity(
-                name = "Obaveza 1"
+                    name = "Obaveza 1"
                 ),
                 PreExamActivity(
                     name = "Obaveza 2"

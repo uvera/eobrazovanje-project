@@ -1,6 +1,5 @@
 package io.uvera.eobrazovanje.api.admin.subjectExecution
 
-import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionCreateDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
 import io.uvera.eobrazovanje.common.repository.*

@@ -57,5 +57,6 @@ class PaymentController(protected val service: PaymentService) {
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @DeleteMapping("/{id}")
     fun deletePayment(
-        @PathVariable("id") paymentId: UUID) : AnyResponseEntity = service.deletePayment(paymentId).let { emptyOk }
+        @PathVariable("id") paymentId: UUID
+    ): AnyResponseEntity = service.deletePayment(paymentId).let { emptyOk }
 }

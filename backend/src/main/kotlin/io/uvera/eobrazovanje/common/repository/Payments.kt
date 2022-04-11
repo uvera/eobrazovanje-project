@@ -1,10 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
-import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTOImpl
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import java.math.BigDecimal
