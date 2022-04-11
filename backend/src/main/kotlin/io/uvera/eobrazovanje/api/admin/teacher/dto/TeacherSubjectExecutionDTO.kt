@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Validated
-class TeacherSubjectExecutionDTO (
+class TeacherSubjectExecutionDTO(
     @field:NotNull
     var subjectExecutionIds: List<UUID>,
 

@@ -20,7 +20,7 @@ import java.util.UUID
 
 @RequestMapping("/api/payment")
 @RestController
-class PaymentController (protected val service: PaymentService){
+class PaymentController(protected val service: PaymentService) {
     val logger by loggerDelegate()
 
     @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
@@ -34,7 +34,7 @@ class PaymentController (protected val service: PaymentService){
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
         @PathVariable id: UUID
-    ) : ResponseEntity<Page<PaymentViewDTO>> {
+    ): ResponseEntity<Page<PaymentViewDTO>> {
         logger.info("Pagination ${Payments::class.simpleName} with params: { page $page, records: $records, studentId: $id}")
         return service.getPayments(page, records, id).ok
     }

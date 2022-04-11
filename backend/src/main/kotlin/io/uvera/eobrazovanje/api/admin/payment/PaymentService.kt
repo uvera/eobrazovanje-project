@@ -2,7 +2,6 @@ package io.uvera.eobrazovanje.api.admin.payment
 
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
-import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTOImpl
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class PaymentService (
+class PaymentService(
     protected val paymentRepo: PaymentRepository,
     protected val studentRepo: StudentRepository
 ) {
@@ -26,7 +25,7 @@ class PaymentService (
     fun getPayment(paymentId: UUID): PaymentViewDTO =
         paymentRepo.findByIdAsDto(paymentId) ?: notFoundById<Payments>(paymentId)
 
-    fun updatePayment(id: UUID, dto:PaymentCreateDTO): PaymentViewDTO = paymentRepo {
+    fun updatePayment(id: UUID, dto: PaymentCreateDTO): PaymentViewDTO = paymentRepo {
         val dbPayments = findByIdOrNull(id) ?: notFoundById<Payments>(id)
         dbPayments.update {
             amount = dto.amount
@@ -41,7 +40,7 @@ class PaymentService (
         return@paymentRepo deleteById(id)
     }
 
-    fun paymentDTOToEntity(dto: PaymentCreateDTO): Payments  {
+    fun paymentDTOToEntity(dto: PaymentCreateDTO): Payments {
         return Payments(
             amount = dto.amount,
             depositedAt = dto.depositedAt,
@@ -54,5 +53,4 @@ class PaymentService (
 
         return@paymentRepo findAllByStudentId(id, req)
     }
-
 }

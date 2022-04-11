@@ -3,7 +3,6 @@ package io.uvera.eobrazovanje.api.admin.examPeriod
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodCreateDTO
 import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodViewDTO
-import io.uvera.eobrazovanje.util.AnyResponseEntity
 import io.uvera.eobrazovanje.util.extensions.ok
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize

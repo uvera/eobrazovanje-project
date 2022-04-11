@@ -3,7 +3,6 @@ package io.uvera.eobrazovanje.api.admin.student
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTOImpl
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.StudentRepository
 import io.uvera.eobrazovanje.common.repository.User

@@ -7,6 +7,5 @@ class StudentPaymentTests : ApplicationTest() {
 
     @BeforeEach
     fun beforeEachTest() {
-
     }
 }

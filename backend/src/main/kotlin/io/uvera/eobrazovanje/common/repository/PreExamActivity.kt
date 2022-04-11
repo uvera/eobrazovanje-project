@@ -18,4 +18,4 @@ class PreExamActivity(
 ) : BaseEntity()
 
 @Repository
-interface PreExamActivityRepository: JpaSpecificationRepository<PreExamActivity, UUID>
+interface PreExamActivityRepository : JpaSpecificationRepository<PreExamActivity, UUID>

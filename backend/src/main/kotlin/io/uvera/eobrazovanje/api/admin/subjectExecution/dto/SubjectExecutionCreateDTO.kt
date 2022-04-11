@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Validated
-class SubjectExecutionCreateDTO (
+class SubjectExecutionCreateDTO(
 
     @field:NotBlank
     var place: String,

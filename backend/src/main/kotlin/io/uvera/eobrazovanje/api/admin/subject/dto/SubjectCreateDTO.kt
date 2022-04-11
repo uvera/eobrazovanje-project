@@ -10,7 +10,7 @@ class SubjectCreateDTO(
 
     @field:NotBlank
     val name: String,
-    
+
     @field:NotBlank
     var year: Int,
 )

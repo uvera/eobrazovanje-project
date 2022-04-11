@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
-import org.springframework.stereotype.Repository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
