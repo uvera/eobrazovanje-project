@@ -58,7 +58,7 @@ class TeacherController(protected val service: TeacherService) {
         service.deleteTeacher(id).let {
             emptyOk
         }
-
+    // TEST NEEDED
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/subjects")
     fun addTeacherToSubjectExecutions(

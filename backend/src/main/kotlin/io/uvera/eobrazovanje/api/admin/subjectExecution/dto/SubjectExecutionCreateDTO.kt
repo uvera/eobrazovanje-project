@@ -13,10 +13,10 @@ class SubjectExecutionCreateDTO(
     @field:NotBlank
     var place: String,
 
-    @field:DateTimeFormat
+    @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     var time: LocalDateTime,
 
-    @field:NotBlank
+    @field:NotNull
     var subjectId: UUID,
 
     @field:NotNull

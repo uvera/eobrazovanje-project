@@ -83,6 +83,9 @@ abstract class ApplicationTest {
     lateinit var subjectExecutionRepository: SubjectExecutionRepository
 
     @Autowired
+    lateinit var preExamActivityRepository: PreExamActivityRepository
+
+    @Autowired
     lateinit var restBuilder: RestTemplateBuilder
 
     @LocalServerPort

@@ -1,5 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -52,4 +54,7 @@ interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecuti
         """
     )
     fun findAllByIds(ids: List<UUID>): MutableList<SubjectExecution>
+
+    @Query("select t from SubjectExecution t left join fetch t.preExamActivities where t.id = :id")
+    fun findByIdAsDto(id: UUID): SubjectExecutionViewDTO?
 }
