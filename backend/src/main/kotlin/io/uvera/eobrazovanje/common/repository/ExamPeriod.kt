@@ -1,6 +1,9 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodViewDTO
+import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.util.*
@@ -19,4 +22,7 @@ class ExamPeriod(
 ) : BaseEntity()
 
 @Repository
-interface ExamPeriodRepository : JpaSpecificationRepository<ExamPeriod, UUID>
+interface ExamPeriodRepository : JpaSpecificationRepository<ExamPeriod, UUID> {
+    @Query("select t from ExamPeriod t left join fetch t.subjectExecutions where t.id = :id")
+    fun findByIdAsDto(id: UUID): ExamPeriodViewDTO?
+}

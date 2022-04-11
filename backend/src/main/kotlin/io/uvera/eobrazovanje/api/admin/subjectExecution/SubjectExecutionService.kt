@@ -5,8 +5,10 @@ import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.save
+import io.uvera.eobrazovanje.util.extensions.updateEach
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class SubjectExecutionService(
@@ -14,9 +16,12 @@ class SubjectExecutionService(
     protected val subjectRepo: SubjectRepository,
     protected val preExamRepo: PreExamActivityRepository
 ) {
-
+    @Transactional
     fun createSubjectExecution(subjectExecutionDTO: SubjectExecutionCreateDTO) = repo {
-        subjectDTOToEntity(subjectExecutionDTO).save()
+        val saved = subjectDTOToEntity(subjectExecutionDTO).save()
+        preExamRepo {
+            findAllById(subjectExecutionDTO.preExamActivityIds).updateEach { subjectExecution = saved }
+        }
     }
 
     fun subjectDTOToEntity(dto: SubjectExecutionCreateDTO): SubjectExecution {
@@ -24,7 +29,6 @@ class SubjectExecutionService(
             place = dto.place,
             time = dto.time,
             subject = subjectRepo.findByIdOrNull(dto.subjectId) ?: notFoundById<Subject>(dto.subjectId),
-            preExamActivities = preExamRepo.findAllById(dto.preExamActivityIds)
         )
     }
 }

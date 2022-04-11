@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 //endregion
 @RequestMapping("/api/admin/subject-execution")
 @RestController
-class SubjectController(protected val service: SubjectExecutionService) {
+class SubjectExecutionController(protected val service: SubjectExecutionService) {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping

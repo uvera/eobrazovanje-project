@@ -1,8 +1,9 @@
 package io.uvera.eobrazovanje.api.admin.examPeriod.dto
 
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.validation.annotation.Validated
 import java.time.LocalDate
-import java.util.UUID
+import java.util.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -11,10 +12,12 @@ class ExamPeriodCreateDTO(
     @field:NotBlank
     var name: String,
 
-    @field:NotBlank
+    @field:NotNull
+    @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     var startDate: LocalDate,
 
-    @field:NotBlank
+    @field:NotNull
+    @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     var endDate: LocalDate,
 
     @field:NotNull

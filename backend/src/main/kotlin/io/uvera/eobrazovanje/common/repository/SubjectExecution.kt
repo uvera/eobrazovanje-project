@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.stereotype.Repository
+import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
@@ -44,4 +45,11 @@ class SubjectExecution(
 
 @Repository
 interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecution, UUID> {
+    @Query(
+        """ select se from SubjectExecution se 
+            left outer join fetch se.examPeriods
+            where se.id in :ids
+        """
+    )
+    fun findAllByIds(ids: List<UUID>): MutableList<SubjectExecution>
 }
