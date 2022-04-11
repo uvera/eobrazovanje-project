@@ -65,6 +65,9 @@ abstract class ApplicationTest {
     lateinit var studentRepository: StudentRepository
 
     @Autowired
+    lateinit var paymentRepository: PaymentRepository
+
+    @Autowired
     lateinit var subjectRepository: SubjectRepository
 
     @Autowired
