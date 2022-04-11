@@ -10,6 +10,8 @@ import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.extensions.update
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
@@ -17,10 +19,12 @@ class SubjectService(
     protected val repo: SubjectRepository,
 ) {
 
+    @Transactional(propagation = Propagation.NEVER)
     fun createSubject(subjectDTO: SubjectCreateDTO): SubjectViewDTO = repo {
         getSubject(subjectDTOToEntity(subjectDTO).save().id)
     }
 
+    @Transactional(propagation = Propagation.NEVER)
     fun updateSubject(id: UUID, dto: SubjectCreateDTO): SubjectViewDTO = repo {
         val dbSubject = findByIdOrNull(id) ?: notFoundById<Subject>(id)
         dbSubject.update {
@@ -28,7 +32,7 @@ class SubjectService(
             year = dto.year
             espb = dto.espb
         }
-        return@repo findByIdAsDto(id) ?: notFoundById<Subject>(id)
+        return@repo getSubject(id)
     }
 
     fun deleteSubject(id: UUID) = repo {
@@ -38,9 +42,6 @@ class SubjectService(
 
     fun getSubject(subjectId: UUID): SubjectViewDTO =
         repo.findByIdAsDto(subjectId) ?: notFoundById<Subject>(subjectId)
-
-    context(SubjectRepository)
-    fun Subject.asDTO() = this.let { findByIdAsDto(it.id) ?: notFoundById<Subject>(it.id) }
 
     fun subjectDTOToEntity(dto: SubjectCreateDTO): Subject {
         return Subject(
