@@ -50,7 +50,7 @@ class AuthController(
     @PostMapping("/login")
     fun createAuthenticationToken(
         @Validated @RequestBody authenticationRequest: AuthenticationRequestDTO,
-    ): AnyResponseEntity = authService.authenticate(authenticationRequest).ok
+    ): ResponseEntity<TokenResponseDTO> = authService.authenticate(authenticationRequest).ok
 
     //region SwaggerDoc
     @Operation(

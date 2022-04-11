@@ -94,20 +94,24 @@ abstract class ApplicationTest {
     @PostConstruct
     @Transactional
     fun initRestTemplate() {
-        val adminToken: String = run {
-            val user = userRepository.findByEmail("admin") ?: userRepository.save(
+        restTemplate = restTemplateWithUser("admin@mail.com", listOf(RoleEnum.ADMIN))
+    }
+
+    fun restTemplateWithUser(email: String, roles: List<RoleEnum>): TestRestTemplate {
+        val token: String = run {
+            val user = userRepository.findByEmail(email) ?: userRepository.save(
                 User(
-                    firstName = "admin",
-                    lastName = "admin",
-                    email = "admin",
-                    password = "{noop}admin",
-                    roles = mutableListOf(RoleEnum.ADMIN),
+                    firstName = "sample",
+                    lastName = "sample",
+                    email = email,
+                    password = "{noop}password",
+                    roles = roles.toMutableList(),
                 )
             )
             jwtAccessService.generateToken(CustomUserDetails(user))
         }
         val customTemplate =
-            restBuilder.rootUri("http://localhost:$localPort").customizers(JWTCustomizer(adminToken))
+            restBuilder.rootUri("http://localhost:$localPort").customizers(JWTCustomizer(token))
                 .requestFactory { HttpComponentsClientHttpRequestFactory() }
                 .errorHandler(object : DefaultResponseErrorHandler() {
                     override fun hasError(response: ClientHttpResponse): Boolean {
@@ -127,7 +131,7 @@ abstract class ApplicationTest {
                         }
                     }
                 )
-        restTemplate = TestRestTemplate(customTemplate)
+        return TestRestTemplate(customTemplate)
     }
 
     @BeforeEach
