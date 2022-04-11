@@ -1,10 +1,7 @@
 package io.uvera.eobrazovanje.api.admin.teacher
 
 import io.uvera.eobrazovanje.api.admin.teacher.dto.*
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO_.teacherType
-import io.uvera.eobrazovanje.common.repository.Teacher
-import io.uvera.eobrazovanje.common.repository.TeacherRepository
-import io.uvera.eobrazovanje.common.repository.User
+import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -17,6 +14,8 @@ import java.util.*
 @Service
 class TeacherService(
     protected val repo: TeacherRepository,
+    protected val subjectExRepo: SubjectExecutionRepository,
+    protected val profEnrolRepo: SubjectProfessorEnrollmentRepository
 ) {
 
     fun getTeacher(id: UUID): TeacherResponseDTO =
@@ -61,6 +60,15 @@ class TeacherService(
     fun deleteTeacher(id: UUID) = repo {
         if (!existsById(id)) notFoundById<Teacher>(id)
         return@repo deleteById(id)
+    }
+
+    fun addTeacherToSubject(dto: TeacherSubjectExecutionDTO) {
+        val teacher = repo.findByIdOrNull(dto.teacherId) ?: notFoundById<Teacher>(dto.teacherId)
+        dto.subjectExecutionIds.forEach {
+            val subject = subjectExRepo.findByIdOrNull(it) ?: notFoundById<SubjectExecution>(it)
+            val enrollment = SubjectProfessorEnrollment(subject, dto.year, teacher)
+            profEnrolRepo.save(enrollment)
+        }
     }
 }
 

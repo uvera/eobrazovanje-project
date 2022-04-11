@@ -1,6 +1,9 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.stereotype.Repository
 import java.time.LocalDate
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -14,3 +17,6 @@ class ExamPeriod(
     @OneToMany(mappedBy = "examPeriod", orphanRemoval = true)
     var heldExams: MutableList<HeldExam> = mutableListOf()
 ) : BaseEntity()
+
+@Repository
+interface ExamPeriodRepository : JpaSpecificationRepository<ExamPeriod, UUID>

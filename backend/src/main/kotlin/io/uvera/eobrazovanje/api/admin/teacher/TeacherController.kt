@@ -3,6 +3,7 @@ package io.uvera.eobrazovanje.api.admin.teacher
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherDTO
 import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherSubjectExecutionDTO
 import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.common.repository.Teacher
 import io.uvera.eobrazovanje.util.AnyResponseEntity
@@ -57,4 +58,12 @@ class TeacherController(protected val service: TeacherService) {
         service.deleteTeacher(id).let {
             emptyOk
         }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/subjects")
+    fun addTeacherToSubjectExecutions(
+        @RequestBody @Validated dto: TeacherSubjectExecutionDTO,
+    ): Any {
+        return service.addTeacherToSubject(dto).ok
+    }
 }

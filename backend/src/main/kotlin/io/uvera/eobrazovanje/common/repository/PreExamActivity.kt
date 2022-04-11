@@ -1,5 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.stereotype.Repository
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -13,3 +16,6 @@ class PreExamActivity(
     @OneToMany(mappedBy = "preExamActivity", orphanRemoval = true)
     var preExamActivityResults: MutableList<PreExamActivityResult> = mutableListOf()
 ) : BaseEntity()
+
+@Repository
+interface PreExamActivityRepository: JpaSpecificationRepository<PreExamActivity, UUID>

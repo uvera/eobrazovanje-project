@@ -1,5 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.stereotype.Repository
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -13,3 +16,6 @@ class SubjectProfessorEnrollment(
     @JoinColumn(name = "teacher_id", nullable = false)
     var teacher: Teacher,
 ) : BaseEntity()
+
+@Repository
+interface SubjectProfessorEnrollmentRepository : JpaSpecificationRepository<SubjectProfessorEnrollment, UUID>

@@ -1,6 +1,9 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -38,3 +41,7 @@ class SubjectExecution(
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var announcements: MutableList<Announcement> = mutableListOf(),
 ) : BaseEntity()
+
+@Repository
+interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecution, UUID> {
+}
