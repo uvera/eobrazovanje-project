@@ -22,6 +22,7 @@ class ExamPeriodTests : ApplicationTest() {
     fun beforeEachTest() {
         subjectRepository.deleteAll()
         examPeriodRepository.deleteAll()
+        subjectExecutionRepository.deleteAll()
     }
 
     @Test
@@ -64,9 +65,8 @@ class ExamPeriodTests : ApplicationTest() {
             )
         ).resolve()
 
-        println(body.subjectExecutions)
         assert(response.statusCode == HttpStatus.OK)
-        assert(body.subjectExecutions.map { it.id } == subjectEx.map { it.id })
+        assert(body.subjectExecutions.sortedBy { it.id }.map { it.id } == subjectEx.sortedBy { it.id }.map { it.id })
         assert(body.name == "Exam period 1")
     }
 }

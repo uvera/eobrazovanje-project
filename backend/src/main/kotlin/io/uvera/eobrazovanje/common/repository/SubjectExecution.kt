@@ -30,7 +30,7 @@ class SubjectExecution(
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var preExamActivities: MutableList<PreExamActivity> = mutableListOf(),
 
-    @ManyToMany
+    @ManyToMany(cascade = [CascadeType.MERGE])
     @JoinTable(
         name = "subject_execution_exam_periods",
         joinColumns = [JoinColumn(name = "subject_execution_id")],

@@ -35,9 +35,6 @@ class ExamPeriodService(
     fun getExamPeriod(examPeriodID: UUID): ExamPeriodViewDTO =
         repo.findByIdAsDto(examPeriodID) ?: notFoundById<ExamPeriod>(examPeriodID)
 
-    context(ExamPeriodRepository)
-    fun ExamPeriod.asDTO() = this.let { findByIdAsDto(it.id) ?: notFoundById<ExamPeriod>(it.id) }
-
     fun dtoToEntity(dto: ExamPeriodCreateDTO): ExamPeriod {
         return ExamPeriod(
             name = dto.name,

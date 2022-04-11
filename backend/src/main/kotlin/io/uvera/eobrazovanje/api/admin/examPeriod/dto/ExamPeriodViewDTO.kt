@@ -15,7 +15,7 @@ interface ExamPeriodViewDTO {
     var startDate: LocalDate
     var endDate: LocalDate
     @get:CollectionMapping
-    val subjectExecutions: List<SubjectExecutionViewDTO>
+    val subjectExecutions: Set<SubjectExecutionViewDTO>
 
     @EntityView(SubjectExecution::class)
     interface SubjectExecutionViewDTO {

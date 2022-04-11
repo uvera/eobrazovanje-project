@@ -4,12 +4,13 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 class PaymentCreateDTO(
-    @field:NotBlank
+    @field:NotNull
     var amount: BigDecimal,
-    @field:NotBlank
+    @field:NotNull
     var depositedAt: LocalDateTime,
-    @field:NotBlank
+    @field:NotNull
     var studentId: UUID,
 )

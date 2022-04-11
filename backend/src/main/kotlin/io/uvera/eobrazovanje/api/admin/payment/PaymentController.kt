@@ -27,12 +27,16 @@ import java.util.UUID
 class PaymentController(protected val service: PaymentService) {
     val logger by loggerDelegate()
 
-    @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @PostMapping
     fun createPayment(@Validated @RequestBody payment: PaymentCreateDTO): ResponseEntity<PaymentViewDTO> =
         service.createPayment(payment).ok
 
-    @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
+    @GetMapping("/{id}")
+    fun getPayment(@PathVariable("id") paymentID: UUID) = service.getPayment(paymentID).ok
+
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @GetMapping("/paged/{id}")
     fun getPaymentsByStudentAndPage(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
@@ -43,14 +47,14 @@ class PaymentController(protected val service: PaymentService) {
         return service.getPayments(page, records, id).ok
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @PutMapping("/{id}")
     fun updatePayment(
         @PathVariable("id") subjectId: UUID,
         @Validated @RequestBody payment: PaymentCreateDTO
     ): ResponseEntity<PaymentViewDTO> = service.updatePayment(subjectId, payment).ok
 
-    @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @DeleteMapping("/{id}")
     fun deletePayment(
         @PathVariable("id") paymentId: UUID) : AnyResponseEntity = service.deletePayment(paymentId).let { emptyOk }
