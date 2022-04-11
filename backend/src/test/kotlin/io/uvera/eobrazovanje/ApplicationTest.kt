@@ -1,6 +1,7 @@
 package io.uvera.eobrazovanje
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import com.fasterxml.jackson.module.mrbean.MrBeanModule
 import com.fasterxml.jackson.module.noctordeser.NoCtorDeserModule
@@ -110,6 +111,7 @@ abstract class ApplicationTest {
                             registerModule(NoCtorDeserModule())
                             registerModule(SortJacksonModule())
                             registerModule(PageJacksonModule())
+                            registerModule(JavaTimeModule())
                         }
                     }
                 )
