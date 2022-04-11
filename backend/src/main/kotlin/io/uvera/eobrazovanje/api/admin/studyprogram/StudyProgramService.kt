@@ -57,14 +57,10 @@ class StudyProgramService(
     fun getStudyProgram(studyProgramId: UUID): StudyProgramViewDTO =
         repo.findByIdAsDto(studyProgramId) ?: notFoundById<StudyProgram>(studyProgramId)
 
-    context(StudyProgramRepository)
-    fun StudyProgram.asDTO() = this.let { findByIdAsDto(it.id) ?: notFoundById<StudyProgram>(it.id) }
-
     fun studyProgramDTOToEntity(dto: StudyProgramCreateDTO): StudyProgram {
         return StudyProgram(
             codeName = dto.codeName,
             name = dto.name
         )
     }
-
 }

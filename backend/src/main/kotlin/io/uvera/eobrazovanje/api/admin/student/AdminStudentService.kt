@@ -24,9 +24,11 @@ class AdminStudentService(
     protected val digitGenerationService: DigitGenerationService,
 ) {
 
+    @Transactional
     fun getStudent(id: UUID): StudentViewDTO =
         repo.findByIdAsDto(id) ?: notFoundById<Student>(id)
 
+    @Transactional
     fun getStudentsByPage(page: Int, records: Int): Page<StudentViewDTO> = repo {
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)
