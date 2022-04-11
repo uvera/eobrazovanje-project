@@ -21,19 +21,9 @@ class TeacherService(
     fun getTeacher(id: UUID): TeacherResponseDTO =
         repo.findByIdAsDto(id) ?: notFoundById<Teacher>(id)
 
-    fun getTeachersByPage(page: Int, records: Int): Page<TeacherResponseDTOImpl> = repo {
+    fun getTeachersByPage(page: Int, records: Int): Page<TeacherResponseDTO> = repo {
         val req = PageRequest.of(page - 1, records)
-        return@repo findAll(req).map {
-            TeacherResponseDTOImpl(
-                it.teacherType,
-                TeacherResponseDTOUserDTOImpl(
-                    it.user.email,
-                    it.user.firstName,
-                    it.user.lastName,
-                    it.user.roles
-                )
-            )
-        }
+        return@repo findAllAsDto(req)
     }
 
     @Transactional
