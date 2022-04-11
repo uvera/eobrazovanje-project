@@ -3,6 +3,8 @@ package io.uvera.eobrazovanje.api.admin.payment
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
 import io.uvera.eobrazovanje.common.repository.Payments
+import io.uvera.eobrazovanje.util.AnyResponseEntity
+import io.uvera.eobrazovanje.util.extensions.emptyOk
 import io.uvera.eobrazovanje.util.extensions.ok
 import io.uvera.eobrazovanje.util.loggerDelegate
 import org.springframework.data.domain.Page
@@ -38,4 +40,16 @@ class PaymentController(protected val service: PaymentService) {
         logger.info("Pagination ${Payments::class.simpleName} with params: { page $page, records: $records, studentId: $id}")
         return service.getPayments(page, records, id).ok
     }
+
+    @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
+    @GetMapping("/{id}")
+    fun updatePayment(
+        @PathVariable("id") subjectId: UUID,
+        @Validated @RequestBody payment: PaymentCreateDTO
+    ): ResponseEntity<PaymentViewDTO> = service.updatePayment(subjectId, payment).ok
+
+    @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
+    @GetMapping("/{id}")
+    fun deletePayment(
+        @PathVariable("id") paymentId: UUID) : AnyResponseEntity = service.deletePayment(paymentId).let { emptyOk }
 }
