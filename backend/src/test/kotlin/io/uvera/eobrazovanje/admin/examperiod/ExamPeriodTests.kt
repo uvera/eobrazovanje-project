@@ -5,8 +5,10 @@ import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodCreateDTO
 import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodViewDTO
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.common.repository.SubjectExecution
+import io.uvera.eobrazovanje.resolve
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.saveAll
+import liquibase.pro.packaged.it
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.postForEntity
@@ -52,7 +54,7 @@ class ExamPeriodTests : ApplicationTest() {
                 )
             ).saveAll()
         }
-        val response = restTemplate.postForEntity<ExamPeriodViewDTO>(
+        val (body, response) = restTemplate.postForEntity<ExamPeriodViewDTO>(
             "/api/admin/exam-period",
             ExamPeriodCreateDTO(
                 name = "Exam period 1",
@@ -60,9 +62,8 @@ class ExamPeriodTests : ApplicationTest() {
                 endDate = LocalDate.now(),
                 subjectExecutionIds = subjectEx.map { it.id }
             )
-        )
+        ).resolve()
 
-        val body = response.body!!
         println(body.subjectExecutions)
         assert(response.statusCode == HttpStatus.OK)
         assert(body.subjectExecutions.map { it.id } == subjectEx.map { it.id })

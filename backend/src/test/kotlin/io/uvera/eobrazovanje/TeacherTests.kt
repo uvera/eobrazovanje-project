@@ -60,7 +60,7 @@ class TeacherTests : ApplicationTest() {
 
     @Test
     fun `create teacher`() {
-        val response = restTemplate.postForEntity<TeacherResponseDTO>(
+        val (body, response) = restTemplate.postForEntity<TeacherResponseDTO>(
             "/api/teacher",
             TeacherDTO(
                 teacherType = teacherType,
@@ -69,9 +69,9 @@ class TeacherTests : ApplicationTest() {
                 email = sampleMail,
                 password = "Test123",
             )
-        )
+        ).resolve()
+
         assert(response.statusCode == HttpStatus.OK)
-        val body = response.body!!
         body.let {
             assert(it.teacherType == teacherType)
             assert(it.user.firstName == sampleName)
@@ -147,8 +147,8 @@ class TeacherTests : ApplicationTest() {
         }.forEach {
             it.save()
         }
-        val res = restTemplate.getForEntity<Page<TeacherResponseDTO>>("/api/teacher/paged?page=${1}&records=${2}")
-        val body = res.body!!
+        val (body, _) = restTemplate.getForEntity<Page<TeacherResponseDTO>>("/api/teacher/paged?page=${1}&records=${2}")
+            .resolve()
         assert(body.content.size == 2)
         assert(body.totalElements == 4L)
     }

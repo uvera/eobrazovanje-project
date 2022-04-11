@@ -8,6 +8,7 @@ import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.User
 import io.uvera.eobrazovanje.error.dto.ApiError
+import io.uvera.eobrazovanje.resolve
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.save
@@ -50,8 +51,8 @@ class AdminStudentTests : ApplicationTest() {
         }.forEach {
             it.save()
         }
-        val res = restTemplate.getForEntity<Page<StudentViewDTO>>("/api/admin/student/paged?page=${1}&records=${2}")
-        val body = res.body!!
+        val (body, _) = restTemplate.getForEntity<Page<StudentViewDTO>>("/api/admin/student/paged?page=${1}&records=${2}")
+            .resolve()
         assert(body.content.size == 2)
         assert(body.totalElements == 4L)
     }
@@ -73,8 +74,7 @@ class AdminStudentTests : ApplicationTest() {
             )
         )
         student = studentRepository.save(student)
-        val response = restTemplate.getForEntity<StudentViewDTO>("/api/admin/student/${student.id}")
-        val body = response.body!!
+        val (body, response) = restTemplate.getForEntity<StudentViewDTO>("/api/admin/student/${student.id}").resolve()
         assert(response.statusCode == HttpStatus.OK)
         assert(body.id == student.id)
         assert(body.user.email == "marko@marko.com")

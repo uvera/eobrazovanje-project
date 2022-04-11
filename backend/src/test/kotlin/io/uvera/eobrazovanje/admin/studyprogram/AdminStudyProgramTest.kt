@@ -5,6 +5,7 @@ import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.common.repository.StudyProgram
 import io.uvera.eobrazovanje.common.repository.Subject
+import io.uvera.eobrazovanje.resolve
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.reload
 import io.uvera.eobrazovanje.util.extensions.saveAll
@@ -38,16 +39,15 @@ class AdminStudyProgramTest : ApplicationTest() {
                 )
             ).saveAll()
         }
-        val response = restTemplate.postForEntity<StudyProgramViewDTO>(
+        val (body, response) = restTemplate.postForEntity<StudyProgramViewDTO>(
             "/api/admin/study-program",
             StudyProgramCreateDTO(
                 name = "Study Program 1",
                 codeName = "SF",
                 subjects = subjects.map { it.id }
             )
-        )
+        ).resolve()
 
-        val body = response.body!!
         assert(response.statusCode == HttpStatus.OK)
         assert(body.subjects.map { it.id } == subjects.map { it.id })
         assert(body.name == "Study Program 1")
@@ -81,8 +81,8 @@ class AdminStudyProgramTest : ApplicationTest() {
             it.studyProgram = studyProgram
             subjectRepository.save(it)
         }
-        val response = restTemplate.getForEntity<StudyProgramViewDTO>("/api/admin/study-program/${studyProgram.id}")
-        val body = response.body!!
+        val (body, response) = restTemplate.getForEntity<StudyProgramViewDTO>("/api/admin/study-program/${studyProgram.id}")
+            .resolve()
         assert(response.statusCode == HttpStatus.OK)
         assert(body.id == studyProgram.id)
         assert(body.subjects.size == subjects.size)

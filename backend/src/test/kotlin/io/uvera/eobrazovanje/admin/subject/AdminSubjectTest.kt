@@ -4,6 +4,7 @@ import io.uvera.eobrazovanje.ApplicationTest
 import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectCreateDTO
 import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.Subject
+import io.uvera.eobrazovanje.resolve
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.reload
 import io.uvera.eobrazovanje.util.extensions.save
@@ -28,8 +29,7 @@ class AdminSubjectTest : ApplicationTest() {
             year = 1,
         ).save()
 
-        val response = restTemplate.getForEntity<SubjectViewDTO>("/api/admin/subject/${subject.id}")
-        val body = response.body!!
+        val (body, response) = restTemplate.getForEntity<SubjectViewDTO>("/api/admin/subject/${subject.id}").resolve()
         assert(response.statusCode == HttpStatus.OK)
         assert(body.espb == 10)
         assert(body.name == "Test1")
@@ -39,16 +39,15 @@ class AdminSubjectTest : ApplicationTest() {
     @Test
     fun `test creation one subject`() {
 
-        val response = restTemplate.postForEntity<SubjectViewDTO>(
+        val (body, response) = restTemplate.postForEntity<SubjectViewDTO>(
             "/api/admin/subject",
             SubjectCreateDTO(
                 espb = 1111,
                 name = "fdsafdsafdsa",
                 year = 1
             )
-        )
+        ).resolve()
 
-        val body = response.body!!
         assert(response.statusCode == HttpStatus.OK)
         assert(body.espb == 1111)
         assert(body.name == "fdsafdsafdsa")
