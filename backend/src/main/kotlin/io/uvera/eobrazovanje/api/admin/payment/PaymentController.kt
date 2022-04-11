@@ -11,9 +11,11 @@ import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -42,14 +44,14 @@ class PaymentController(protected val service: PaymentService) {
     }
 
     @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
-    @GetMapping("/{id}")
+    @PutMapping("/{id}")
     fun updatePayment(
         @PathVariable("id") subjectId: UUID,
         @Validated @RequestBody payment: PaymentCreateDTO
     ): ResponseEntity<PaymentViewDTO> = service.updatePayment(subjectId, payment).ok
 
     @PreAuthorize("hasAnyRole('STUDENT, ADMIN')")
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     fun deletePayment(
         @PathVariable("id") paymentId: UUID) : AnyResponseEntity = service.deletePayment(paymentId).let { emptyOk }
 }
