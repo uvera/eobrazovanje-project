@@ -3,14 +3,13 @@ package io.uvera.eobrazovanje.api.admin.student
 import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
-import io.uvera.eobrazovanje.common.repository.Student
-import io.uvera.eobrazovanje.common.repository.StudentRepository
-import io.uvera.eobrazovanje.common.repository.User
+import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.common.service.DigitGenerationService
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.saveAll
+import io.uvera.eobrazovanje.util.extensions.updateEach
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
@@ -54,7 +53,7 @@ class AdminStudentService(
             lastName = it.lastName,
             email = it.email,
             password = "{noop}" + digitGenerationService.getRandomPassword(10),
-            roles = mutableListOf(RoleEnum.STUDENT)
+            role = RoleEnum.STUDENT,
         ).let { user ->
             Student(
                 transcriptNumber = it.transcriptNumber,

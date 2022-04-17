@@ -39,7 +39,7 @@ class AdminStudentTests : ApplicationTest() {
                     lastName = sampleName + it,
                     email = sampleMail + it,
                     password = "{noop}test",
-                    roles = mutableListOf(RoleEnum.STUDENT),
+                    role = RoleEnum.STUDENT,
                 ),
                 transcriptNumber = "1252950-21$it",
                 identificationNumber = "2415215$it",
@@ -70,7 +70,7 @@ class AdminStudentTests : ApplicationTest() {
                 lastName = "Markovic",
                 email = "marko@marko.com",
                 password = "{noop}test",
-                roles = mutableListOf(RoleEnum.STUDENT),
+                role = RoleEnum.STUDENT,
             )
         )
         student = studentRepository.save(student)

@@ -9,3 +9,7 @@ databaseChangeLog:
       file: db/changelog/2022/04/09-02-changelog.xml
   - include:
       file: db/changelog/2022/04/11-01-changelog.xml
+  - include:
+      file: db/changelog/2022/04/17-01-changelog.xml
+  - include:
+      file: db/changelog/2022/04/17-02-changelog.xml

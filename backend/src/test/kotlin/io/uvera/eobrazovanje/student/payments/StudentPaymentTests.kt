@@ -38,7 +38,7 @@ class StudentPaymentTests : ApplicationTest() {
             lastName = sampleName,
             email = sampleMail,
             password = "{noop}test",
-            roles = mutableListOf(RoleEnum.STUDENT),
+            role = RoleEnum.STUDENT,
         ),
     )
 

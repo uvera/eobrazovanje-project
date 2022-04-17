@@ -26,7 +26,7 @@ import java.time.LocalDate
 class TeacherTests : ApplicationTest() {
     val sampleName = "Test name"
     val sampleMail = "Sample mail"
-    val roles = mutableListOf(RoleEnum.TEACHER)
+    val role = RoleEnum.TEACHER
     val teacherType = TeacherType.PROFESSOR
 
     @BeforeEach
@@ -41,7 +41,7 @@ class TeacherTests : ApplicationTest() {
                 lastName = sampleName,
                 email = sampleMail,
                 password = "{noop}test",
-                roles = mutableListOf(RoleEnum.TEACHER),
+                role = role,
             )
         )
         save(teacher)
@@ -53,7 +53,6 @@ class TeacherTests : ApplicationTest() {
             with(user) {
                 assert(firstName == sampleName)
                 assert(lastName == sampleName)
-                assert(this.roles == this@TeacherTests.roles)
             }
         }
     }
@@ -89,7 +88,7 @@ class TeacherTests : ApplicationTest() {
                 lastName = sampleName,
                 email = sampleMail,
                 password = "{noop}test",
-                roles = mutableListOf(RoleEnum.TEACHER),
+                role = role,
             )
         )
         teacher.save()
@@ -118,7 +117,7 @@ class TeacherTests : ApplicationTest() {
                 lastName = sampleName,
                 email = sampleMail,
                 password = "{noop}test",
-                roles = mutableListOf(RoleEnum.TEACHER),
+                role = role,
             )
         )
         save(teacher)
@@ -141,7 +140,7 @@ class TeacherTests : ApplicationTest() {
                     lastName = sampleName + it,
                     email = sampleMail + it,
                     password = "{noop}test",
-                    roles = mutableListOf(RoleEnum.TEACHER),
+                    role = role,
                 )
             )
         }.forEach {

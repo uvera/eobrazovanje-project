@@ -25,7 +25,7 @@ class AuthTest : ApplicationTest() {
             lastName = "marko",
             email = "marko@gmail.com",
             password = "{noop}test",
-            roles = mutableListOf(RoleEnum.TEACHER),
+            role = RoleEnum.TEACHER,
         ).save()
 
         val (body, res) = restTemplate.postForEntity<TokenResponseDTO>(
@@ -52,13 +52,13 @@ class AuthTest : ApplicationTest() {
 
     @Test
     fun `test whoAmI`() = userRepository {
-        val newRestTemplate = restTemplateWithUser("marko@gmail.com", listOf(RoleEnum.TEACHER))
+        val newRestTemplate = restTemplateWithUser("marko@gmail.com", RoleEnum.TEACHER)
         val (getBody, getRes) = newRestTemplate.getForEntity<WhoAmIDTO>(
             "/api/auth/whoami"
         ).resolve()
         println(getBody)
         assert(getRes.statusCode == HttpStatus.OK)
         assert(getBody.email == "marko@gmail.com")
-        assert(getBody.roles.sorted() == listOf(RoleEnum.TEACHER).map { it.toString() })
+        assert(getBody.role == RoleEnum.TEACHER.toString())
     }
 }

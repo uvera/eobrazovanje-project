@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.api.admin.teacher
 
 import io.uvera.eobrazovanje.api.admin.teacher.dto.*
 import io.uvera.eobrazovanje.common.repository.*
+import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -66,6 +67,6 @@ fun teacherDTOToEntity(dto: TeacherDTO): Teacher {
     return Teacher(
         teachingSince = LocalDate.now(),
         teacherType = dto.teacherType,
-        user = User(dto.firstName, dto.lastName, dto.email, dto.password, true)
+        user = User(dto.firstName, dto.lastName, dto.email, dto.password, true, RoleEnum.TEACHER)
     )
 }

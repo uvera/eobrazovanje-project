@@ -94,10 +94,10 @@ abstract class ApplicationTest {
     @PostConstruct
     @Transactional
     fun initRestTemplate() {
-        restTemplate = restTemplateWithUser("admin@mail.com", listOf(RoleEnum.ADMIN))
+        restTemplate = restTemplateWithUser("admin@mail.com", RoleEnum.ADMIN)
     }
 
-    fun restTemplateWithUser(email: String, roles: List<RoleEnum>): TestRestTemplate {
+    fun restTemplateWithUser(email: String, role: RoleEnum): TestRestTemplate {
         val token: String = run {
             val user = userRepository.findByEmail(email) ?: userRepository.save(
                 User(
@@ -105,7 +105,7 @@ abstract class ApplicationTest {
                     lastName = "sample",
                     email = email,
                     password = "{noop}password",
-                    roles = roles.toMutableList(),
+                    role = role,
                 )
             )
             jwtAccessService.generateToken(CustomUserDetails(user))
