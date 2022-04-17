@@ -61,6 +61,7 @@ const routes: Routes = [
     canLoad: [PublicGuard],
     canActivateChild: [PublicGuard],
   },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   {
     path: '404',
