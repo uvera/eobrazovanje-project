@@ -21,6 +21,7 @@ import { TeacherGuard } from './common/guard/teacher-guard.guard';
 import { AuthInterceptor } from './common/http/auth-interceptor';
 import { SessionService } from './common/service/session.service';
 import { ApiService } from './common/service/api.service';
+import { LogoutComponent } from './common/components/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,13 @@ const routes: Routes = [
     canActivate: [PublicGuard],
     canLoad: [PublicGuard],
     canActivateChild: [PublicGuard],
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    canActivate: [PrivateGuard],
+    canLoad: [PrivateGuard],
+    canActivateChild: [PrivateGuard],
   },
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },

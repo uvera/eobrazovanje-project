@@ -12,9 +12,10 @@ import { ApiService } from './service/api.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CurrentUserService } from './service/current-user.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
-  declarations: [DashboardComponent, LoginComponent, NotFoundComponent],
+  declarations: [DashboardComponent, LoginComponent, NotFoundComponent, LogoutComponent],
   providers: [ApiService, CurrentUserService],
   imports: [
     FlexLayoutModule,
