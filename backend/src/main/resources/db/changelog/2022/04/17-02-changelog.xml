@@ -7,7 +7,7 @@
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1650197503396-1" author="dusan (generated)">
         <addColumn tableName="app_user">
-            <column name="role" type="VARCHAR"/>
+            <column name="role" type="INT"/>
         </addColumn>
     </changeSet>
     <changeSet id="1650197503396-2" author="dusan (generated)">
