@@ -1,7 +1,10 @@
-FROM node:lts
+FROM node:lts as installcache
 WORKDIR /app
 ADD package.json package.json
 RUN npm install
-ADD . /app
-ENTRYPOINT ["npm", "start"]
+FROM node:lts
+WORKDIR /app
+COPY --from=installcache /app ./
+ADD . . 
+ENTRYPOINT ["npm", "start", "--host 0.0.0.0"]
 
