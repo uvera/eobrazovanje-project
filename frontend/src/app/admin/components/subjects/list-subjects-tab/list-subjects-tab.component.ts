@@ -4,6 +4,8 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ListSubjectsTabService } from './list-subjects-tab.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditSubjectDialogComponent } from '../edit-subject-dialog/edit-subject-dialog.component';
+import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-subjects-tab',
@@ -18,6 +20,7 @@ export class ListSubjectsTabComponent implements OnInit {
 
   constructor(
     private service: ListSubjectsTabService,
+    private snack: MatSnackBar,
     private dialog: MatDialog
   ) {}
 
@@ -53,6 +56,10 @@ export class ListSubjectsTabComponent implements OnInit {
       });
   }
 
+  reloadFromApi() {
+    this.fetchFromApi(this.pageIndex.value, this.pageSize.value);
+  }
+
   queryParamsChange(event: NzTableQueryParams) {
     this.pageSize.next(event.pageSize);
     this.pageIndex.next(event.pageIndex);
@@ -69,7 +76,37 @@ export class ListSubjectsTabComponent implements OnInit {
       .subscribe({
         next: (value) => {
           if (value === 'success') {
-            this.fetchFromApi(this.pageIndex.value, this.pageSize.value);
+            this.reloadFromApi();
+          }
+        },
+      });
+  }
+
+  deleteSubject(id: string) {
+    this.dialog
+      .open(AreYouSureDialogComponent, {
+        data: {
+          dialogTitle: 'Are you sure you want to delete subject?',
+          yesButtonText: 'Delete',
+        },
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe({
+        next: (value) => {
+          if (value === 'yes') {
+            this.service
+              .deleteSubjectById(id)
+              .pipe(first())
+              .subscribe({
+                next: (_) => {
+                  this.snack.open('Successfully deleted subject');
+                  this.reloadFromApi();
+                },
+                error: () => {
+                  this.snack.open('Error while deleting subject');
+                },
+              });
           }
         },
       });

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<mat-dialog-actions>
+  <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%">
+    <div mat-dialog-actions>
+      <button mat-raised-button color="secondary" type="button" (click)="dialogRef.close('no')">{{noButtonText}}</button>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" type="submit" (click)="dialogRef.close('yes')">{{yesButtonText}}</button>
+    </div>
+  </div>
+</mat-dialog-actions>

@@ -20,6 +20,7 @@
       <th>ESPB</th>
       <th>Year</th>
       <th>Edit</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +31,9 @@
       <td>{{i.year}}</td>
       <td>
         <button (click)="editSubject(i.id)" mat-raised-button color="primary" type="button">Edit</button>
+      </td>
+      <td>
+        <button (click)="deleteSubject(i.id)" mat-raised-button color="secondary" type="button">Delete</button>
       </td>
     </tr>
     </tbody>

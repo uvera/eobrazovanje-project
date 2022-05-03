@@ -15,4 +15,8 @@ export class ListSubjectsTabService {
       .set('records', pageSize);
     return this.api.get<PageEntity>('/api/admin/subject', params);
   }
+
+  deleteSubjectById(id: string) {
+    return this.api.delete(`/api/admin/subject/${id}`);
+  }
 }

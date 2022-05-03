@@ -13,9 +13,17 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CurrentUserService } from './service/current-user.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LogoutComponent } from './components/logout/logout.component';
+import { AreYouSureDialogComponent } from './components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [DashboardComponent, LoginComponent, NotFoundComponent, LogoutComponent],
+  declarations: [
+    DashboardComponent,
+    LoginComponent,
+    NotFoundComponent,
+    LogoutComponent,
+    AreYouSureDialogComponent,
+  ],
   providers: [ApiService, CurrentUserService],
   imports: [
     FlexLayoutModule,
@@ -26,6 +34,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     ReactiveFormsModule,
     CommonModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
 })
 export class AppCommonModule {}
