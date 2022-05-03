@@ -16,20 +16,18 @@ import java.util.*
 @Tag(description = "Endpoints for subjects.", name = "subject")
 //endregion
 @RequestMapping("/api/admin/subject")
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 class SubjectController(protected val service: SubjectService) {
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     fun createSubject(@Validated @RequestBody subjectDTO: SubjectCreateDTO): ResponseEntity<SubjectViewDTO> =
         service.createSubject(subjectDTO).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     fun getSubject(@PathVariable("id") subjectId: UUID): ResponseEntity<SubjectViewDTO> =
         service.getSubject(subjectId).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     fun updateSubject(
         @PathVariable("id") subjectId: UUID,
@@ -37,9 +35,14 @@ class SubjectController(protected val service: SubjectService) {
     ): ResponseEntity<SubjectViewDTO> =
         service.updateSubject(subjectId, subjectDTO).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     fun deleteSubject(
         @PathVariable("id") subjectId: UUID
     ): AnyResponseEntity = service.deleteSubject(subjectId).let { emptyOk }
+
+    @GetMapping
+    fun getAllSubjects(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+    ) = service.getAllSubjectsPaged(page, records).ok
 }

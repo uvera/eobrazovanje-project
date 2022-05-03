@@ -1,1 +1,13 @@
-<p>admin-dashboard works!</p>
+<mat-drawer-container class="sidenav">
+  <mat-drawer mode="side" opened class="sidenav-drawer">
+    <div>
+      <a mat-button [routerLink]="'subjects'" [routerLinkActive]="'is-active'">Subjects</a>
+    </div>
+    <div>
+      <a mat-button [routerLink]="'study-programs'" [routerLinkActive]="'is-active'">Study programs</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="sidenav-content">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

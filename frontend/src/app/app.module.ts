@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppCommonModule } from './common/app-common.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './common/components/dashboard/dashboard.component';
 import { PrivateGuard } from './common/guard/private-guard.guard';
@@ -22,6 +22,11 @@ import { AuthInterceptor } from './common/http/auth-interceptor';
 import { SessionService } from './common/service/session.service';
 import { ApiService } from './common/service/api.service';
 import { LogoutComponent } from './common/components/logout/logout.component';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import en from '@angular/common/locales/en';
+
+registerLocaleData(en);
 
 const routes: Routes = [
   {
@@ -107,6 +112,7 @@ const routes: Routes = [
         return new AuthInterceptor(router, session, api);
       },
     },
+    { provide: NZ_I18N, useValue: en_US },
   ],
   bootstrap: [AppComponent],
 })

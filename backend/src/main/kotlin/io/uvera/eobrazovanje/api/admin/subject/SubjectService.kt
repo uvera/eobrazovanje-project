@@ -8,6 +8,7 @@ import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.extensions.update
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -49,5 +50,10 @@ class SubjectService(
             espb = dto.espb,
             year = dto.year
         )
+    }
+
+    fun getAllSubjectsPaged(page: Int, records: Int): Any = repo {
+        val req = PageRequest.of(page - 1, records)
+        return@repo findAllAsDto(req)
     }
 }
