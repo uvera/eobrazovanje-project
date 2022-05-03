@@ -1,13 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-  <div fxLayout="column" fxLayoutAlign="flex-start flex-start">
-    <mat-form-field appearance="standard">
+  <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+    <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Name</mat-label>
       <input matInput inputmode="text" type="text" formControlName="name">
       <mat-error *ngIf="!!(form.get('name'))?.errors?.['required']">
         Name is required
       </mat-error>
     </mat-form-field>
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>ESPB</mat-label>
       <input matInput inputmode="number" type="number" formControlName="espb">
       <mat-error *ngIf="!!(form.get('espb'))?.errors?.['required']">
@@ -17,7 +17,7 @@
         Only whole numbers allowed
       </mat-error>
     </mat-form-field>
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Year</mat-label>
       <input matInput inputmode="number" type="number" formControlName="year">
       <mat-error *ngIf="!!(form.get('year'))?.errors?.['required']">
@@ -27,7 +27,7 @@
         Only whole numbers allowed
       </mat-error>
     </mat-form-field>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions fxFlexAlign="flex-end">
       <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
     </div>
   </div>
