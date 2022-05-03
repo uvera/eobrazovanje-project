@@ -10,6 +10,11 @@ import { ListSubjectsTabComponent } from './components/subjects/list-subjects-ta
 import { MatTabsModule } from '@angular/material/tabs';
 import { CreateSubjectTabComponent } from './components/subjects/create-subject-tab/create-subject-tab.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -68,6 +73,11 @@ const routes: Routes = [
     MatButtonModule,
     MatTabsModule,
     NzTableModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FlexLayoutModule,
+    MatDialogModule,
   ],
 })
 export class AdminModule {}

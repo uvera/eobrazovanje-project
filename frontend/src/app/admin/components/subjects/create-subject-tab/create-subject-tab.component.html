@@ -1,1 +1,34 @@
-<p>create-subject-tab works!</p>
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+  <div fxLayout="column" fxLayoutAlign="flex-start flex-start">
+    <mat-form-field appearance="standard">
+      <mat-label>Name</mat-label>
+      <input matInput inputmode="text" type="text" formControlName="name">
+      <mat-error *ngIf="!!(form.get('name'))?.errors?.['required']">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>ESPB</mat-label>
+      <input matInput inputmode="number" type="number" formControlName="espb">
+      <mat-error *ngIf="!!(form.get('espb'))?.errors?.['required']">
+        ESPB is required
+      </mat-error>
+      <mat-error *ngIf="!!(form.get('espb'))?.errors?.['pattern']">
+        Only whole numbers allowed
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Year</mat-label>
+      <input matInput inputmode="number" type="number" formControlName="year">
+      <mat-error *ngIf="!!(form.get('year'))?.errors?.['required']">
+        Year is required
+      </mat-error>
+      <mat-error *ngIf="!!(form.get('year'))?.errors?.['pattern']">
+        Only whole numbers allowed
+      </mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </div>
+  </div>
+</form>
