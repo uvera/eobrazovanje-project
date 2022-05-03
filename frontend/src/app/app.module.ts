@@ -7,7 +7,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppCommonModule } from './common/app-common.module';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarModule,
+} from '@angular/material/snack-bar';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './common/components/dashboard/dashboard.component';
@@ -100,6 +103,7 @@ const routes: Routes = [
     MatSnackBarModule,
   ],
   providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000 } },
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
