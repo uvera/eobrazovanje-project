@@ -7,12 +7,12 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ListSubjectsTabService {
+  constructor(private readonly api: ApiService) {}
+
   fetchPaged(pageIndex: number, pageSize: number) {
     const params = new HttpParams()
       .set('page', pageIndex)
       .set('records', pageSize);
     return this.api.get<PageEntity>('/api/admin/subject', params);
   }
-
-  constructor(private readonly api: ApiService) {}
 }

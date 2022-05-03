@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ListSubjectsTabService } from './list-subjects-tab.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditSubjectDialogComponent } from '../edit-subject-dialog/edit-subject-dialog.component';
 
 @Component({
   selector: 'app-list-subjects-tab',
@@ -14,7 +16,10 @@ export class ListSubjectsTabComponent implements OnInit {
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<SubjectViewDTO[]>([]);
 
-  constructor(private service: ListSubjectsTabService) {}
+  constructor(
+    private service: ListSubjectsTabService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.pageNumberAndSizeCombined$.subscribe((value) => {
@@ -51,6 +56,23 @@ export class ListSubjectsTabComponent implements OnInit {
   queryParamsChange(event: NzTableQueryParams) {
     this.pageSize.next(event.pageSize);
     this.pageIndex.next(event.pageIndex);
+  }
+
+  editSubject(id: string) {
+    this.dialog
+      .open(EditSubjectDialogComponent, {
+        data: {
+          id: id,
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (value) => {
+          if (value === 'success') {
+            this.fetchFromApi(this.pageIndex.value, this.pageSize.value);
+          }
+        },
+      });
   }
 }
 

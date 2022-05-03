@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EditSubjectDialogComponent } from './components/subjects/edit-subject-dialog/edit-subject-dialog.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,7 @@ const routes: Routes = [
     StudyProgramsComponent,
     ListSubjectsTabComponent,
     CreateSubjectTabComponent,
+    EditSubjectDialogComponent,
   ],
   imports: [
     CommonModule,

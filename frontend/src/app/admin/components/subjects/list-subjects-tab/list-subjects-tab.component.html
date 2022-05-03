@@ -19,6 +19,7 @@
       <th>Name</th>
       <th>ESPB</th>
       <th>Year</th>
+      <th>Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +28,9 @@
       <td>{{i.name}}</td>
       <td>{{i.espb}}</td>
       <td>{{i.year}}</td>
+      <td>
+        <button (click)="editSubject(i.id)" mat-raised-button color="primary" type="button">Edit</button>
+      </td>
     </tr>
     </tbody>
   </nz-table>
