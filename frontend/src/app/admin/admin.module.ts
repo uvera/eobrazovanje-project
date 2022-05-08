@@ -16,12 +16,25 @@ import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditSubjectDialogComponent } from './components/subjects/edit-subject-dialog/edit-subject-dialog.component';
+import { StudentsComponent } from './components/students/students.component';
+import { ListStudentsTabComponent } from './components/students/list-students-tab/list-students-tab.component';
+import { CreateStudentTabComponent } from './components/students/create-student-tab/create-student-tab.component';
+import { EditStudentDialogComponent } from './components/students/edit-student-dialog/edit-student-dialog.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: AdminDashboardComponent,
     children: [
+      {
+        path: 'students',
+        component: StudentsComponent,
+        children: [
+          { path: 'list-students-tab', component: ListStudentsTabComponent },
+          { path: 'create-student-tab', component: CreateStudentTabComponent },
+          { path: '', pathMatch: 'full', redirectTo: 'list-students-tab' },
+        ],
+      },
       {
         path: 'subjects',
         component: SubjectsComponent,
@@ -67,6 +80,10 @@ const routes: Routes = [
     ListSubjectsTabComponent,
     CreateSubjectTabComponent,
     EditSubjectDialogComponent,
+    StudentsComponent,
+    ListStudentsTabComponent,
+    CreateStudentTabComponent,
+    EditStudentDialogComponent,
   ],
   imports: [
     CommonModule,

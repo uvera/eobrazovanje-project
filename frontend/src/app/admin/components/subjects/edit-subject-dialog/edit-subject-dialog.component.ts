@@ -12,7 +12,6 @@ import { of } from 'rxjs';
   styleUrls: ['./edit-subject-dialog.component.scss'],
 })
 export class EditSubjectDialogComponent implements OnInit {
-  subjectData!: EditSubjectData;
   form!: FormGroup;
 
   constructor(

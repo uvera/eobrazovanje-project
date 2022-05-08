@@ -9,6 +9,7 @@ import java.util.*
 interface StudentViewDTO {
     val id: UUID
     val transcriptNumber: String
+    val identificationNumber: String
     val user: StudentUserViewDTO
 
     @EntityView(User::class)

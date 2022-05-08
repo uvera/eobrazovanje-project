@@ -1,6 +1,7 @@
 package io.uvera.eobrazovanje.error.exception
 
 import io.uvera.eobrazovanje.error.dto.ApiError
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -37,5 +38,12 @@ class ExceptionHandlers {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun methodArgumentNotValidException(ex: MethodArgumentNotValidException, req: HttpServletRequest) =
-        ResponseEntity<ApiError>(ApiError.fromMethodArgsNotValidException(ex, req, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST)
+        ResponseEntity<ApiError>(
+            ApiError.fromMethodArgsNotValidException(ex, req, HttpStatus.BAD_REQUEST),
+            HttpStatus.BAD_REQUEST
+        )
+
+    @ExceptionHandler(DataIntegrityViolationException::class)
+    fun dataIntegrityViolationException(ex: DataIntegrityViolationException, req: HttpServletRequest) =
+        exceptionEntity(ex, req, HttpStatus.INTERNAL_SERVER_ERROR)
 }
