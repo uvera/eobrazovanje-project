@@ -65,6 +65,7 @@ class StudyProgramService(
         )
     }
 
+    @Transactional
     fun getAllStudyProgramsPaged(page: Int, records: Int): Any = repo {
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)

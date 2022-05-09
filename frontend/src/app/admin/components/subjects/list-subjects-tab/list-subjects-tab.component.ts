@@ -113,7 +113,7 @@ export class ListSubjectsTabComponent implements OnInit {
   }
 }
 
-interface SubjectViewDTO {
+export interface SubjectViewDTO {
   id: string;
   espb: number;
   name: string;

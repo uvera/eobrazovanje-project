@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.api.admin.studyprogram.dto
 
 import com.blazebit.persistence.view.CollectionMapping
 import com.blazebit.persistence.view.EntityView
+import com.blazebit.persistence.view.Mapping
 import io.uvera.eobrazovanje.common.repository.StudyProgram
 import io.uvera.eobrazovanje.common.repository.Subject
 import java.util.*

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -20,6 +21,8 @@ import { StudentsComponent } from './components/students/students.component';
 import { ListStudentsTabComponent } from './components/students/list-students-tab/list-students-tab.component';
 import { CreateStudentTabComponent } from './components/students/create-student-tab/create-student-tab.component';
 import { EditStudentDialogComponent } from './components/students/edit-student-dialog/edit-student-dialog.component';
+import { CreateStudyProgramTabComponent } from './components/study-programs/create-study-program-tab/create-study-program-tab.component';
+import { ListStudyProgramsTabComponent } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
 
 const routes: Routes = [
   {
@@ -57,6 +60,16 @@ const routes: Routes = [
       {
         path: 'study-programs',
         component: StudyProgramsComponent,
+        children: [
+          {
+            path: 'create-study-program-tab',
+            component: CreateStudyProgramTabComponent,
+          },
+          {
+            path: 'list-study-programs-tab',
+            component: ListStudyProgramsTabComponent,
+          },
+        ]
       },
       {
         path: '',
@@ -84,6 +97,8 @@ const routes: Routes = [
     ListStudentsTabComponent,
     CreateStudentTabComponent,
     EditStudentDialogComponent,
+    CreateStudyProgramTabComponent,
+    ListStudyProgramsTabComponent,
   ],
   imports: [
     CommonModule,
@@ -97,6 +112,7 @@ const routes: Routes = [
     MatInputModule,
     FlexLayoutModule,
     MatDialogModule,
+    MatSelectModule
   ],
 })
 export class AdminModule {}

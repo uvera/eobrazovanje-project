@@ -40,7 +40,7 @@ class StudyProgramController(protected val service: StudyProgramService) {
         @PathVariable("id") studyProgramId: UUID
     ): AnyResponseEntity = service.deleteStudyProgram(studyProgramId).let { emptyOk }
 
-    @GetMapping
+    @GetMapping("/paged")
     fun getAllStudyPrograms(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,

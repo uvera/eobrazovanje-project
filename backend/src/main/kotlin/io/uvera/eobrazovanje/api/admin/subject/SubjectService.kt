@@ -56,4 +56,8 @@ class SubjectService(
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)
     }
+
+    fun getAllSubjectsWithoutStudyPrograms(): Any = repo {
+        return@repo findAllWhereStudyProgramIsNullAsDto()
+    }
 }

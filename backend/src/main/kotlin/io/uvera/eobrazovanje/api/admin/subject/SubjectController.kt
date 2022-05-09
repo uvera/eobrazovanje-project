@@ -45,4 +45,7 @@ class SubjectController(protected val service: SubjectService) {
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
     ) = service.getAllSubjectsPaged(page, records).ok
+
+    @GetMapping("/available")
+    fun getAllSubjectsWithoutStudyPrograms() = service.getAllSubjectsWithoutStudyPrograms().ok
 }
