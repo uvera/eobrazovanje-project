@@ -6,6 +6,7 @@ import io.uvera.eobrazovanje.common.repository.StudyProgram
 import io.uvera.eobrazovanje.common.repository.StudyProgramRepository
 import io.uvera.eobrazovanje.common.repository.SubjectRepository
 import io.uvera.eobrazovanje.util.extensions.*
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -62,5 +63,10 @@ class StudyProgramService(
             codeName = dto.codeName,
             name = dto.name
         )
+    }
+
+    fun getAllStudyProgramsPaged(page: Int, records: Int): Any = repo {
+        val req = PageRequest.of(page - 1, records)
+        return@repo findAllAsDto(req)
     }
 }

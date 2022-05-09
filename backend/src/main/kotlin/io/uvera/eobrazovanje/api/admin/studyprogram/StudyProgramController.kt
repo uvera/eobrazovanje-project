@@ -17,19 +17,17 @@ import java.util.*
 //endregion
 @RequestMapping("/api/admin/study-program")
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 class StudyProgramController(protected val service: StudyProgramService) {
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    fun createStudyProgram(@Validated @RequestBody studyProgram: StudyProgramCreateDTO): ResponseEntity<StudyProgramViewDTO> =
-        service.createStudyProgram(studyProgram).ok
-
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     fun getStudyProgram(@PathVariable("id") studyProgramId: UUID): ResponseEntity<StudyProgramViewDTO> =
         service.getStudyProgram(studyProgramId).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    fun createStudyProgram(@Validated @RequestBody studyProgram: StudyProgramCreateDTO): ResponseEntity<StudyProgramViewDTO> =
+        service.createStudyProgram(studyProgram).ok
+
     @PutMapping("/{id}")
     fun updateStudyProgram(
         @PathVariable("id") studyProgramId: UUID,
@@ -37,9 +35,14 @@ class StudyProgramController(protected val service: StudyProgramService) {
     ): ResponseEntity<StudyProgramViewDTO> =
         service.updateStudyProgram(studyProgramId, studyProgram).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     fun deleteStudyProgram(
         @PathVariable("id") studyProgramId: UUID
     ): AnyResponseEntity = service.deleteStudyProgram(studyProgramId).let { emptyOk }
+
+    @GetMapping
+    fun getAllStudyPrograms(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+    ) = service.getAllStudyProgramsPaged(page, records).ok
 }

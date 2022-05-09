@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -33,4 +34,7 @@ class StudyProgram(
 interface StudyProgramRepository : JpaSpecificationRepository<StudyProgram, UUID> {
     @Query("select t from StudyProgram t left join fetch t.subjects where t.id = :id")
     fun findByIdAsDto(id: UUID): StudyProgramViewDTO?
+    @Query("select t from StudyProgram t left join fetch t.subjects where t.id = :id")
+    fun findAllAsDto(page: Pageable): List<StudyProgramViewDTO>
+
 }
