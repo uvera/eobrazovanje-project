@@ -4,13 +4,17 @@ import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Slice
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 import javax.persistence.*
 
 @Entity
+@NamedEntityGraph(
+    name = "StudyProgram.subjects",
+    attributeNodes = [NamedAttributeNode("subjects")]
+)
 @Table(name = "study_program")
 class StudyProgram(
     @Column(name = "code_name", nullable = false, unique = true)
@@ -33,9 +37,14 @@ class StudyProgram(
 ) : BaseEntity()
 
 @Repository
+@Transactional(readOnly = true)
 interface StudyProgramRepository : JpaSpecificationRepository<StudyProgram, UUID> {
     @Query("select t from StudyProgram t left join fetch t.subjects where t.id = :id")
     fun findByIdAsDto(id: UUID): StudyProgramViewDTO?
-    @Query("select t from StudyProgram t left join fetch Subject s")
+
+    @org.springframework.data.jpa.repository.EntityGraph("StudyProgram.subjects")
+    @Query(
+        "select t from StudyProgram t",
+    )
     fun findAllAsDto(page: Pageable): Page<StudyProgramViewDTO>
 }
