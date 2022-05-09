@@ -4,6 +4,7 @@ import com.blazebit.persistence.Criteria
 import com.blazebit.persistence.CriteriaBuilderFactory
 import com.blazebit.persistence.integration.view.spring.EnableEntityViews
 import com.blazebit.persistence.spi.CriteriaBuilderConfiguration
+import com.blazebit.persistence.spring.data.impl.repository.BlazePersistenceRepositoryFactoryBean
 import com.blazebit.persistence.view.EntityViewManager
 import com.blazebit.persistence.view.impl.EntityViewConfigurationImpl
 import com.blazebit.persistence.view.spi.EntityViewConfiguration
@@ -14,6 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Scope
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 import javax.persistence.EntityManagerFactory
@@ -23,6 +25,7 @@ import javax.persistence.PersistenceUnit
 @EnableAsync
 @EnableScheduling
 @EnableEntityViews(basePackages = ["io.uvera.eobrazovanje"])
+@EnableJpaRepositories(repositoryFactoryBeanClass = BlazePersistenceRepositoryFactoryBean::class)
 @ConfigurationPropertiesScan(basePackageClasses = [ConfigurationPropertiesMarker::class])
 class KotlinSpringBootApp {
 

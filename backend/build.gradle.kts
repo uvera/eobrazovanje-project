@@ -66,6 +66,7 @@ dependencies {
     // region blaze
     implementation("com.blazebit:blaze-persistence-integration-entity-view-spring:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-integration-spring-data-base:$blazeVersion")
+    implementation("com.blazebit:blaze-persistence-integration-spring-data-2.4:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-entity-view-impl:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-entity-view-api:$blazeVersion")
     implementation("com.blazebit:blaze-persistence-jpa-criteria-api:$blazeVersion")
