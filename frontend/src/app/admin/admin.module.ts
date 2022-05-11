@@ -22,7 +22,7 @@ import { ListStudentsTabComponent } from './components/students/list-students-ta
 import { CreateStudentTabComponent } from './components/students/create-student-tab/create-student-tab.component';
 import { EditStudentDialogComponent } from './components/students/edit-student-dialog/edit-student-dialog.component';
 import { CreateStudyProgramTabComponent } from './components/study-programs/create-study-program-tab/create-study-program-tab.component';
-import { ListStudyProgramsTabComponent } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
+import { ListStudyProgramsTabComponent, SubjectsNamePipe } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
 import { EditStudyProgramDialogComponent } from './components/study-programs/edit-study-program-dialog/edit-study-program-dialog.component';
 
 const routes: Routes = [
@@ -106,6 +106,7 @@ const routes: Routes = [
     CreateStudyProgramTabComponent,
     ListStudyProgramsTabComponent,
     EditStudyProgramDialogComponent,
+    SubjectsNamePipe
   ],
   imports: [
     CommonModule,
