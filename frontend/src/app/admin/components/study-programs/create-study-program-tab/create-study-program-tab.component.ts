@@ -29,7 +29,7 @@ export class CreateStudyProgramTabComponent implements OnInit {
     this.form = this.fb.group({
       name: [null, [Validators.required]],
       codeName: [null, [Validators.required]],
-      subjects: [null],
+      subjects: [null, [Validators.required]],
     });
   }
 

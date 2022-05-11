@@ -35,6 +35,15 @@ class StudyProgramService(
     @Transactional
     fun updateStudyProgram(id: UUID, dto: StudyProgramCreateDTO): StudyProgramViewDTO = repo {
         val dbStudy = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
+        subjectRepo {
+            dbStudy.subjects.filter {
+                !dto.subjects.contains(it.id)
+            }.forEach { subject ->
+                subject.studyProgram = null
+                subject.save()
+            }
+        }
+
         dbStudy.update {
             name = dto.name
             codeName = dto.codeName
@@ -45,6 +54,7 @@ class StudyProgramService(
                 }
             }
         }
+
         return@repo findByIdAsDto(id) ?: notFoundById<StudyProgram>(id)
     }
 

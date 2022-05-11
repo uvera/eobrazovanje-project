@@ -23,6 +23,7 @@ import { CreateStudentTabComponent } from './components/students/create-student-
 import { EditStudentDialogComponent } from './components/students/edit-student-dialog/edit-student-dialog.component';
 import { CreateStudyProgramTabComponent } from './components/study-programs/create-study-program-tab/create-study-program-tab.component';
 import { ListStudyProgramsTabComponent } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
+import { EditStudyProgramDialogComponent } from './components/study-programs/edit-study-program-dialog/edit-study-program-dialog.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,11 @@ const routes: Routes = [
             path: 'list-study-programs-tab',
             component: ListStudyProgramsTabComponent,
           },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-study-programs-tab',
+          },
         ]
       },
       {
@@ -99,6 +105,7 @@ const routes: Routes = [
     EditStudentDialogComponent,
     CreateStudyProgramTabComponent,
     ListStudyProgramsTabComponent,
+    EditStudyProgramDialogComponent,
   ],
   imports: [
     CommonModule,

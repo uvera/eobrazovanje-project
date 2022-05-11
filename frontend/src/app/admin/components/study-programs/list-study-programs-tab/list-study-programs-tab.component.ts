@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
+import { AreYouSureDialogComponent } from 'src/app/common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { EditStudyProgramDialogComponent } from '../edit-study-program-dialog/edit-study-program-dialog.component';
 import { ListStudyProgramsTabService } from './list-study-programs-tab.service';
 
 @Component({
@@ -63,52 +65,52 @@ export class ListStudyProgramsTabComponent implements OnInit {
     this.pageIndex.next(event.pageIndex);
   }
 
-  // editStudent(id: string) {
-  //   this.dialog
-  //     .open(EditStudentDialogComponent, {
-  //       data: {
-  //         id: id,
-  //       },
-  //     })
-  //     .afterClosed()
-  //     .subscribe({
-  //       next: (value) => {
-  //         if (value === 'success') {
-  //           this.reloadFromApi();
-  //         }
-  //       },
-  //     });
-  // }
+  editStudyProgram(id: string) {
+    this.dialog
+      .open(EditStudyProgramDialogComponent, {
+        data: {
+          id: id,
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (value) => {
+          if (value === 'success') {
+            this.reloadFromApi();
+          }
+        },
+      });
+  }
 
-//   deleteStudent(id: string) {
-//     this.dialog
-//       .open(AreYouSureDialogComponent, {
-//         data: {
-//           dialogTitle: 'Are you sure you want to delete student?',
-//           yesButtonText: 'Delete',
-//         },
-//       })
-//       .afterClosed()
-//       .pipe(first())
-//       .subscribe({
-//         next: (value) => {
-//           if (value === 'yes') {
-//             this.service
-//               .deleteStudentById(id)
-//               .pipe(first())
-//               .subscribe({
-//                 next: (_) => {
-//                   this.snack.open('Successfully deleted student');
-//                   this.reloadFromApi();
-//                 },
-//                 error: () => {
-//                   this.snack.open('Error while deleting student');
-//                 },
-//               });
-//           }
-//         },
-//       });
-//   }
+  deleteStudyProgram(id: string) {
+    this.dialog
+      .open(AreYouSureDialogComponent, {
+        data: {
+          dialogTitle: 'Are you sure you want to delete this study program?',
+          yesButtonText: 'Delete',
+        },
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe({
+        next: (value) => {
+          if (value === 'yes') {
+            this.service
+              .deleteStudyProgramById(id)
+              .pipe(first())
+              .subscribe({
+                next: (_) => {
+                  this.snack.open('Successfully deleted study program');
+                  this.reloadFromApi();
+                },
+                error: () => {
+                  this.snack.open('Error while deleting study program');
+                },
+              });
+          }
+        },
+      });
+  }
   }
 
 export interface StudyProgramsViewDTO {
