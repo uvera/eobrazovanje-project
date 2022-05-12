@@ -24,6 +24,10 @@ import { EditStudentDialogComponent } from './components/students/edit-student-d
 import { CreateStudyProgramTabComponent } from './components/study-programs/create-study-program-tab/create-study-program-tab.component';
 import { ListStudyProgramsTabComponent, SubjectsNamePipe } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
 import { EditStudyProgramDialogComponent } from './components/study-programs/edit-study-program-dialog/edit-study-program-dialog.component';
+import { PreExamActivitiesComponent } from './components/pre-exam-activities/pre-exam-activities.component';
+import { ListPreExamActivitiesComponent } from './components/pre-exam-activities/list-pre-exam-activities/list-pre-exam-activities.component';
+import { CreatePreExamActivityComponent } from './components/pre-exam-activities/create-pre-exam-activity/create-pre-exam-activity.component';
+import { EditPreExamActivityComponent } from './components/pre-exam-activities/edit-pre-exam-activity/edit-pre-exam-activity.component';
 
 const routes: Routes = [
   {
@@ -78,6 +82,25 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'pre-exam-activities',
+        component: PreExamActivitiesComponent,
+        children: [
+          {
+            path: 'create-pre-exam-activity',
+            component: CreatePreExamActivityComponent,
+          },
+          {
+            path: 'list-pre-exam-activities',
+            component: ListPreExamActivitiesComponent,
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-pre-exam-activities',
+          },
+        ]
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'subjects',
@@ -106,7 +129,11 @@ const routes: Routes = [
     CreateStudyProgramTabComponent,
     ListStudyProgramsTabComponent,
     EditStudyProgramDialogComponent,
-    SubjectsNamePipe
+    SubjectsNamePipe,
+    PreExamActivitiesComponent,
+    ListPreExamActivitiesComponent,
+    CreatePreExamActivityComponent,
+    EditPreExamActivityComponent
   ],
   imports: [
     CommonModule,
