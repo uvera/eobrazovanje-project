@@ -1,10 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
     <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+
       <mat-form-field appearance="standard" fxFlexFill>
-        <mat-label>Teacher Type</mat-label>
-        <input matInput inputmode="text" type="text" formControlName="teacherType">
+        <mat-label>Select teacher type</mat-label>
+        <mat-select formControlName="teacherType">
+          <mat-option *ngFor="let teacherType of teacherTypes" [value]="teacherType">
+           {{ teacherType }}
+          </mat-option>
+        </mat-select>
         <mat-error *ngIf="!!(form.get('teacherType'))?.errors?.['required']">
-          Teacher Type is required
+          Teacher type is required
         </mat-error>
       </mat-form-field>
   
@@ -32,6 +37,14 @@
         </mat-error>
         <mat-error *ngIf="!!(form.get('email'))?.errors?.['email']">
           Invalid email format
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="!!(form.get('password'))?.errors?.['required']">
+          Password is required
         </mat-error>
       </mat-form-field>
   

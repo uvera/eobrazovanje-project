@@ -8,6 +8,6 @@ export class CreateProfesorTabService {
   constructor(private readonly api: ApiService) {}
 
   createProfesor(form: Record<string, unknown>) {
-    return this.api.post('/api/teacher', { data: [form] });
+    return this.api.post('/api/teacher', form);
   }
 }
