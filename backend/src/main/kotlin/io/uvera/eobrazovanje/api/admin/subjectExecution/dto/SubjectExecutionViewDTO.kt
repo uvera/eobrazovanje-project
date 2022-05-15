@@ -18,5 +18,6 @@ interface SubjectExecutionViewDTO {
     interface PreExamActivityViewDTO {
         var id: UUID
         var name: String
+        var points: Int
     }
 }

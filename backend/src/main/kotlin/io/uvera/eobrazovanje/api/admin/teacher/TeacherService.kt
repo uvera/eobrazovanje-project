@@ -27,6 +27,10 @@ class TeacherService(
         return@repo findAllAsDto(req)
     }
 
+    fun getAllTeachers(): Any = repo {
+        return@repo findAllTeachers()
+    }
+
     @Transactional
     fun createTeacher(dto: TeacherDTO) = repo {
         teacherDTOToEntity(dto).save().let {

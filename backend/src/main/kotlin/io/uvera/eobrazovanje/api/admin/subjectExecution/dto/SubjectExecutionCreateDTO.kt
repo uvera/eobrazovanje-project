@@ -20,5 +20,6 @@ class SubjectExecutionCreateDTO(
     var subjectId: UUID,
 
     @field:NotNull
-    var preExamActivityIds: List<UUID>
+    var preExamActivityIds: List<UUID>,
+
 )

@@ -11,6 +11,8 @@ import { ListSubjectsTabComponent } from './components/subjects/list-subjects-ta
 import { MatTabsModule } from '@angular/material/tabs';
 import { CreateSubjectTabComponent } from './components/subjects/create-subject-tab/create-subject-tab.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,6 +30,10 @@ import { PreExamActivitiesComponent } from './components/pre-exam-activities/pre
 import { ListPreExamActivitiesComponent } from './components/pre-exam-activities/list-pre-exam-activities/list-pre-exam-activities.component';
 import { CreatePreExamActivityComponent } from './components/pre-exam-activities/create-pre-exam-activity/create-pre-exam-activity.component';
 import { EditPreExamActivityComponent } from './components/pre-exam-activities/edit-pre-exam-activity/edit-pre-exam-activity.component';
+import { SubjectExecutionsComponent } from './components/subject-executions/subject-executions.component';
+import { ListSubjectExecutionsTabComponent } from './components/subject-executions/list-subject-executions-tab/list-subject-executions-tab.component';
+import { EditSubjectExecutionsDialogComponent } from './components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
+import { CreateSubjectExecutionsTabComponent } from './components/subject-executions/create-subject-executions-tab/create-subject-executions-tab.component';
 
 const routes: Routes = [
   {
@@ -101,6 +107,25 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'subject-executions',
+        component: SubjectExecutionsComponent,
+        children: [
+          {
+            path: 'create-subject-executions-tab',
+            component: CreateSubjectExecutionsTabComponent,
+          },
+          {
+            path: 'list-subject-executions-tab',
+            component: ListSubjectExecutionsTabComponent,
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-subject-executions-tab',
+          },
+        ]
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'subjects',
@@ -133,7 +158,11 @@ const routes: Routes = [
     PreExamActivitiesComponent,
     ListPreExamActivitiesComponent,
     CreatePreExamActivityComponent,
-    EditPreExamActivityComponent
+    EditPreExamActivityComponent,
+    SubjectExecutionsComponent,
+    ListSubjectExecutionsTabComponent,
+    EditSubjectExecutionsDialogComponent,
+    CreateSubjectExecutionsTabComponent
   ],
   imports: [
     CommonModule,
@@ -145,9 +174,13 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
     FlexLayoutModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    NgxMatNativeDateModule
   ],
 })
-export class AdminModule {}
+export class AdminModule { }

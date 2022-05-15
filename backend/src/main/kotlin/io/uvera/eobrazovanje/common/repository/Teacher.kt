@@ -52,4 +52,7 @@ interface TeacherRepository : JpaSpecificationRepository<Teacher, UUID> {
 
     @Query("select t from Teacher t")
     fun findAllAsDto(pageable: Pageable): Page<TeacherResponseDTO>
+
+    @Query("select t from Teacher t")
+    fun findAllTeachers(): List<TeacherResponseDTO>
 }

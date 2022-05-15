@@ -7,6 +7,7 @@ import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.extensions.updateEach
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -17,7 +18,8 @@ import java.util.*
 class SubjectExecutionService(
     protected val repo: SubjectExecutionRepository,
     protected val subjectRepo: SubjectRepository,
-    protected val preExamRepo: PreExamActivityRepository
+    protected val preExamRepo: PreExamActivityRepository,
+    protected val professorRepo: TeacherRepository
 ) {
     @Transactional(propagation = Propagation.NEVER)
     fun createSubjectExecution(subjectExecutionDTO: SubjectExecutionCreateDTO): SubjectExecutionViewDTO = repo {
@@ -28,6 +30,12 @@ class SubjectExecutionService(
         }.let {
             getSubjectExecution(it.id)
         }
+    }
+
+    @Transactional
+    fun getAllSubjectExecutionsPaged(page: Int, records: Int): Any = repo {
+        val req = PageRequest.of(page - 1, records)
+        return@repo findAllAsDto(req)
     }
 
     @Transactional

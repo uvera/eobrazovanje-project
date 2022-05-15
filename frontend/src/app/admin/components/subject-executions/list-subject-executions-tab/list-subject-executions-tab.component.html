@@ -1,0 +1,38 @@
+<div>
+    <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
+    <nz-table
+      #dataTable
+      [nzData]="dataSet.value"
+      nzShowPagination
+      [nzFrontPagination]="false"
+      [nzPageIndex]="pageIndex.value"
+      [nzPageSize]="pageSize.value"
+      [nzTotal]="total.value"
+      [nzVirtualItemSize]="total.value"
+      (nzQueryParams)="queryParamsChange($event)"
+      [nzPageSizeOptions]="[1, 5, 10, 25, 50]"
+      [nzShowSizeChanger]="true"
+    >
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Place</th>
+        <th>Time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let i of dataTable.data">
+        <td>{{i.id}}</td>
+        <td>{{i.place}}</td>
+        <td>{{i.time | date:'short'}}</td>
+        <!-- <td>
+          <button (click)="editSubjectExecution(i.id)" mat-raised-button color="primary" type="button">Edit</button>
+        </td>
+        <td>
+          <button (click)="deleteSubjectExecution(i.id)" mat-raised-button color="secondary" type="button">Delete</button>
+        </td> -->
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  

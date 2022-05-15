@@ -51,4 +51,8 @@ class PreExamActivityService (protected val repo: PreExamActivityRepository) {
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)
     }
+
+    fun getAllPreExamActivities(): Any = repo {
+        return@repo findAllPreExamActivities()
+    }
 }

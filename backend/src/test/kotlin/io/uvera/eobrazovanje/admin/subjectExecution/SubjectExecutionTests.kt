@@ -40,10 +40,12 @@ class SubjectExecutionTests : ApplicationTest() {
         val prexam = preExamActivityRepository {
             listOf(
                 PreExamActivity(
-                    name = "Obaveza 1"
+                    name = "Obaveza 1",
+                    points = 55
                 ),
                 PreExamActivity(
-                    name = "Obaveza 2"
+                    name = "Obaveza 2",
+                    points = 55
                 )
             ).saveAll()
         }

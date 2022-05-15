@@ -45,4 +45,7 @@ class PreExamActivityController(protected val service: PreExamActivityService) {
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
     ) = service.getAllPreExamActivitiesPaged(page, records).ok
 
+    @GetMapping("/all")
+    fun findAllPreExamActivities() = service.getAllPreExamActivities().ok
+
 }

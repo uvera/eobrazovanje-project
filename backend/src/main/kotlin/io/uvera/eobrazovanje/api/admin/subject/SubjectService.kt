@@ -60,4 +60,8 @@ class SubjectService(
     fun getAllSubjectsWithoutStudyPrograms(): Any = repo {
         return@repo findAllWhereStudyProgramIsNullAsDto()
     }
+
+    fun getAllSubjects(): Any = repo {
+        return@repo findAllSubjects()
+    }
 }

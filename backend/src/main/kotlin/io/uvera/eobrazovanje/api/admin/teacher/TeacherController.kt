@@ -58,6 +58,11 @@ class TeacherController(protected val service: TeacherService) {
         service.deleteTeacher(id).let {
             emptyOk
         }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/all")
+    fun getAllTeachers() = service.getAllTeachers().ok
+
     // TEST NEEDED
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/subjects")

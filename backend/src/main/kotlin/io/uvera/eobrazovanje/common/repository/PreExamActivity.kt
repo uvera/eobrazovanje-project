@@ -33,4 +33,7 @@ interface PreExamActivityRepository : JpaSpecificationRepository<PreExamActivity
 
     @Query("select t from PreExamActivity t")
     fun findAllAsDto(page: Pageable): Page<PreExamActivityViewDTO>
+
+    @Query("select t from PreExamActivity t")
+    fun findAllPreExamActivities(): List<PreExamActivityViewDTO>
 }

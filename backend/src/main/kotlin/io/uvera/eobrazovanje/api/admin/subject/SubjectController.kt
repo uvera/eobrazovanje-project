@@ -48,4 +48,7 @@ class SubjectController(protected val service: SubjectService) {
 
     @GetMapping("/available")
     fun getAllSubjectsWithoutStudyPrograms() = service.getAllSubjectsWithoutStudyPrograms().ok
+
+    @GetMapping("/all")
+    fun getAllSubjects() = service.getAllSubjects().ok
 }
