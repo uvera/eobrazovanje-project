@@ -1,1 +1,33 @@
-<p>edit-subject-executions-dialog works!</p>
+<h1>Subject Execution edit</h1>
+<h1>SUBJECT: {{subjectName}}</h1>
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Place</mat-label>
+            <input matInput inputmode="text" type="text" formControlName="place">
+            <mat-error *ngIf="!!(form.get('place'))?.errors?.['required']">
+                Place is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="time">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSeconds]="true" [touchUi]="true">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Select pre-exam-activities</mat-label>
+            <mat-select formControlName="preExamActivityIds" [(ngModel)]="existentPreExamActivities" multiple>
+                <mat-option *ngFor="let ex of opPreExamActivities" [value]="ex.id">
+                    {{ ex.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div mat-dialog-actions fxFlexAlign="flex-end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </div>
+    </div>
+</form>

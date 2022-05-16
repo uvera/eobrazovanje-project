@@ -6,6 +6,7 @@ import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 import { EditPreExamActivityComponent } from '../../pre-exam-activities/edit-pre-exam-activity/edit-pre-exam-activity.component';
 import { ListStudentsTabService } from '../../students/list-students-tab/list-students-tab.service';
+import { EditSubjectExecutionsDialogComponent } from '../edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { ListSubjectExecutionsTabService } from './list-subject-executions-tab.service';
 
 @Component({
@@ -66,9 +67,9 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
     this.pageIndex.next(event.pageIndex);
   }
 
-  editStudyProgram(id: string) {
+  editSubjectExecution(id: string) {
     this.dialog
-      .open(EditPreExamActivityComponent, {
+      .open(EditSubjectExecutionsDialogComponent, {
         data: {
           id: id,
         },
@@ -83,11 +84,11 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
       });
   }
 
-  deleteStudyProgram(id: string) {
+  deleteSubjectExecution(id: string) {
     this.dialog
       .open(AreYouSureDialogComponent, {
         data: {
-          dialogTitle: 'Are you sure you want to delete this study program?',
+          dialogTitle: 'Are you sure you want to delete this subject execution?',
           yesButtonText: 'Delete',
         },
       })
@@ -101,11 +102,11 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
               .pipe(first())
               .subscribe({
                 next: (_) => {
-                  this.snack.open('Successfully deleted study program');
+                  this.snack.open('Successfully deleted subject execution');
                   this.reloadFromApi();
                 },
                 error: () => {
-                  this.snack.open('Error while deleting study program');
+                  this.snack.open('Error while deleting subject execution');
                 },
               });
           }

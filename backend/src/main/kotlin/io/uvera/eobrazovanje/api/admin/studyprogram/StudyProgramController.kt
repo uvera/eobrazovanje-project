@@ -41,7 +41,7 @@ class StudyProgramController(protected val service: StudyProgramService) {
     ): AnyResponseEntity = service.deleteStudyProgram(studyProgramId).let { emptyOk }
 
     @GetMapping("/paged")
-    fun getAllStudyPrograms(
+    fun getAllStudyProgramsPaged(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
     ) = service.getAllStudyProgramsPaged(page, records).ok

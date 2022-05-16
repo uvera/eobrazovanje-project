@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
-import { AreYouSureDialogComponent } from 'src/app/common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 import { SubjectViewDTO } from '../../subjects/list-subjects-tab/list-subjects-tab.component';
 import { EditStudyProgramDialogComponent } from '../edit-study-program-dialog/edit-study-program-dialog.component';
 import { ListStudyProgramsTabService } from './list-study-programs-tab.service';

@@ -57,4 +57,7 @@ interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
 
     @Query("select s from Student s")
     fun findAllAsDto(pageable: Pageable): Page<StudentViewDTO>
+
+    @Query("select s from Student s")
+    fun findAllStudents(): List<StudentViewDTO>
 }

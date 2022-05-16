@@ -18,6 +18,8 @@
         <th>ID</th>
         <th>Place</th>
         <th>Time</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
       </thead>
       <tbody>
@@ -25,12 +27,12 @@
         <td>{{i.id}}</td>
         <td>{{i.place}}</td>
         <td>{{i.time | date:'short'}}</td>
-        <!-- <td>
+        <td>
           <button (click)="editSubjectExecution(i.id)" mat-raised-button color="primary" type="button">Edit</button>
         </td>
         <td>
           <button (click)="deleteSubjectExecution(i.id)" mat-raised-button color="secondary" type="button">Delete</button>
-        </td> -->
+        </td>
       </tr>
       </tbody>
     </nz-table>

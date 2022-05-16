@@ -1,0 +1,56 @@
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Select teacher type</mat-label>
+        <mat-select formControlName="teacherType">
+          <mat-option *ngFor="let teacherType of teacherTypes" [value]="teacherType">
+           {{ teacherType }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!(form.get('teacherType'))?.errors?.['required']">
+          Teacher type is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>First Name</mat-label>
+        <input matInput inputmode="text" type="text" formControlName="firstName">
+        <mat-error *ngIf="!!(form.get('firstName'))?.errors?.['required']">
+          First name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Last Name</mat-label>
+        <input matInput inputmode="text" type="text" formControlName="lastName">
+        <mat-error *ngIf="!!(form.get('lastName'))?.errors?.['required']">
+          Last name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Email</mat-label>
+        <input matInput inputmode="email" type="email" formControlName="email">
+        <mat-error *ngIf="!!(form.get('email'))?.errors?.['required']">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="!!(form.get('email'))?.errors?.['email']">
+          Invalid email format
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="!!(form.get('password'))?.errors?.['required']">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+  
+      <div mat-dialog-actions fxFlexAlign="flex-end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+      </div>
+    </div>
+  </form>
+  

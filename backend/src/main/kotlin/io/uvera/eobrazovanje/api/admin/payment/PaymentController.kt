@@ -1,6 +1,7 @@
 package io.uvera.eobrazovanje.api.admin.payment
 
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
+import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
 import io.uvera.eobrazovanje.common.repository.Payments
 import io.uvera.eobrazovanje.util.AnyResponseEntity
@@ -37,11 +38,11 @@ class PaymentController(protected val service: PaymentService) {
     fun getPayment(@PathVariable("id") paymentID: UUID) = service.getPayment(paymentID).ok
 
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
-    @GetMapping("/paged/{id}")
+    @GetMapping("/paged")
     fun getPaymentsByStudentAndPage(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-        @PathVariable id: UUID
+        @RequestParam(value = "id", required = true) id: UUID
     ): ResponseEntity<Page<PaymentViewDTO>> {
         logger.info("Pagination ${Payments::class.simpleName} with params: { page $page, records: $records, studentId: $id}")
         return service.getPayments(page, records, id).ok
@@ -50,9 +51,9 @@ class PaymentController(protected val service: PaymentService) {
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @PutMapping("/{id}")
     fun updatePayment(
-        @PathVariable("id") subjectId: UUID,
-        @Validated @RequestBody payment: PaymentCreateDTO
-    ): ResponseEntity<PaymentViewDTO> = service.updatePayment(subjectId, payment).ok
+        @PathVariable("id") paymentId: UUID,
+        @Validated @RequestBody payment: PaymentUpdateDTO
+    ): ResponseEntity<PaymentViewDTO> = service.updatePayment(paymentId, payment).ok
 
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @DeleteMapping("/{id}")
