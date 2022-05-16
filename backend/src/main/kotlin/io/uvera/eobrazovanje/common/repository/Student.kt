@@ -38,8 +38,9 @@ class Student(
     @OneToMany(mappedBy = "student", orphanRemoval = true)
     var subjectEnrollments: MutableList<SubjectEnrollment> = mutableListOf(),
 
-    @OneToMany(mappedBy = "student", orphanRemoval = true)
-    var studyProgramEnrollments: MutableList<StudyProgramEnrollment> = mutableListOf(),
+    @ManyToOne(optional = true, cascade = [CascadeType.MERGE])
+    @JoinColumn(name = "study_program_id", nullable = true)
+    var studyProgram: StudyProgram? = null,
 
     @OneToMany(mappedBy = "student", orphanRemoval = true)
     var preExamActivityResults: MutableList<PreExamActivityResult> = mutableListOf(),
@@ -60,4 +61,7 @@ interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
 
     @Query("select s from Student s")
     fun findAllStudents(): List<StudentViewDTO>
+
+    @Query("select s from Student s where s.studyProgram is null")
+    fun findAllWhereNoStudyProgram(): List<StudentViewDTO>
 }

@@ -17,19 +17,17 @@ import java.util.*
 
 @RequestMapping("/api/admin/student")
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 class AdminStudentController(protected val service: AdminStudentService) {
     val logger by loggerDelegate()
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     fun createStudents(@Validated @RequestBody students: AdminCreateStudentsDTO): ResponseEntity<List<CreatedStudentDTO>> =
         service.createStudents(students).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     fun getStudentById(@PathVariable("id") id: UUID): ResponseEntity<StudentViewDTO> = service.getStudent(id).ok
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/paged")
     fun getStudentsByPage(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
@@ -39,7 +37,6 @@ class AdminStudentController(protected val service: AdminStudentService) {
         return service.getStudentsByPage(page, records).ok
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     fun updateStudent(
         @PathVariable("id") studentId: UUID,
@@ -51,7 +48,9 @@ class AdminStudentController(protected val service: AdminStudentService) {
         @PathVariable("id") studentId: UUID
     ): AnyResponseEntity = service.deleteStudent(studentId).let { emptyOk }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
     fun getAllStudents() = service.getAllStudents().ok
+
+    @GetMapping("/no-study-programs")
+    fun getStudentsWithoutStudyPrograms() = service.getStudentsWithoutStudyPrograms().ok
 }

@@ -6,6 +6,7 @@ import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 import { SubjectViewDTO } from '../../subjects/list-subjects-tab/list-subjects-tab.component';
 import { EditStudyProgramDialogComponent } from '../edit-study-program-dialog/edit-study-program-dialog.component';
+import { EnrollStudentsDialogComponent } from '../enroll-students-dialog/enroll-students-dialog.component';
 import { ListStudyProgramsTabService } from './list-study-programs-tab.service';
 
 
@@ -65,6 +66,23 @@ export class ListStudyProgramsTabComponent implements OnInit {
   queryParamsChange(event: NzTableQueryParams) {
     this.pageSize.next(event.pageSize);
     this.pageIndex.next(event.pageIndex);
+  }
+
+  enrollStudents(id: string) {
+    this.dialog
+      .open(EnrollStudentsDialogComponent, {
+        data: {
+          id: id,
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (value) => {
+          if (value === 'success') {
+            this.reloadFromApi();
+          }
+        },
+      });
   }
 
   editStudyProgram(id: string) {

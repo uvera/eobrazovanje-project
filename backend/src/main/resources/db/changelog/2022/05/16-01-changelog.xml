@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1652726319256-1" author="ivke (generated)">
+        <addColumn tableName="student">
+            <column name="study_program_id" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1652726319256-2" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="study_program_id" baseTableName="student"
+                                 constraintName="FK_STUDENT_ON_STUDY_PROGRAM" referencedColumnNames="id"
+                                 referencedTableName="study_program"/>
+    </changeSet>
+    <changeSet id="1652726319256-3" author="ivke (generated)">
+        <dropForeignKeyConstraint baseTableName="study_program_enrollment"
+                                  constraintName="fk_study_program_enrollment_on_student"/>
+    </changeSet>
+    <changeSet id="1652726319256-4" author="ivke (generated)">
+        <dropForeignKeyConstraint baseTableName="study_program_enrollment"
+                                  constraintName="fk_study_program_enrollment_on_study_program"/>
+    </changeSet>
+    <changeSet id="1652726319256-6" author="ivke (generated)">
+        <dropTable cascadeConstraints="true" tableName="study_program_enrollment"/>
+    </changeSet>
+
+</databaseChangeLog>

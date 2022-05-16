@@ -19,6 +19,7 @@
         <th>Code name</th>
         <th>Full name</th>
         <th>Subjects</th>
+        <th>Enroll students</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -29,6 +30,9 @@
         <td>{{i.codeName}}</td>
         <td>{{i.name}}</td>
         <td>{{i.subjects | subjectsNamePipe }}</td>
+        <td>
+          <button (click)="enrollStudents(i.id)" mat-raised-button color="primary" type="button">Enroll/View</button>
+        </td>
         <td>
           <button (click)="editStudyProgram(i.id)" mat-raised-button color="primary" type="button">Edit</button>
         </td>

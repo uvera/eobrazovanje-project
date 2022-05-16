@@ -65,7 +65,8 @@ class AdminStudentService(
                 currentYear = it.currentYear,
                 changedPassword = false,
                 balance = BigDecimal.ZERO,
-                user = user
+                user = user,
+                studyProgram = null
             )
         }
     }
@@ -93,5 +94,9 @@ class AdminStudentService(
 
     fun getAllStudents(): Any = repo {
         return@repo findAllStudents()
+    }
+
+    fun getStudentsWithoutStudyPrograms(): Any = repo {
+        return@repo findAllWhereNoStudyProgram()
     }
 }

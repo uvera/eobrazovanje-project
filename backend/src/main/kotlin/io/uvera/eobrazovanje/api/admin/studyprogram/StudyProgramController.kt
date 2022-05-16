@@ -1,6 +1,7 @@
 package io.uvera.eobrazovanje.api.admin.studyprogram
 
 import io.swagger.v3.oas.annotations.tags.Tag
+import io.uvera.eobrazovanje.api.admin.studyprogram.dto.EnrollStudentsDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.util.AnyResponseEntity
@@ -45,4 +46,10 @@ class StudyProgramController(protected val service: StudyProgramService) {
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
     ) = service.getAllStudyProgramsPaged(page, records).ok
+
+    @PutMapping("/{id}/enroll")
+    fun enrollStudentsToStudyProgram(
+        @PathVariable("id") studyProgramId: UUID,
+        @RequestBody students: EnrollStudentsDTO
+    ) = service.enrollStudentsToStudyProgram(studyProgramId, students.studentIds).ok
 }

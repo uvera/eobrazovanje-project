@@ -42,6 +42,8 @@ import { SubjectExecutionsComponent } from './components/subject-executions/subj
 import { ListSubjectExecutionsTabComponent } from './components/subject-executions/list-subject-executions-tab/list-subject-executions-tab.component';
 import { EditSubjectExecutionsDialogComponent } from './components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { CreateSubjectExecutionsTabComponent } from './components/subject-executions/create-subject-executions-tab/create-subject-executions-tab.component';
+import { EnrollStudentsDialogComponent } from './components/study-programs/enroll-students-dialog/enroll-students-dialog.component';
+import { EnrollToSubjectDialogComponent } from './components/subject-executions/enroll-to-subject-dialog/enroll-to-subject-dialog.component';
 
 const routes: Routes = [
   {
@@ -197,6 +199,8 @@ const routes: Routes = [
     ListSubjectExecutionsTabComponent,
     EditSubjectExecutionsDialogComponent,
     CreateSubjectExecutionsTabComponent,
+    EnrollStudentsDialogComponent,
+    EnrollToSubjectDialogComponent,
   ],
   imports: [
     CommonModule,

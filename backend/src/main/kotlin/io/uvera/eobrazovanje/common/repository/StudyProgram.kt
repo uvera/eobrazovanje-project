@@ -30,7 +30,7 @@ class StudyProgram(
     var subjectExecutions: MutableSet<SubjectExecution> = mutableSetOf(),
 
     @OneToMany(mappedBy = "studyProgram", orphanRemoval = true)
-    var studyProgramEnrollments: MutableList<StudyProgramEnrollment> = mutableListOf(),
+    var students: MutableList<Student> = mutableListOf(),
 
     @OneToMany(mappedBy = "studyProgram", orphanRemoval = true)
     var subjects: MutableList<Subject> = mutableListOf(),

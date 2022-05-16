@@ -2,9 +2,7 @@ package io.uvera.eobrazovanje.api.admin.studyprogram
 
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
 import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
-import io.uvera.eobrazovanje.common.repository.StudyProgram
-import io.uvera.eobrazovanje.common.repository.StudyProgramRepository
-import io.uvera.eobrazovanje.common.repository.SubjectRepository
+import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
@@ -17,6 +15,7 @@ import java.util.*
 class StudyProgramService(
     protected val repo: StudyProgramRepository,
     protected val subjectRepo: SubjectRepository,
+    protected val studentRepo: StudentRepository
 ) {
 
     @Transactional(propagation = Propagation.NEVER)
@@ -80,4 +79,18 @@ class StudyProgramService(
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)
     }
-}
+
+    @Transactional
+    fun enrollStudentsToStudyProgram(id: UUID, studentIds: List<UUID>): Any = repo {
+        val dbStudy = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
+        studentRepo {
+                studentIds.forEach {
+                    val student = studentRepo.findByIdOrNull(it) ?: notFoundById<Student>(it)
+                    student.studyProgram = dbStudy
+                    student.currentYear = 1
+                    student.save()
+                }
+            }
+        }
+    }
+

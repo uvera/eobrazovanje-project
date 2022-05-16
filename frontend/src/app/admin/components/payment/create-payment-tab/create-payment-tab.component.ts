@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, of } from 'rxjs';
-import { PaymentViewDTO } from '../../payment/list-payment-tab/list-payment-tab.component';
 import { StudentsViewDTO } from '../../students/list-students-tab/list-students-tab.component';
 import { CreatePaymentTabService } from './create-payment-tab.service';
 
