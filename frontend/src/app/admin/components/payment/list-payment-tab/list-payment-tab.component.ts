@@ -6,6 +6,8 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 import { ListPaymentTabService } from './list-payment-tab.service';
 import { EditPaymentDialogComponent } from '../edit-payment-dialog/edit-payment-dialog.component';
+import { StudentsViewDTO } from '../../students/list-students-tab/list-students-tab.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list-payment-tab',
@@ -17,16 +19,28 @@ export class ListPaymentTabComponent implements OnInit {
   readonly total = new BehaviorSubject<number>(1);
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<PaymentViewDTO[]>([]);
+  opStudents: StudentsViewDTO[] = [];
+  form!: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private service: ListPaymentTabService,
     private snack: MatSnackBar,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      id: [null],
+    });
+    this.service.getStudents().pipe(first()).subscribe((res) => {
+      this.opStudents = res?.body as Array<StudentsViewDTO>
+    })
     this.pageNumberAndSizeCombined$.subscribe((value) => {
-      this.fetchFromApi(value.pageIndex, value.pageSize);
+      this.fetchFromApi(value.pageIndex, value.pageSize, this.form.get('id')?.value);
+    });
+    this.form.valueChanges.subscribe(x => {
+      this.reloadFromApi()
     });
   }
 
@@ -42,22 +56,24 @@ export class ListPaymentTabComponent implements OnInit {
     }))
   );
 
-  fetchFromApi(pageIndex: number, pageSize: number) {
-    this.service
-      .fetchPaged(pageIndex, pageSize)
-      .pipe(first())
-      .subscribe((res) => {
-        const responseBody = res?.body;
-        if (responseBody) {
-          const { content, totalElements } = responseBody;
-          this.total.next(totalElements);
-          this.dataSet.next(content);
-        }
-      });
+  fetchFromApi(pageIndex: number, pageSize: number, id: string) {
+    if (id) {
+      this.service
+        .fetchPaged(pageIndex, pageSize, id)
+        .pipe(first())
+        .subscribe((res) => {
+          const responseBody = res?.body;
+          if (responseBody) {
+            const { content, totalElements } = responseBody;
+            this.total.next(totalElements);
+            this.dataSet.next(content);
+          }
+        });
+    }
   }
 
   reloadFromApi() {
-    this.fetchFromApi(this.pageIndex.value, this.pageSize.value);
+    this.fetchFromApi(this.pageIndex.value, this.pageSize.value, this.form.get('id')?.value);
   }
 
   queryParamsChange(event: NzTableQueryParams) {
@@ -117,7 +133,12 @@ export interface PaymentViewDTO {
   id: string;
   amount: Number;
   depositedAt: Date;
-  user: {
+  student: {
     id: string;
+    user: {
+      firstName: string;
+      lastName: string;
+      email: string;
+    }
   };
 }

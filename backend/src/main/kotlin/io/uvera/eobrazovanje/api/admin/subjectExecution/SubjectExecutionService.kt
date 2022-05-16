@@ -39,8 +39,8 @@ class SubjectExecutionService(
     }
 
     @Transactional
-    fun getSubjectExecution(studyProgramId: UUID): SubjectExecutionViewDTO =
-        repo.findByIdAsDto(studyProgramId) ?: notFoundById<StudyProgram>(studyProgramId)
+    fun getSubjectExecution(subjExecutionId: UUID): SubjectExecutionViewDTO =
+        repo.findByIdAsDto(subjExecutionId) ?: notFoundById<SubjectExecution>(subjExecutionId)
 
     fun subjectDTOToEntity(dto: SubjectExecutionCreateDTO): SubjectExecution {
         return SubjectExecution(

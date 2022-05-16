@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, of } from 'rxjs';
 import { PaymentViewDTO } from '../../payment/list-payment-tab/list-payment-tab.component';
+import { StudentsViewDTO } from '../../students/list-students-tab/list-students-tab.component';
 import { CreatePaymentTabService } from './create-payment-tab.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { CreatePaymentTabService } from './create-payment-tab.service';
 })
 export class CreatePaymentTabComponent implements OnInit {
   form!: FormGroup;
-  opStudents: Array<StudentViewDTO> = [];
+  opStudents: Array<StudentsViewDTO> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -25,12 +26,12 @@ export class CreatePaymentTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getStudents().pipe(first()).subscribe((res) => {
-      this.opStudents = res?.body as Array<StudentViewDTO>
+      this.opStudents = res?.body as Array<StudentsViewDTO>
     })
     this.form = this.fb.group({
       amount: [null, [Validators.required]],
       depositedAt: [null, [Validators.required]],
-      id: [null, [Validators.required]],
+      studentId: [null, [Validators.required]],
     });
   }
 
@@ -49,9 +50,5 @@ export class CreatePaymentTabComponent implements OnInit {
       },
     });
   }
-}
-
-interface StudentViewDTO {
-    id: number,
 }
 

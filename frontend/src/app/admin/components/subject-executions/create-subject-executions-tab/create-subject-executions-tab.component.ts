@@ -42,7 +42,7 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
   submitForm(form: Record<string, unknown>) {
     this.service.createSubjectExecution(form).subscribe({
       next: (_) => {
-        this.snack.open('Study program created');
+        this.snack.open('Subject execution created created');
         of(
           this.router.navigate(['list-subject-executions-tab'], {
             relativeTo: this.ar.parent,

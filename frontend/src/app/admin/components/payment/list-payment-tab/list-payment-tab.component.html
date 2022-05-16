@@ -1,34 +1,35 @@
 <div>
-    <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
-    <nz-table
-      #dataTable
-      [nzData]="dataSet.value"
-      nzShowPagination
-      [nzFrontPagination]="false"
-      [nzPageIndex]="pageIndex.value"
-      [nzPageSize]="pageSize.value"
-      [nzTotal]="total.value"
-      [nzVirtualItemSize]="total.value"
-      (nzQueryParams)="queryParamsChange($event)"
-      [nzPageSizeOptions]="[1, 5, 10, 25, 50]"
-      [nzShowSizeChanger]="true"
-    >
-      <thead>
+  <form [formGroup]="form">
+    <mat-form-field appearance="standard">
+      <mat-label>Select student</mat-label>
+      <mat-select formControlName="id">
+        <mat-option *ngFor="let student of opStudents" [value]="student.id">
+          {{ student.user.firstName + " " + student.user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
+  <nz-table #dataTable [nzData]="dataSet.value" nzShowPagination [nzFrontPagination]="false"
+    [nzPageIndex]="pageIndex.value" [nzPageSize]="pageSize.value" [nzTotal]="total.value"
+    [nzVirtualItemSize]="total.value" (nzQueryParams)="queryParamsChange($event)"
+    [nzPageSizeOptions]="[1, 5, 10, 25, 50]" [nzShowSizeChanger]="true">
+    <thead>
       <tr>
         <th>ID</th>
         <th>Amount</th>
         <th>Deposited At</th>
-        <th>User ID</th>
+        <th>Student</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <tr *ngFor="let i of dataTable.data">
         <td>{{i.id}}</td>
         <td>{{i.amount}}</td>
-        <td>{{i.depositedAt}}</td>
-        <td>{{i.user.id}}</td>
+        <td>{{i.depositedAt | date:'short'}}</td>
+        <td>{{i.student.user.firstName + " " + i.student.user.lastName}}</td>
         <td>
           <button (click)="editPayment(i.id)" mat-raised-button color="primary" type="button">Edit</button>
         </td>
@@ -36,7 +37,6 @@
           <button (click)="deletePayment(i.id)" mat-raised-button color="secondary" type="button">Delete</button>
         </td>
       </tr>
-      </tbody>
-    </nz-table>
-  </div>
-  
+    </tbody>
+  </nz-table>
+</div>

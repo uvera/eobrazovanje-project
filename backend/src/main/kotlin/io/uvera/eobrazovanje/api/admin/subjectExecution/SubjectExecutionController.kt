@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 //region SwaggerDoc
 @Tag(description = "Endpoints for subject executions.", name = "subject execution")
@@ -28,4 +29,7 @@ class SubjectExecutionController(protected val service: SubjectExecutionService)
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
     ) = service.getAllSubjectExecutionsPaged(page, records).ok
+
+    @GetMapping("/{id}")
+    fun getSubjectExecution(@PathVariable("id") executionID: UUID) = service.getSubjectExecution(executionID).ok
 }

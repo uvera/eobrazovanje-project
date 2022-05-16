@@ -12,6 +12,13 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
+@NamedEntityGraph(
+    name = "subject-entity-graph",
+    attributeNodes = [
+        NamedAttributeNode("preExamActivities"),
+        NamedAttributeNode("subject"),
+    ]
+)
 @Table(name = "subject_execution")
 class SubjectExecution(
     @Column(name = "place", nullable = false)
@@ -57,7 +64,10 @@ interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecuti
     )
     fun findAllByIds(ids: List<UUID>): MutableList<SubjectExecution>
 
-    @Query("select t from SubjectExecution t left join fetch t.preExamActivities where t.id = :id")
+    @org.springframework.data.jpa.repository.EntityGraph("subject-entity-graph")
+    @Query(
+        "select t from SubjectExecution t",
+    )
     fun findByIdAsDto(id: UUID): SubjectExecutionViewDTO?
 
     @Query("select t from SubjectExecution t")

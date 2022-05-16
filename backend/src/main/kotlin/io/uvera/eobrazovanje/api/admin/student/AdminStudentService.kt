@@ -92,6 +92,6 @@ class AdminStudentService(
     }
 
     fun getAllStudents(): Any = repo {
-        return@repo findAllStdents()
+        return@repo findAllStudents()
     }
 }

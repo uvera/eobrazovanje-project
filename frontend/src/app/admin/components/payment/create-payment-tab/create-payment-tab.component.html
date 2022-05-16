@@ -2,7 +2,7 @@
     <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
       <mat-form-field appearance="standard" fxFlexFill>
         <mat-label>Amount</mat-label>
-        <input matInput inputmode="text" type="text" formControlName="amount">
+        <input matInput inputmode="numeric" type="number" formControlName="amount">
         <mat-error *ngIf="!!(form.get('amount'))?.errors?.['required']">
          Amount is required
         </mat-error>
@@ -16,10 +16,10 @@
      </mat-form-field>
   
      <mat-form-field appearance="standard" fxFlexFill>
-      <mat-label>Select User ID</mat-label>
-      <mat-select formControlName="id">
+      <mat-label>Select student</mat-label>
+      <mat-select formControlName="studentId">
         <mat-option *ngFor="let student of opStudents" [value]="student.id">
-         {{ student.id }}
+         {{ student.user.firstName + " " + student.user.lastName }}
         </mat-option>
       </mat-select>
     </mat-form-field>

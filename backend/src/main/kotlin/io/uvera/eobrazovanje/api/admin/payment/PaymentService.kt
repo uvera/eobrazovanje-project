@@ -1,6 +1,7 @@
 package io.uvera.eobrazovanje.api.admin.payment
 
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
+import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
@@ -25,12 +26,11 @@ class PaymentService(
     fun getPayment(paymentId: UUID): PaymentViewDTO =
         paymentRepo.findByIdAsDto(paymentId) ?: notFoundById<Payments>(paymentId)
 
-    fun updatePayment(id: UUID, dto: PaymentCreateDTO): PaymentViewDTO = paymentRepo {
+    fun updatePayment(id: UUID, dto: PaymentUpdateDTO): PaymentViewDTO = paymentRepo {
         val dbPayments = findByIdOrNull(id) ?: notFoundById<Payments>(id)
         dbPayments.update {
             amount = dto.amount
             depositedAt = dto.depositedAt
-            student = studentRepo.findByIdOrNull(dto.studentId) ?: notFoundById<Student>(dto.studentId)
         }
         return@paymentRepo findByIdAsDto(id) ?: notFoundById<Payments>(id)
     }
