@@ -74,4 +74,8 @@ class AuthService(
             refreshToken = jwtRefreshService.generateToken(userDetails)
         )
     }
+
+    fun getAllUsers(): Any = repo {
+        return@repo findAllUsers()
+    }
 }

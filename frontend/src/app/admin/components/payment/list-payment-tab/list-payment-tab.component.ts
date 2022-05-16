@@ -4,22 +4,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
-import { ListProfesorsTabService } from './list-profesors-tab.service';
-import { EditProfesorDialogComponent } from '../edit-profesor-dialog/edit-profesor-dialog.component';
+import { ListPaymentTabService } from './list-payment-tab.service';
+import { EditPaymentDialogComponent } from '../edit-payment-dialog/edit-payment-dialog.component';
 
 @Component({
-  selector: 'app-list-profesor-tab',
-  templateUrl: './list-profesor-tab.component.html',
-  styleUrls: ['./list-profesor-tab.component.scss']
+  selector: 'app-list-payment-tab',
+  templateUrl: './list-payment-tab.component.html',
+  styleUrls: ['./list-payment-tab.component.scss']
 })
-export class ListProfesorTabComponent implements OnInit {
+export class ListPaymentTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
   readonly total = new BehaviorSubject<number>(1);
   readonly pageSize = new BehaviorSubject<number>(10);
-  readonly dataSet = new BehaviorSubject<TeacherResponseDTO[]>([]);
+  readonly dataSet = new BehaviorSubject<PaymentViewDTO[]>([]);
 
   constructor(
-    private service: ListProfesorsTabService,
+    private service: ListPaymentTabService,
     private snack: MatSnackBar,
     private dialog: MatDialog
   ) {}
@@ -65,9 +65,9 @@ export class ListProfesorTabComponent implements OnInit {
     this.pageIndex.next(event.pageIndex);
   }
 
-  editTeacher(id: string) {
+  editPayment(id: string) {
     this.dialog
-      .open(EditProfesorDialogComponent, {
+      .open(EditPaymentDialogComponent, {
         data: {
           id: id,
         },
@@ -82,11 +82,11 @@ export class ListProfesorTabComponent implements OnInit {
       });
   }
 
-  deleteTeacher(id: string) {
+  deletePayment(id: string) {
     this.dialog
       .open(AreYouSureDialogComponent, {
         data: {
-          dialogTitle: 'Are you sure you want to delete profesor?',
+          dialogTitle: 'Are you sure you want to delete payment?',
           yesButtonText: 'Delete',
         },
       })
@@ -96,15 +96,15 @@ export class ListProfesorTabComponent implements OnInit {
         next: (value) => {
           if (value === 'yes') {
             this.service
-              .deleteProfesorById(id)
+              .deletePaymentById(id)
               .pipe(first())
               .subscribe({
                 next: (_) => {
-                  this.snack.open('Successfully deleted profesor');
+                  this.snack.open('Successfully deleted payment');
                   this.reloadFromApi();
                 },
                 error: () => {
-                  this.snack.open('Error while deleting profesor');
+                  this.snack.open('Error while deleting payment');
                 },
               });
           }
@@ -113,11 +113,11 @@ export class ListProfesorTabComponent implements OnInit {
   }
 }
 
-export interface TeacherResponseDTO {
+export interface PaymentViewDTO {
   id: string;
-  teacherType: string;
+  amount: Number;
+  depositedAt: Date;
   user: {
-    firstName: string;
-    lastName: string;
+    id: string;
   };
 }

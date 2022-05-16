@@ -50,4 +50,8 @@ class AdminStudentController(protected val service: AdminStudentService) {
     fun deleteStudent(
         @PathVariable("id") studentId: UUID
     ): AnyResponseEntity = service.deleteStudent(studentId).let { emptyOk }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/all")
+    fun getAllStudents() = service.getAllStudents().ok
 }

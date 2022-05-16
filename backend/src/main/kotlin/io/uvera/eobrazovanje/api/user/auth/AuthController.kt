@@ -98,4 +98,8 @@ class AuthController(
     @GetMapping("/whoami")
     fun whoAmI(): ResponseEntity<WhoAmIDTO> =
         authService.whoAmI().ok
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/all")
+    fun getAllUsers() = service.getAllUsers().ok
 }

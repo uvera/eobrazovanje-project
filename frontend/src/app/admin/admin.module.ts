@@ -28,6 +28,10 @@ import { ProfesorComponent } from './components/profesor/profesor.component';
 import { ListProfesorTabComponent } from './components/profesor/list-profesor-tab/list-profesor-tab.component';
 import { CreateProfesorTabComponent } from './components/profesor/create-profesor-tab/create-profesor-tab.component';
 import { EditProfesorDialogComponent } from './components/profesor/edit-profesor-dialog/edit-profesor-dialog.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { ListPaymentTabComponent } from './components/payment/list-payment-tab/list-payment-tab.component';
+import { EditPaymentDialogComponent } from './components/payment/edit-payment-dialog/edit-payment-dialog.component';
+import { CreatePaymentTabComponent } from './components/payment/create-payment-tab/create-payment-tab.component';
 import { ListStudyProgramsTabComponent, SubjectsNamePipe } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
 import { EditStudyProgramDialogComponent } from './components/study-programs/edit-study-program-dialog/edit-study-program-dialog.component';
 import { PreExamActivitiesComponent } from './components/pre-exam-activities/pre-exam-activities.component';
@@ -60,6 +64,15 @@ const routes: Routes = [
           { path: 'list-profesors-tab', component: ListProfesorTabComponent },
           { path: 'create-profesor-tab', component: CreateProfesorTabComponent },
           { path: '', pathMatch: 'full', redirectTo: 'list-profesors-tab' },
+        ],
+      },
+      {
+        path: 'payments',
+        component: PaymentComponent,
+        children: [
+          { path: 'list-payments-tab', component: ListPaymentTabComponent },
+          { path: 'create-payment-tab', component: CreatePaymentTabComponent },
+          { path: '', pathMatch: 'full', redirectTo: 'list-payments-tab' },
         ],
       },
       {
@@ -168,6 +181,10 @@ const routes: Routes = [
     CreateProfesorTabComponent,
     ListProfesorTabComponent,
     EditProfesorDialogComponent,
+    PaymentComponent,
+    ListPaymentTabComponent,
+    EditPaymentDialogComponent,
+    CreatePaymentTabComponent,
     CreateStudyProgramTabComponent,
     ListStudyProgramsTabComponent,
     EditStudyProgramDialogComponent,
