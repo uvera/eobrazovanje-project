@@ -55,11 +55,3 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
     });
   }
 }
-
-interface ProfessorViewDTO {
-  id: number,
-  user: {
-    firstName: string
-    lastName: string
-  }
-}

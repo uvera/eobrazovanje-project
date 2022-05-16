@@ -66,7 +66,7 @@ interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecuti
 
     @org.springframework.data.jpa.repository.EntityGraph("subject-entity-graph")
     @Query(
-        "select t from SubjectExecution t",
+        "select t from SubjectExecution t where t.id = :id",
     )
     fun findByIdAsDto(id: UUID): SubjectExecutionViewDTO?
 

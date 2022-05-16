@@ -1,12 +1,14 @@
 package io.uvera.eobrazovanje.api.admin.subjectExecution
 
+import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
+import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionCreateDTO
+import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionUpdateDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.common.repository.*
-import io.uvera.eobrazovanje.util.extensions.invoke
-import io.uvera.eobrazovanje.util.extensions.notFoundById
-import io.uvera.eobrazovanje.util.extensions.save
-import io.uvera.eobrazovanje.util.extensions.updateEach
+import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -30,6 +32,32 @@ class SubjectExecutionService(
         }.let {
             getSubjectExecution(it.id)
         }
+    }
+
+    @Transactional
+    fun updateSubjectExecution(id: UUID, dto: SubjectExecutionUpdateDTO): SubjectExecutionViewDTO = repo {
+        val sub = findByIdOrNull(id) ?: notFoundById<SubjectExecution>(id)
+        preExamRepo {
+            sub.preExamActivities.filter {
+                !dto.preExamActivityIds.contains(it.id)
+            }.forEach { exam ->
+                exam.subjectExecution = null
+                exam.save()
+            }
+        }
+
+        sub.update {
+            place = dto.place
+            time = dto.time
+        }.let { subEntity ->
+            preExamRepo {
+                findAllById(dto.preExamActivityIds).updateEach {
+                    subjectExecution = subEntity
+                }
+            }
+        }
+
+        return@repo findByIdAsDto(id) ?: notFoundById<SubjectExecution>(id)
     }
 
     @Transactional
