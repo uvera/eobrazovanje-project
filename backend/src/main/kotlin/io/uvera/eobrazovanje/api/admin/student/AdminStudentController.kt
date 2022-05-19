@@ -1,9 +1,6 @@
 package io.uvera.eobrazovanje.api.admin.student
 
-import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentUpdateDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.*
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.util.AnyResponseEntity
 import io.uvera.eobrazovanje.util.extensions.emptyOk
@@ -22,7 +19,7 @@ class AdminStudentController(protected val service: AdminStudentService) {
     val logger by loggerDelegate()
 
     @PostMapping
-    fun createStudents(@Validated @RequestBody students: AdminCreateStudentsDTO): ResponseEntity<List<CreatedStudentDTO>> =
+    fun createStudents(@Validated @RequestBody students: List<AdminCreateStudentDTO>): ResponseEntity<List<CreatedStudentDTO>> =
         service.createStudents(students).ok
 
     @GetMapping("/{id}")
