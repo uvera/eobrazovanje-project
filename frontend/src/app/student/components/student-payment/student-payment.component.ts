@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentPaymentComponent implements OnInit {
   links = [
-    ['list-payments-tab', 'List payments'],
-    ['create-payment-tab', 'Create payment'],
+    ['list-student-payments-tab', 'List payments'],
+    ['create-student-payment-tab', 'Create payment'],
   ];
   activeLink = this.links[0][0];
 

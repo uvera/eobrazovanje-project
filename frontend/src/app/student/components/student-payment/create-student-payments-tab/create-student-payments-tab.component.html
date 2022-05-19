@@ -1,1 +1,21 @@
-<p>create-student-payments-tab works!</p>
+<h2>Deposit amout to my bank account</h2>
+
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+      
+      
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Amount</mat-label>
+        <input matInput inputmode="numeric" type="number" formControlName="amount">
+        <mat-error *ngIf="!!(form.get('amount'))?.errors?.['required']">
+         Amount is required
+        </mat-error>
+      </mat-form-field>
+  
+      <div mat-dialog-actions fxFlexAlign="flex-end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+      </div>
+
+    </div>
+  </form>
+  
