@@ -25,6 +25,7 @@ class PaymentService(
 
     fun getPayment(paymentId: UUID): PaymentViewDTO =
         paymentRepo.findByIdAsDto(paymentId) ?: notFoundById<Payments>(paymentId)
+    
 
     fun updatePayment(id: UUID, dto: PaymentUpdateDTO): PaymentViewDTO = paymentRepo {
         val dbPayments = findByIdOrNull(id) ?: notFoundById<Payments>(id)
@@ -52,5 +53,11 @@ class PaymentService(
         val req = PageRequest.of(page - 1, records)
 
         return@paymentRepo findAllByStudentId(id, req)
+    }
+
+    fun getStudentPaymentsByEmail(page: Int, records: Int, email: String): Page<PaymentViewDTO> = paymentRepo {
+        val req = PageRequest.of(page - 1, records)
+    
+        return@paymentRepo findAllByStudentEmail(email, req)
     }
 }

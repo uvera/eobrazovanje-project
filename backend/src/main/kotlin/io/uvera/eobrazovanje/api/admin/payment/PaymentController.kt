@@ -49,6 +49,17 @@ class PaymentController(protected val service: PaymentService) {
     }
 
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
+    @GetMapping("/student/paged")
+    fun getPaymentsByStudentEmailAndPage(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+        @RequestParam(value = "email", required = true) email: String
+    ): ResponseEntity<Page<PaymentViewDTO>> {
+        logger.info("Pagination ${Payments::class.simpleName} with params: { page $page, records: $records, studentEmail: $email}")
+        return service.getStudentPaymentsByEmail(page, records, email).ok
+    }
+
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @PutMapping("/{id}")
     fun updatePayment(
         @PathVariable("id") paymentId: UUID,
