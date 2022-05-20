@@ -34,3 +34,7 @@ val emptyOk: AnyResponseEntity
 inline fun <reified T : BaseEntity> notFoundById(id: UUID): Nothing {
     throw EntityNotFoundException("${T::class.simpleName}: not found by id: $id")
 }
+
+inline fun <reified T : BaseEntity> notFoundByEmail(email: String): Nothing {
+    throw EntityNotFoundException("${T::class.simpleName}: not found by email: $email")
+}

@@ -1,5 +1,6 @@
 package io.uvera.eobrazovanje.api.admin.payment
 
+import io.uvera.eobrazovanje.api.admin.payment.dto.StudentPaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
@@ -27,6 +28,11 @@ import java.util.UUID
 @RestController
 class PaymentController(protected val service: PaymentService) {
     val logger by loggerDelegate()
+
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
+    @PostMapping("/student")
+    fun createPaymentFromStudent(@Validated @RequestBody payment: StudentPaymentCreateDTO): ResponseEntity<PaymentViewDTO> =
+        service.createStudentPayment(payment).ok
 
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @PostMapping

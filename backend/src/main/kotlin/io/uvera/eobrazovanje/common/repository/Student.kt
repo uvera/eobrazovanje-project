@@ -64,4 +64,7 @@ interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
 
     @Query("select s from Student s where s.studyProgram is null")
     fun findAllWhereNoStudyProgram(): List<StudentViewDTO>
+
+    @Query("select s from Student s where s.user.email = :email")
+    fun findByUserEmailOrNull(email: String): Student?
 }

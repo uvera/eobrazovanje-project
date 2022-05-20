@@ -1,11 +1,12 @@
 package io.uvera.eobrazovanje.api.admin.payment
-
+import io.uvera.eobrazovanje.api.admin.payment.dto.StudentPaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
+import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.extensions.update
 import org.springframework.data.domain.Page
@@ -21,6 +22,10 @@ class PaymentService(
 ) {
     fun createPayment(paymentDTO: PaymentCreateDTO): PaymentViewDTO = paymentRepo {
         getPayment(paymentDTOToEntity(paymentDTO).save().id)
+    }
+
+    fun createStudentPayment(paymentDTO: StudentPaymentCreateDTO): PaymentViewDTO = paymentRepo {
+        getPayment(studentPaymentDTOToEntity(paymentDTO).save().id)
     }
 
     fun getPayment(paymentId: UUID): PaymentViewDTO =
@@ -41,14 +46,6 @@ class PaymentService(
         return@paymentRepo deleteById(id)
     }
 
-    fun paymentDTOToEntity(dto: PaymentCreateDTO): Payments {
-        return Payments(
-            amount = dto.amount,
-            depositedAt = dto.depositedAt,
-            student = studentRepo.findByIdOrNull(dto.studentId) ?: notFoundById<Student>(dto.studentId)
-        )
-    }
-
     fun getPayments(page: Int, records: Int, id: UUID): Page<PaymentViewDTO> = paymentRepo {
         val req = PageRequest.of(page - 1, records)
 
@@ -59,5 +56,22 @@ class PaymentService(
         val req = PageRequest.of(page - 1, records)
     
         return@paymentRepo findAllByStudentEmail(email, req)
+    }
+
+
+    fun paymentDTOToEntity(dto: PaymentCreateDTO): Payments {
+        return Payments(
+            amount = dto.amount,
+            depositedAt = dto.depositedAt,
+            student = studentRepo.findByIdOrNull(dto.studentId) ?: notFoundById<Student>(dto.studentId)
+        )
+    }
+
+    fun studentPaymentDTOToEntity(dto: StudentPaymentCreateDTO): Payments {
+        return Payments(
+            amount = dto.amount,
+            depositedAt = dto.depositedAt,
+            student = studentRepo.findByUserEmailOrNull(dto.studentEmail) ?: notFoundByEmail<Student>(dto.studentEmail)
+        )
     }
 }
