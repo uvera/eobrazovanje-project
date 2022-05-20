@@ -51,6 +51,11 @@ class Student(
 
 @Repository
 interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
+    fun findByIdOrNull(id: UUID): Student?
+
+    @Query("select s from Student s where s.user.email = :email")
+    fun findByUserEmailOrNull(email: String): Student?
+    
     fun findByTranscriptNumber(value: String): Student?
 
     @Query("select t from Student t where t.id = :id")
@@ -65,6 +70,4 @@ interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
     @Query("select s from Student s where s.studyProgram is null")
     fun findAllWhereNoStudyProgram(): List<StudentViewDTO>
 
-    @Query("select s from Student s where s.user.email = :email")
-    fun findByUserEmailOrNull(email: String): Student?
 }

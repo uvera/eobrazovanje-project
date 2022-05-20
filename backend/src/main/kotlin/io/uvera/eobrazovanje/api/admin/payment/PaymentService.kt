@@ -21,10 +21,16 @@ class PaymentService(
     protected val studentRepo: StudentRepository
 ) {
     fun createPayment(paymentDTO: PaymentCreateDTO): PaymentViewDTO = paymentRepo {
+        // TODO add addition of funds to the balance of students
+        // val student = @studentRepo findByIdOrNull(paymentDTO.studentId)?: notFoundById<Student>(paymentDTO.studentId)
+
         getPayment(paymentDTOToEntity(paymentDTO).save().id)
     }
 
     fun createStudentPayment(paymentDTO: StudentPaymentCreateDTO): PaymentViewDTO = paymentRepo {
+        // TODO add addition of funds to the balance of students
+        // val student = @studentRepo findByUserEmailOrNull(paymentDTO.studentEmail)?: notFoundByEmail<Student>(paymentDTO.studentEmail)
+
         getPayment(studentPaymentDTOToEntity(paymentDTO).save().id)
     }
 
