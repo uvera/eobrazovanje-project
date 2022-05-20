@@ -50,25 +50,33 @@ export class ListStudentPaymentsTabComponent implements OnInit {
   );
 
   fetchCurrentStudentsPayments(pageIndex: number, pageSize: number) {
-    this.service.fetchCurrentStudent()
-      .pipe()
-      .subscribe((res) => {
-        const responseBody = res?.body;
-        if (responseBody) {
-          const { email }  = responseBody;
-          this.service.
-          fetchStudentPaymentsPaged(pageIndex, pageSize, email)
-          .pipe(first())
+    this.service.fetchCurrentUser()
+    .pipe()
+    .subscribe((res) => {
+      const responseBody = res?.body;
+      if (responseBody) {
+        const { email }  = responseBody;
+        this.service.
+        fetchCurrentStudent(email)
           .subscribe((res) => {
             const responseBody = res?.body
-            if(responseBody) {
-              const { content, totalElements } = responseBody;
-              this.total.next(totalElements);
-              this.dataSet.next(content);
-            }
-          })
-        }
-      })
+            if (responseBody) {
+            const { id }  = responseBody;
+            this.service.
+            fetchStudentPaymentsPaged(pageIndex, pageSize, id)
+            .pipe(first())
+            .subscribe((res) => {
+              const responseBody = res?.body
+              if(responseBody) {
+                const { content, totalElements } = responseBody;
+                this.total.next(totalElements);
+                this.dataSet.next(content);
+              }
+            })
+          }
+        })
+      }
+    })
   }
   
   fetchStudentPaymentsFromApi() {

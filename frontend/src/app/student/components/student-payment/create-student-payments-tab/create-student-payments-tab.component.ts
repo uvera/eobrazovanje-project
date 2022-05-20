@@ -23,32 +23,41 @@ export class CreateStudentPaymentsTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      studentEmail: '',
+      studentId: '',
       amount: [null, [Validators.required]],
       depositedAt: [null, [Validators.required]],
     });
   }
 
   submitForm() {
-    this.service.fetchCurrentStudent()
+    this.service.fetchCurrentUser()
+    .pipe()
     .subscribe((res) => {
       const responseBody = res?.body;
       if (responseBody) {
         const { email }  = responseBody;
-        this.form.controls['studentEmail'].setValue(email);
-        this.service.createPayment(this.form.value).subscribe({
-          next: (_) => {
-            this.snack.open('Payment created');
-            of(
-              this.router.navigate(['list-student-payments-tab'], {
-                relativeTo: this.ar.parent,
-              })
-            );
-          },
-          error: (_) => {
-            this.snack.open('Error occurred');
-          },
-        });
+        this.service.
+        fetchCurrentStudent(email)
+          .subscribe((res) => {
+            const responseBody = res?.body
+            if (responseBody) {
+              const { id }  = responseBody;
+              this.form.controls['studentId'].setValue(id);
+              this.service.createPayment(this.form.value).subscribe({
+                next: (_) => {
+                  this.snack.open('Payment created');
+                  of(
+                    this.router.navigate(['list-student-payments-tab'], {
+                      relativeTo: this.ar.parent,
+                    })
+                  );
+                },
+                error: (_) => {
+                  this.snack.open('Error occurred');
+                },
+              });
+          }
+        })
       }
     })
   }

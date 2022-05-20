@@ -30,11 +30,6 @@ class PaymentController(protected val service: PaymentService) {
     val logger by loggerDelegate()
 
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
-    @PostMapping("/student")
-    fun createPaymentFromStudent(@Validated @RequestBody payment: StudentPaymentCreateDTO): ResponseEntity<PaymentViewDTO> =
-        service.createStudentPayment(payment).ok
-
-    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
     @PostMapping
     fun createPayment(@Validated @RequestBody payment: PaymentCreateDTO): ResponseEntity<PaymentViewDTO> =
         service.createPayment(payment).ok
@@ -52,17 +47,6 @@ class PaymentController(protected val service: PaymentService) {
     ): ResponseEntity<Page<PaymentViewDTO>> {
         logger.info("Pagination ${Payments::class.simpleName} with params: { page $page, records: $records, studentId: $id}")
         return service.getPayments(page, records, id).ok
-    }
-
-    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
-    @GetMapping("/student/paged")
-    fun getPaymentsByStudentEmailAndPage(
-        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
-        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-        @RequestParam(value = "email", required = true) email: String
-    ): ResponseEntity<Page<PaymentViewDTO>> {
-        logger.info("Pagination ${Payments::class.simpleName} with params: { page $page, records: $records, studentEmail: $email}")
-        return service.getStudentPaymentsByEmail(page, records, email).ok
     }
 
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")

@@ -51,10 +51,13 @@ class Student(
 
 @Repository
 interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
-    fun findByIdOrNull(id: UUID): Student?
+    fun findByUserId(id: UUID): Student?
 
     @Query("select s from Student s where s.user.email = :email")
     fun findByUserEmailOrNull(email: String): Student?
+    
+    @Query("select s from Student s where s.user.email = :email")
+    fun findByUserEmailAsDto(email: String): StudentViewDTO?
     
     fun findByTranscriptNumber(value: String): Student?
 

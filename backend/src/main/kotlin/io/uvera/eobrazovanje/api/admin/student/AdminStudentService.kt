@@ -9,6 +9,7 @@ import io.uvera.eobrazovanje.common.service.DigitGenerationService
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
+import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import io.uvera.eobrazovanje.util.extensions.update
 import org.springframework.data.domain.Page
@@ -30,6 +31,10 @@ class AdminStudentService(
     @Transactional
     fun getStudent(id: UUID): StudentViewDTO =
         repo.findByIdAsDto(id) ?: notFoundById<Student>(id)
+
+    @Transactional
+    fun getStudentByEmail(email: String): StudentViewDTO =
+        repo.findByUserEmailAsDto(email) ?: notFoundByEmail<Student>(email)
 
     @Transactional
     fun getStudentsByPage(page: Int, records: Int): Page<StudentViewDTO> = repo {
