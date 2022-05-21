@@ -44,6 +44,7 @@ import { EditSubjectExecutionsDialogComponent } from './components/subject-execu
 import { CreateSubjectExecutionsTabComponent } from './components/subject-executions/create-subject-executions-tab/create-subject-executions-tab.component';
 import { EnrollStudentsDialogComponent } from './components/study-programs/enroll-students-dialog/enroll-students-dialog.component';
 import { EnrollToSubjectDialogComponent } from './components/subject-executions/enroll-to-subject-dialog/enroll-to-subject-dialog.component';
+import { LogoutComponent } from '../common/components/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,10 @@ const routes: Routes = [
           { path: 'create-student-tab', component: CreateStudentTabComponent },
           { path: '', pathMatch: 'full', redirectTo: 'list-students-tab' },
         ],
+      },
+      {
+        path: 'logout',
+        component: LogoutComponent
       },
       {
         path: 'profesors',

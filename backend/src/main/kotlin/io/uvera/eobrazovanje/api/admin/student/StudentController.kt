@@ -28,7 +28,7 @@ class StudentController(
     @GetMapping("/subjects")
     fun getStudentSubjects(
         @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
-    ): ResponseEntity<List<SubjectViewDTO>> = service.getStudentSubjects(id).ok
+    ): Any = service.getStudentSubjects(id).ok
 
 
 }

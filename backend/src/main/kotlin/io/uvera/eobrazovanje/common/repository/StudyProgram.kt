@@ -12,8 +12,11 @@ import javax.persistence.*
 
 @Entity
 @NamedEntityGraph(
-    name = "StudyProgram.subjects",
-    attributeNodes = [NamedAttributeNode("subjects")]
+    name = "subjects-and-executions",
+    attributeNodes = [
+        NamedAttributeNode("subjects"),
+        NamedAttributeNode("subjectExecutions")
+    ]
 )
 @Table(name = "study_program")
 class StudyProgram(
@@ -42,7 +45,7 @@ interface StudyProgramRepository : JpaSpecificationRepository<StudyProgram, UUID
     @Query("select t from StudyProgram t left join fetch t.subjects where t.id = :id")
     fun findByIdAsDto(id: UUID): StudyProgramViewDTO?
 
-    @org.springframework.data.jpa.repository.EntityGraph("StudyProgram.subjects")
+    @org.springframework.data.jpa.repository.EntityGraph("subjects-and-executions")
     @Query(
         "select t from StudyProgram t",
     )

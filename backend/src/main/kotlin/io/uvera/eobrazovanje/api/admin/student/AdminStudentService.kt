@@ -5,6 +5,7 @@ import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.*
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.common.service.DigitGenerationService
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
@@ -13,12 +14,14 @@ import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import io.uvera.eobrazovanje.util.extensions.update
+import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
+import java.lang.Integer.parseInt
 import java.math.BigDecimal
 import java.util.*
 
@@ -28,6 +31,8 @@ class AdminStudentService(
     protected val userRepository: UserRepository,
     protected val subjectRepository: SubjectRepository,
     protected val digitGenerationService: DigitGenerationService,
+    protected val studyRepo: StudyProgramRepository,
+    protected val subjEnrolRepo: SubjectEnrollmentRepository
 ) {
 
     @Transactional
@@ -45,9 +50,20 @@ class AdminStudentService(
     }
 
     @Transactional
-    fun createStudents(students: AdminCreateStudentsDTO): List<CreatedStudentDTO> = repo {
-        students.convertToStudents().let { list ->
-            list.saveAll().map {
+    fun createStudents(students: List<AdminCreateStudentDTO>): List<CreatedStudentDTO> = repo {
+        convertToStudents(students).let { list ->
+            list.saveAll().onEach {
+                val executions = studyRepo.findByIdOrNull(it.studyProgram?.id)?.subjectExecutions
+                executions?.forEach { execution ->
+                    subjEnrolRepo {
+                        SubjectEnrollment(
+                            year = it.currentYear, //not sure if this will be this but leave it for now
+                            subjectExecution = execution,
+                            student = it
+                        ).save()
+                    }
+                }
+            }.map {
                 CreatedStudentDTO(
                     firstName = it.user.firstName,
                     lastName = it.user.lastName,
@@ -58,7 +74,7 @@ class AdminStudentService(
         }
     }
 
-    fun AdminCreateStudentsDTO.convertToStudents() = this.data.map {
+    fun convertToStudents(students: List<AdminCreateStudentDTO>) = students.map {
         User(
             firstName = it.firstName,
             lastName = it.lastName,
@@ -69,11 +85,11 @@ class AdminStudentService(
             Student(
                 transcriptNumber = it.transcriptNumber,
                 identificationNumber = it.identificationNumber,
-                currentYear = it.currentYear,
+                currentYear = parseInt(it.currentYear),
                 changedPassword = false,
                 balance = BigDecimal.ZERO,
                 user = user,
-                studyProgram = null
+                studyProgram = studyRepo.findByIdOrNull(it.studyProgramId) ?: notFoundById<StudyProgram>(it.studyProgramId)
             )
         }
     }
@@ -107,7 +123,11 @@ class AdminStudentService(
         return@repo findAllWhereNoStudyProgram()
     }
 
-    fun getStudentSubjects(studentId: UUID): List<SubjectViewDTO> = subjectRepository {
-        return@subjectRepository findByStudentId(studentId)
+    fun getStudentSubjects(studentId: UUID): Any {
+        val enrolments = enrollmentRepo {
+            findAllByStudentId(studentId)
+        }
+        println(enrolments)
+        return enrolments
     }
 }

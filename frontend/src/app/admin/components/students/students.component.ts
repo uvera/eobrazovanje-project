@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class StudentsComponent implements OnInit {
   links = [
     ['list-students-tab', 'List students'],
-    ['create-student-tab', 'Create student'],
+    // ['create-student-tab', 'Create student'],
   ];
   activeLink = this.links[0][0];
 

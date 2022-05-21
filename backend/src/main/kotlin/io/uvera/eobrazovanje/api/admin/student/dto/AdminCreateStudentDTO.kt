@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.api.admin.student.dto
 
 import io.uvera.eobrazovanje.constraint.StudentTranscriptNumberExists
 import org.springframework.validation.annotation.Validated
+import java.util.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -15,7 +16,7 @@ class AdminCreateStudentDTO(
     val identificationNumber: String,
 
     @field:NotNull
-    val currentYear: Int,
+    val currentYear: String,
 
     @field:NotBlank
     var firstName: String,
@@ -25,4 +26,7 @@ class AdminCreateStudentDTO(
 
     @field:NotBlank
     var email: String,
+
+    @field:NotNull
+    var studyProgramId: UUID
 )

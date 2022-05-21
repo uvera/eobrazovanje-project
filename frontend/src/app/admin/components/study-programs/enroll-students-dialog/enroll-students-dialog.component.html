@@ -1,16 +1,7 @@
 <h1 mat-dialog-title>Enroll students to selected study program</h1>
-<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-
-    <mat-form-field appearance="standard" fxFlexFill>
-        <mat-label>Select students</mat-label>
-        <mat-select formControlName="studentIds" multiple>
-            <mat-option *ngFor="let stud of opStudents" [value]="stud.id">
-                {{ stud.transcriptNumber }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
+<div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+    <input type="file" id="fileUpload" (change)="onFileSelected($event)">
     <div mat-dialog-actions fxFlexAlign="flex-end">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
     </div>
-</form>
+</div>

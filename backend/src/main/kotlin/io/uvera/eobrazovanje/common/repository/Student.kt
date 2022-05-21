@@ -72,5 +72,4 @@ interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
 
     @Query("select s from Student s where s.studyProgram is null")
     fun findAllWhereNoStudyProgram(): List<StudentViewDTO>
-
 }
