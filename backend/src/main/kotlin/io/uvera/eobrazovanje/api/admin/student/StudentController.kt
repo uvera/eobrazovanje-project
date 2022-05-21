@@ -1,9 +1,7 @@
 package io.uvera.eobrazovanje.api.admin.student
 
-import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.util.AnyResponseEntity
 import io.uvera.eobrazovanje.util.extensions.emptyOk
@@ -26,5 +24,11 @@ class StudentController(
     fun getCurrentlyLoggedInStudentByEmail(
         @RequestParam(value = "email", required = true, defaultValue = "") email: String
     ): ResponseEntity<StudentViewDTO> = service.getStudentByEmail(email).ok
+
+    @GetMapping("/subjects")
+    fun getStudentSubjects(
+        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
+    ): ResponseEntity<List<SubjectViewDTO>> = service.getStudentSubjects(id).ok
+
 
 }

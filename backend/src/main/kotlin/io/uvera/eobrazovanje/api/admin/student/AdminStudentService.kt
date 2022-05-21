@@ -4,6 +4,7 @@ import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.common.service.DigitGenerationService
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
@@ -25,6 +26,7 @@ import java.util.*
 class AdminStudentService(
     protected val repo: StudentRepository,
     protected val userRepository: UserRepository,
+    protected val subjectRepository: SubjectRepository,
     protected val digitGenerationService: DigitGenerationService,
 ) {
 
@@ -103,5 +105,9 @@ class AdminStudentService(
 
     fun getStudentsWithoutStudyPrograms(): Any = repo {
         return@repo findAllWhereNoStudyProgram()
+    }
+
+    fun getStudentSubjects(studentId: UUID): List<SubjectViewDTO> = subjectRepository {
+        return@subjectRepository findByStudentId(studentId)
     }
 }
