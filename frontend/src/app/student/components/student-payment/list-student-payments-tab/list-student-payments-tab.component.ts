@@ -61,18 +61,18 @@ export class ListStudentPaymentsTabComponent implements OnInit {
           .subscribe((res) => {
             const responseBody = res?.body
             if (responseBody) {
-            const { id }  = responseBody;
-            this.service.
-            fetchStudentPaymentsPaged(pageIndex, pageSize, id)
-            .pipe(first())
-            .subscribe((res) => {
-              const responseBody = res?.body
-              if(responseBody) {
-                const { content, totalElements } = responseBody;
-                this.total.next(totalElements);
-                this.dataSet.next(content);
-              }
-            })
+              const { id }  = responseBody;
+              this.service.
+              fetchStudentPaymentsPaged(pageIndex, pageSize, id)
+              .pipe(first())
+              .subscribe((res) => {
+                const responseBody = res?.body
+                if(responseBody) {
+                  const { content, totalElements } = responseBody;
+                  this.total.next(totalElements);
+                  this.dataSet.next(content);
+                }
+              })
           }
         })
       }
