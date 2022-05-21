@@ -40,4 +40,8 @@ interface SubjectRepository : JpaSpecificationRepository<Subject, UUID> {
     fun findAllWhereStudyProgramIsNullAsDto(): List<SubjectViewDTO>
     @Query("select s from Subject s")
     fun findAllSubjects(): List<SubjectViewDTO>
+
+    // This is a placeholder query and should be fixed, replace with a working query that gets all subjects of one student
+    @Query("select t from Subject t where t.id = :id")
+    fun findByStudentId(id: UUID): List<SubjectViewDTO>
 }
