@@ -21,13 +21,21 @@ class SubjectExecutionService(
     protected val repo: SubjectExecutionRepository,
     protected val subjectRepo: SubjectRepository,
     protected val preExamRepo: PreExamActivityRepository,
-    protected val professorRepo: TeacherRepository
+    protected val professorRepo: TeacherRepository,
+    protected val studyRepo: StudyProgramRepository,
 ) {
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional
     fun createSubjectExecution(subjectExecutionDTO: SubjectExecutionCreateDTO): SubjectExecutionViewDTO = repo {
         subjectDTOToEntity(subjectExecutionDTO).save().also { subjectExEntity ->
             preExamRepo {
                 findAllById(subjectExecutionDTO.preExamActivityIds).updateEach { subjectExecution = subjectExEntity }
+            }
+        }.also { subjectEx ->
+            val studyProgramID = subjectRepo.findSubjectWithStudyProgram(subjectExecutionDTO.subjectId).studyProgram?.id
+            repo {
+                val dbStudy = studyProgramID?.let { studyRepo.findByIdWithExecutions(it) }
+                subjectEx.studyProgram = dbStudy
+                subjectEx.save()
             }
         }.let {
             getSubjectExecution(it.id)

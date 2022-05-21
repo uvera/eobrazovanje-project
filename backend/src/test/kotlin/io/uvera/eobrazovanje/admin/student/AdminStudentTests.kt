@@ -91,7 +91,7 @@ class AdminStudentTests : ApplicationTest() {
                     AdminCreateStudentDTO(
                         transcriptNumber = "1234",
                         identificationNumber = "12313",
-                        currentYear = 1231,
+                        currentYear = "1231",
                         firstName = "Marko",
                         lastName = "Petrovic",
                         email = "marko@petrovic.com"

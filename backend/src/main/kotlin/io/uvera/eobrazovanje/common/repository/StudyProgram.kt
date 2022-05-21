@@ -24,12 +24,7 @@ class StudyProgram(
     var codeName: String,
     @Column(name = "name", nullable = false)
     var name: String,
-    @ManyToMany
-    @JoinTable(
-        name = "study_program_subject_executions",
-        joinColumns = [JoinColumn(name = "study_program_id")],
-        inverseJoinColumns = [JoinColumn(name = "subject_executions_id")]
-    )
+    @OneToMany(mappedBy = "studyProgram", orphanRemoval = true)
     var subjectExecutions: MutableSet<SubjectExecution> = mutableSetOf(),
 
     @OneToMany(mappedBy = "studyProgram", orphanRemoval = true)
@@ -50,4 +45,7 @@ interface StudyProgramRepository : JpaSpecificationRepository<StudyProgram, UUID
         "select t from StudyProgram t",
     )
     fun findAllAsDto(page: Pageable): Page<StudyProgramViewDTO>
+
+    @Query("select t from StudyProgram t left join fetch t.subjectExecutions where t.id = :id")
+    fun findByIdWithExecutions(id: UUID): StudyProgram?
 }

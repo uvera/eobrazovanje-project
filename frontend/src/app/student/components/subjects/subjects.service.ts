@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../common/service/api.service';
 import { HttpParams } from '@angular/common/http';
+import { PageEntity } from 'src/app/common/http/page-entity';
 
 @Injectable({
     providedIn: 'root'
@@ -11,10 +12,12 @@ export class SubjectsComponentService {
         private readonly api: ApiService
     ) {}
 
-    fetchStudentSubjects(id: string) {
+    fetchStudentSubjects(id: string, pageIndex: number, pageSize: number) {
         const params = new HttpParams()
         .set('id', id)
-        return this.api.get<SubjectViewDTO>('/api/student/subjects', params)
+        .set('page', pageIndex)
+        .set('records', pageSize);
+        return this.api.get<PageEntity>('/api/student/subjects', params)
     }
 
     fetchCurrentUser() {

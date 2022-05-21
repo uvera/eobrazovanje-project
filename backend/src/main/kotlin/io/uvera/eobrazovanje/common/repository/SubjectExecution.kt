@@ -30,8 +30,10 @@ class SubjectExecution(
     var subject: Subject,
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var subjectEnrollments: MutableList<SubjectEnrollment> = mutableListOf(),
-    @ManyToMany(mappedBy = "subjectExecutions")
-    var studyPrograms: MutableSet<StudyProgram> = mutableSetOf(),
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "study_program_subject_id", nullable = true)
+    var studyProgram: StudyProgram? = null,
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var subjectProfessorEnrollments: MutableList<SubjectProfessorEnrollment> = mutableListOf(),

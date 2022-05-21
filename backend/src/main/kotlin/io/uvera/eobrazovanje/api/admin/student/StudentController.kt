@@ -27,8 +27,10 @@ class StudentController(
 
     @GetMapping("/subjects")
     fun getStudentSubjects(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
         @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
-    ): Any = service.getStudentSubjects(id).ok
+    ): Any = service.getStudentSubjects(page, records, id).ok
 
 
 }

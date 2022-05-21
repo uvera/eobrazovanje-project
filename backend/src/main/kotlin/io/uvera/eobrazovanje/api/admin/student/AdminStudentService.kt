@@ -123,11 +123,11 @@ class AdminStudentService(
         return@repo findAllWhereNoStudyProgram()
     }
 
-    fun getStudentSubjects(studentId: UUID): Any {
-        val enrolments = enrollmentRepo {
-            findAllByStudentId(studentId)
+    fun getStudentSubjects(page: Int, records: Int, studentId: UUID): Page<EnrollmentViewDTO> {
+        val req = PageRequest.of(page - 1, records)
+        val enrolments = subjEnrolRepo {
+            findAllByStudentId(req, studentId)
         }
-        println(enrolments)
         return enrolments
     }
 }

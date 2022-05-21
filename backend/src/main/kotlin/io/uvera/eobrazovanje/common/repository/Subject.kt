@@ -38,6 +38,8 @@ interface SubjectRepository : JpaSpecificationRepository<Subject, UUID> {
     fun findAllAsDto(pageable: Pageable): Page<SubjectViewDTO>
     @Query("select s from Subject s where s.studyProgram is null")
     fun findAllWhereStudyProgramIsNullAsDto(): List<SubjectViewDTO>
+    @Query("select s from Subject s left join fetch s.studyProgram where s.id = :id")
+    fun findSubjectWithStudyProgram(id: UUID): Subject
     @Query("select s from Subject s")
     fun findAllSubjects(): List<SubjectViewDTO>
 }
