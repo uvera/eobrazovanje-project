@@ -41,6 +41,9 @@ class SubjectExecution(
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var preExamActivities: MutableList<PreExamActivity> = mutableListOf(),
 
+    @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
+    var studentExamEnrollments: MutableList<ExamEnrollment> = mutableListOf(),
+
     @ManyToMany(cascade = [CascadeType.MERGE])
     @JoinTable(
         name = "subject_execution_exam_periods",

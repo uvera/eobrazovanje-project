@@ -47,6 +47,9 @@ class Student(
 
     @OneToMany(mappedBy = "student", orphanRemoval = true)
     var heldExamResults: MutableList<HeldExamResult> = mutableListOf(),
+
+    @OneToMany(mappedBy = "student", orphanRemoval = true)
+    var examEnrollments: MutableList<ExamEnrollment> = mutableListOf(),
 ) : BaseEntity()
 
 @Repository
