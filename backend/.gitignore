@@ -38,3 +38,6 @@ out/
 
 ### JPA Buddy ###
 .jpb/
+
+### jer sam ja tako nabudzio ###
+src/main/resources/application.yml

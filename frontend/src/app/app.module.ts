@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -24,6 +23,7 @@ import { TeacherGuard } from './common/guard/teacher-guard.guard';
 import { AuthInterceptor } from './common/http/auth-interceptor';
 import { SessionService } from './common/service/session.service';
 import { ApiService } from './common/service/api.service';
+import { MatTabsModule } from '@angular/material/tabs';
 import { LogoutComponent } from './common/components/logout/logout.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
@@ -101,6 +101,7 @@ const routes: Routes = [
     CommonModule,
     AppCommonModule,
     MatSnackBarModule,
+    MatTabsModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000 } },

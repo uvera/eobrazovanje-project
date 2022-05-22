@@ -13,6 +13,7 @@ import { CreateSubjectTabComponent } from './components/subjects/create-subject-
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -44,6 +45,11 @@ import { EditSubjectExecutionsDialogComponent } from './components/subject-execu
 import { CreateSubjectExecutionsTabComponent } from './components/subject-executions/create-subject-executions-tab/create-subject-executions-tab.component';
 import { EnrollStudentsDialogComponent } from './components/study-programs/enroll-students-dialog/enroll-students-dialog.component';
 import { EnrollToSubjectDialogComponent } from './components/subject-executions/enroll-to-subject-dialog/enroll-to-subject-dialog.component';
+import { LogoutComponent } from '../common/components/logout/logout.component';
+import { ExamPeriodsComponent } from './components/exam-periods/exam-periods.component';
+import { ListExamPeriodsTabComponent, SubjectExecutionNamePipe } from './components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
+import { CreateExamPeriodTabComponent } from './components/exam-periods/create-exam-period-tab/create-exam-period-tab.component';
+import { EditExamPeriodDialogComponent } from './components/exam-periods/edit-exam-period-dialog/edit-exam-period-dialog.component';
 
 const routes: Routes = [
   {
@@ -60,12 +66,25 @@ const routes: Routes = [
         ],
       },
       {
+        path: 'logout',
+        component: LogoutComponent
+      },
+      {
         path: 'profesors',
         component: ProfesorComponent,
         children: [
           { path: 'list-profesors-tab', component: ListProfesorTabComponent },
           { path: 'create-profesor-tab', component: CreateProfesorTabComponent },
           { path: '', pathMatch: 'full', redirectTo: 'list-profesors-tab' },
+        ],
+      },
+      {
+        path: 'exam-periods',
+        component: ExamPeriodsComponent,
+        children: [
+          { path: 'list-exam-periods-tab', component: ListExamPeriodsTabComponent },
+          { path: 'create-exam-period-tab', component: CreateExamPeriodTabComponent },
+          { path: '', pathMatch: 'full', redirectTo: 'list-exam-periods-tab' },
         ],
       },
       {
@@ -191,6 +210,7 @@ const routes: Routes = [
     ListStudyProgramsTabComponent,
     EditStudyProgramDialogComponent,
     SubjectsNamePipe,
+    SubjectExecutionNamePipe,
     PreExamActivitiesComponent,
     ListPreExamActivitiesComponent,
     CreatePreExamActivityComponent,
@@ -201,6 +221,10 @@ const routes: Routes = [
     CreateSubjectExecutionsTabComponent,
     EnrollStudentsDialogComponent,
     EnrollToSubjectDialogComponent,
+    ExamPeriodsComponent,
+    ListExamPeriodsTabComponent,
+    CreateExamPeriodTabComponent,
+    EditExamPeriodDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -218,7 +242,8 @@ const routes: Routes = [
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    MatNativeDateModule
   ],
 })
 export class AdminModule { }

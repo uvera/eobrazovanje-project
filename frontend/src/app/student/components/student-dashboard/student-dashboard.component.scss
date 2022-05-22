@@ -1,0 +1,25 @@
+.sidenav {
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    border: 1px solid #555;
+  }
+  
+  .sidenav-drawer {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  }
+  
+  .sidenav-content {
+    padding: 10px;
+  }
+  
+  .is-active {
+    color: #555555;
+  }
+  
+  .mat-button {
+    width: 100%;
+  }
+  

@@ -1,11 +1,12 @@
 package io.uvera.eobrazovanje.api.admin.payment
-
+import io.uvera.eobrazovanje.api.admin.payment.dto.StudentPaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.notFoundById
+import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.extensions.update
 import org.springframework.data.domain.Page
@@ -20,11 +21,14 @@ class PaymentService(
     protected val studentRepo: StudentRepository
 ) {
     fun createPayment(paymentDTO: PaymentCreateDTO): PaymentViewDTO = paymentRepo {
+        // TODO add addition of funds to the balance of students
+
         getPayment(paymentDTOToEntity(paymentDTO).save().id)
     }
 
     fun getPayment(paymentId: UUID): PaymentViewDTO =
         paymentRepo.findByIdAsDto(paymentId) ?: notFoundById<Payments>(paymentId)
+    
 
     fun updatePayment(id: UUID, dto: PaymentUpdateDTO): PaymentViewDTO = paymentRepo {
         val dbPayments = findByIdOrNull(id) ?: notFoundById<Payments>(id)
@@ -40,17 +44,24 @@ class PaymentService(
         return@paymentRepo deleteById(id)
     }
 
+    fun getPayments(page: Int, records: Int, id: UUID): Page<PaymentViewDTO> = paymentRepo {
+        val req = PageRequest.of(page - 1, records)
+
+        return@paymentRepo findAllByStudentId(id, req)
+    }
+
+    fun getStudentPaymentsByEmail(page: Int, records: Int, email: String): Page<PaymentViewDTO> = paymentRepo {
+        val req = PageRequest.of(page - 1, records)
+    
+        return@paymentRepo findAllByStudentEmail(email, req)
+    }
+
+
     fun paymentDTOToEntity(dto: PaymentCreateDTO): Payments {
         return Payments(
             amount = dto.amount,
             depositedAt = dto.depositedAt,
             student = studentRepo.findByIdOrNull(dto.studentId) ?: notFoundById<Student>(dto.studentId)
         )
-    }
-
-    fun getPayments(page: Int, records: Int, id: UUID): Page<PaymentViewDTO> = paymentRepo {
-        val req = PageRequest.of(page - 1, records)
-
-        return@paymentRepo findAllByStudentId(id, req)
     }
 }

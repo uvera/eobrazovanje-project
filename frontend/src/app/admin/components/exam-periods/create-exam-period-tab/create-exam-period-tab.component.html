@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Name</mat-label>
+            <input matInput inputmode="text" type="text" formControlName="name">
+            <mat-error *ngIf="!!(form.get('name'))?.errors?.['required']">
+                Name is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Choose a start date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="startDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Choose a end date</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="endDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Select subject executions</mat-label>
+            <mat-select formControlName="subjectExecutionIds" multiple>
+                <mat-option *ngFor="let subject of opSubjects" [value]="subject.id">
+                    {{ subject.subject.name + " " + subject.subject.year + " " + subject.place }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div mat-dialog-actions fxFlexAlign="flex-end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </div>
+    </div>
+</form>

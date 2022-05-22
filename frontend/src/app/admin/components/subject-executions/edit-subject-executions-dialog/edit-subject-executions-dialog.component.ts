@@ -73,6 +73,7 @@ export class EditSubjectExecutionsDialogComponent implements OnInit {
 }
 
 export interface SubjectExecutionViewDTO {
+  id: string;
   place: string;
   time: string;
   preExamActivities: PreExamActivityViewDTO[]

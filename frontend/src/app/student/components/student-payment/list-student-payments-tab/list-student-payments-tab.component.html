@@ -1,0 +1,26 @@
+<h2>My payments</h2>
+
+<div>
+
+  <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
+  <nz-table #dataTable [nzData]="dataSet.value" nzShowPagination [nzFrontPagination]="false"
+    [nzPageIndex]="pageIndex.value" [nzPageSize]="pageSize.value" [nzTotal]="total.value"
+    [nzVirtualItemSize]="total.value" (nzQueryParams)="queryParamsChange($event)"
+    [nzPageSizeOptions]="[1, 5, 10, 25, 50]" [nzShowSizeChanger]="true">
+    <thead>
+      <tr>
+        <th>Deposited At</th>
+        <th>Payment ID</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of dataTable.data">
+        <td>{{i.depositedAt | date:'short'}}</td>
+        <td>{{i.id}}</td>
+        <td>{{i.amount}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+</div>

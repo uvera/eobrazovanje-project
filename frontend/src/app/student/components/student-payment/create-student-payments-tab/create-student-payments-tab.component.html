@@ -1,0 +1,27 @@
+<h2>Deposit amout to my bank account</h2>
+
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+      
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Amount</mat-label>
+        <input matInput inputmode="numeric" type="number" formControlName="amount">
+        <mat-error *ngIf="!!(form.get('amount'))?.errors?.['required']">
+         Amount is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="standard" fxFlexFill>
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="depositedAt">
+        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker [showSeconds]="true" [touchUi]="true">
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <div mat-dialog-actions fxFlexAlign="flex-end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+      </div>
+
+    </div>
+  </form>
+  

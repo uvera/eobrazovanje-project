@@ -47,10 +47,21 @@ class Student(
 
     @OneToMany(mappedBy = "student", orphanRemoval = true)
     var heldExamResults: MutableList<HeldExamResult> = mutableListOf(),
+
+    @OneToMany(mappedBy = "student", orphanRemoval = true)
+    var examEnrollments: MutableList<ExamEnrollment> = mutableListOf(),
 ) : BaseEntity()
 
 @Repository
 interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
+    fun findByUserId(id: UUID): Student?
+
+    @Query("select s from Student s where s.user.email = :email")
+    fun findByUserEmailOrNull(email: String): Student?
+    
+    @Query("select s from Student s where s.user.email = :email")
+    fun findByUserEmailAsDto(email: String): StudentViewDTO?
+    
     fun findByTranscriptNumber(value: String): Student?
 
     @Query("select t from Student t where t.id = :id")

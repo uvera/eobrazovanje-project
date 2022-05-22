@@ -31,4 +31,7 @@ interface PaymentRepository : JpaSpecificationRepository<Payments, UUID> {
 
     @Query("select p from Payments p where p.student.id = :id")
     fun findAllByStudentId(id: UUID, pageable: Pageable): Page<PaymentViewDTO>
+
+    @Query("select p from Payments p where p.student.user.email = :email")
+    fun findAllByStudentEmail(email: String, pageable: Pageable): Page<PaymentViewDTO>
 }

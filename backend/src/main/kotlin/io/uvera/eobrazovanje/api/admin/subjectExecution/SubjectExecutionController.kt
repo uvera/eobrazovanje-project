@@ -42,4 +42,7 @@ class SubjectExecutionController(protected val service: SubjectExecutionService)
     ): Any {
         return service.updateSubjectExecution(id, dto).ok
     }
+
+    @GetMapping("/all")
+    fun getAllSubjectExecutions() = service.getAllSubjectExecutions().ok
 }

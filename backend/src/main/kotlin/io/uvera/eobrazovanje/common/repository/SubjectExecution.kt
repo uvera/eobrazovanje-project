@@ -30,14 +30,19 @@ class SubjectExecution(
     var subject: Subject,
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var subjectEnrollments: MutableList<SubjectEnrollment> = mutableListOf(),
-    @ManyToMany(mappedBy = "subjectExecutions")
-    var studyPrograms: MutableSet<StudyProgram> = mutableSetOf(),
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "study_program_subject_id", nullable = true)
+    var studyProgram: StudyProgram? = null,
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var subjectProfessorEnrollments: MutableList<SubjectProfessorEnrollment> = mutableListOf(),
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var preExamActivities: MutableList<PreExamActivity> = mutableListOf(),
+
+    @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
+    var studentExamEnrollments: MutableList<ExamEnrollment> = mutableListOf(),
 
     @ManyToMany(cascade = [CascadeType.MERGE])
     @JoinTable(
@@ -72,4 +77,10 @@ interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecuti
 
     @Query("select t from SubjectExecution t")
     fun findAllAsDto(page: Pageable): Page<SubjectExecutionTableViewDTO>
+
+    @org.springframework.data.jpa.repository.EntityGraph("subject-entity-graph")
+    @Query(
+        "select t from SubjectExecution t",
+    )
+    fun findAllForDisplay(): List<SubjectExecutionViewDTO>
 }

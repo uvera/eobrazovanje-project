@@ -1,9 +1,19 @@
 package io.uvera.eobrazovanje.api.admin.student
 
+import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentUpdateDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.*
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.common.service.DigitGenerationService
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
+import io.uvera.eobrazovanje.util.extensions.invoke
+import io.uvera.eobrazovanje.util.extensions.notFoundById
+import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
+import io.uvera.eobrazovanje.util.extensions.saveAll
+import io.uvera.eobrazovanje.util.extensions.update
 import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -19,6 +29,7 @@ import java.util.*
 class AdminStudentService(
     protected val repo: StudentRepository,
     protected val userRepository: UserRepository,
+    protected val subjectRepository: SubjectRepository,
     protected val digitGenerationService: DigitGenerationService,
     protected val studyRepo: StudyProgramRepository,
     protected val subjEnrolRepo: SubjectEnrollmentRepository
@@ -27,6 +38,10 @@ class AdminStudentService(
     @Transactional
     fun getStudent(id: UUID): StudentViewDTO =
         repo.findByIdAsDto(id) ?: notFoundById<Student>(id)
+
+    @Transactional
+    fun getStudentByEmail(email: String): StudentViewDTO =
+        repo.findByUserEmailAsDto(email) ?: notFoundByEmail<Student>(email)
 
     @Transactional
     fun getStudentsByPage(page: Int, records: Int): Page<StudentViewDTO> = repo {
@@ -106,5 +121,13 @@ class AdminStudentService(
 
     fun getStudentsWithoutStudyPrograms(): Any = repo {
         return@repo findAllWhereNoStudyProgram()
+    }
+
+    fun getStudentSubjects(page: Int, records: Int, studentId: UUID): Page<EnrollmentViewDTO> {
+        val req = PageRequest.of(page - 1, records)
+        val enrolments = subjEnrolRepo {
+            findAllByStudentId(req, studentId)
+        }
+        return enrolments
     }
 }
