@@ -21,6 +21,8 @@ import { StudentPaymentComponent } from './components/student-payment/student-pa
 import { CreateStudentPaymentsTabComponent } from './components/student-payment/create-student-payments-tab/create-student-payments-tab.component';
 import { ListStudentPaymentsTabComponent } from './components/student-payment/list-student-payments-tab/list-student-payments-tab.component';
 import { LogoutComponent } from '../common/components/logout/logout.component';
+import { ListExamsTabComponent } from './components/exams/list-exams-tab/list-exams-tab.component';
+import { ListEnrolledExamsTabComponent } from './components/exams/list-enrolled-exams-tab/list-enrolled-exams-tab.component';
 
 
 const routes: Routes = [
@@ -47,7 +49,11 @@ const routes: Routes = [
       },
       {
         path: 'exams',
-        component: ExamsComponent
+        component: ExamsComponent,
+        children: [
+          { path: 'list-student-exam-enrollments-tab', component: ListExamsTabComponent },
+          { path: 'list-student-all-exam-enrollments-tab', component: ListEnrolledExamsTabComponent }
+        ]
       },
       {
         path: 'logout',
@@ -76,6 +82,8 @@ const routes: Routes = [
     SubjectsComponent,
     ExamsComponent,
     ProfileComponent,
+    ListExamsTabComponent,
+    ListEnrolledExamsTabComponent,
   ],
   imports: [
     CommonModule,
@@ -96,4 +104,4 @@ const routes: Routes = [
     NgxMatNativeDateModule
   ],
 })
-export class StudentModule {}
+export class StudentModule { }

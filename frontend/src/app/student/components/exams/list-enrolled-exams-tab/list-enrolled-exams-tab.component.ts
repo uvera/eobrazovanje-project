@@ -1,27 +1,25 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
-import { SubjectExecutionTableViewDTO } from '../../subject-executions/list-subject-executions-tab/list-subject-executions-tab.component';
-import { ListExamPeriodsTabService } from './list-exam-periods-tab.service';
+import { ExamPeriodsViewDTO } from 'src/app/admin/components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
+import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
+import { SubjectExecutionTableViewDTO } from 'src/app/admin/components/subject-executions/list-subject-executions-tab/list-subject-executions-tab.component';
+import { ListEnrolledExamsTabService } from './list-enrolled-exams-tab.service';
 
 @Component({
-  selector: 'app-list-exam-periods-tab',
-  templateUrl: './list-exam-periods-tab.component.html',
-  styleUrls: ['./list-exam-periods-tab.component.scss']
+  selector: 'app-list-enrolled-exams-tab',
+  templateUrl: './list-enrolled-exams-tab.component.html',
+  styleUrls: ['./list-enrolled-exams-tab.component.scss']
 })
-export class ListExamPeriodsTabComponent implements OnInit {
+export class ListEnrolledExamsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
   readonly total = new BehaviorSubject<number>(1);
   readonly pageSize = new BehaviorSubject<number>(10);
-  readonly dataSet = new BehaviorSubject<ExamPeriodsViewDTO[]>([]);
+  readonly dataSet = new BehaviorSubject<ExamEnrollmentDTO[]>([]);
 
   constructor(
-    private service: ListExamPeriodsTabService,
-    private snack: MatSnackBar,
-    private dialog: MatDialog
-  ) {}
+    private service: ListEnrolledExamsTabService,
+  ) { }
 
   ngOnInit(): void {
     this.pageNumberAndSizeCombined$.subscribe((value) => {
@@ -65,17 +63,12 @@ export class ListExamPeriodsTabComponent implements OnInit {
   }
 }
 
-export interface ExamPeriodsViewDTO {
+interface ExamEnrollmentDTO {
   id: string,
-  name: string,
-  startDate: Date,
-  endDate: Date,
-  subjectExecutions: SubjectExecutionTableViewDTO[]
-}
-
-@Pipe({name: 'subjectExecutionNamePipe'})
-export class SubjectExecutionNamePipe implements PipeTransform {
-  transform(value: SubjectExecutionTableViewDTO[]): any {
-    return value.map(v => v.place).join(',')
+  subjectExecution: SubjectExecutionTableViewDTO,
+  examPeriod: {
+    id: string,
+    startDate: Date,
+    endDate: Date
   }
 }

@@ -37,4 +37,8 @@ interface SubjectEnrollmentRepository : JpaSpecificationRepository<SubjectEnroll
     @Query("select s from SubjectEnrollment s where s.student.id = :id")
     @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
     fun findAllByStudentId(page: Pageable, id: UUID): Page<EnrollmentViewDTO>
+
+    @Query("select s from SubjectEnrollment s where s.student.id = :id")
+    @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
+    fun findAllByStudentId(id: UUID): List<SubjectEnrollment>
 }

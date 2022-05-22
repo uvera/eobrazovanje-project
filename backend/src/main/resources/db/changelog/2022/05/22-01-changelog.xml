@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1653209263517-1" author="ivke (generated)">
+        <addColumn tableName="exam_enrollment">
+            <column name="exam_period_enrollment_id" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1653209263517-2" author="ivke (generated)">
+        <addNotNullConstraint columnName="exam_period_enrollment_id" tableName="exam_enrollment"/>
+    </changeSet>
+    <changeSet id="1653209263517-3" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="exam_period_enrollment_id" baseTableName="exam_enrollment"
+                                 constraintName="FK_EXAM_ENROLLMENT_ON_EXAM_PERIOD_ENROLLMENT"
+                                 referencedColumnNames="id" referencedTableName="exam_period"/>
+    </changeSet>
+    <changeSet id="1653209263517-4" author="ivke (generated)">
+        <dropColumn columnName="attempt" tableName="exam_enrollment"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -25,13 +25,19 @@ class ExamPeriod(
     @ManyToMany(mappedBy = "examPeriods", cascade = [CascadeType.MERGE])
     var subjectExecutions: MutableSet<SubjectExecution> = mutableSetOf(),
     @OneToMany(mappedBy = "examPeriod", orphanRemoval = true)
-    var heldExams: MutableList<HeldExam> = mutableListOf()
+    var heldExams: MutableList<HeldExam> = mutableListOf(),
+    @OneToMany(mappedBy = "examPeriod", orphanRemoval = true)
+    var examEnrollments: MutableList<ExamEnrollment> = mutableListOf()
 ) : BaseEntity()
 
 @Repository
 interface ExamPeriodRepository : JpaSpecificationRepository<ExamPeriod, UUID> {
     @Query("select t from ExamPeriod t left join fetch t.subjectExecutions where t.id = :id")
     fun findByIdAsDto(id: UUID): ExamPeriodViewDTO?
+
+    @org.springframework.data.jpa.repository.EntityGraph("exam-graph")
+    @Query("select t from ExamPeriod t")
+    fun findAllForStudent(): List<ExamPeriodViewDTO>
 
     @org.springframework.data.jpa.repository.EntityGraph("exam-graph")
     @Query("select t from ExamPeriod t")
