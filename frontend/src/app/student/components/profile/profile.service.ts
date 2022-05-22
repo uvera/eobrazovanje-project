@@ -27,6 +27,7 @@ export interface CurrentTokenInfoDTO {
 
 export interface CurrentStudentDTO {
     id: string;
+    balance: number;
     transcriptNumber: string;
     identificationNumber: string;
     user: {

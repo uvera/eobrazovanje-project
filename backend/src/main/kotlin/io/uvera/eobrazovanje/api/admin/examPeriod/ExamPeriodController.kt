@@ -43,7 +43,7 @@ class ExamPeriodController(protected val service: ExamPeriodService) {
     fun enrollStudentIntoExamPeriod(
         @PathVariable("id") examPeriodID: UUID,
         @PathVariable("subjectExecutionID") subjectExecutionID: UUID,
-        ): AnyResponseEntity {
+        ): ResponseEntity<String> {
         val principal by principalDelegate()
         return service.enrollStudentToExamPeriod(examPeriodID, principal, subjectExecutionID).ok
     }

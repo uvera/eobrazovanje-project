@@ -9,6 +9,7 @@ import { CurrentStudentDTO, ProfileComponentService } from './profile.service';
 export class ProfileComponent implements OnInit {
   student: CurrentStudentDTO = {
     id: '',
+    balance: 0,
     transcriptNumber: '',
     identificationNumber: '',
     user: {

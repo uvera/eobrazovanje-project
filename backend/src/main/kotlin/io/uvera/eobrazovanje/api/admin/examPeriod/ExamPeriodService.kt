@@ -82,7 +82,7 @@ class ExamPeriodService(
     }
 
     @Transactional
-    fun enrollStudentToExamPeriod(examPeriodID: UUID, principal: CustomUserDetails, subjectExecutionID: UUID): Any {
+    fun enrollStudentToExamPeriod(examPeriodID: UUID, principal: CustomUserDetails, subjectExecutionID: UUID): String {
         val student = studentRepo.findByUserEmailOrNull(principal.email) ?: notFoundByEmail<Student>(principal.email)
         val examPeriod = repo.findByIdOrNull(examPeriodID) ?: notFoundById<ExamPeriod>(examPeriodID)
         val subjectExecution = subjectExRepo.findByIdOrNull(subjectExecutionID) ?: notFoundById<SubjectExecution>(subjectExecutionID)

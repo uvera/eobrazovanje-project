@@ -52,7 +52,12 @@ const routes: Routes = [
         component: ExamsComponent,
         children: [
           { path: 'list-student-exam-enrollments-tab', component: ListExamsTabComponent },
-          { path: 'list-student-all-exam-enrollments-tab', component: ListEnrolledExamsTabComponent }
+          { path: 'list-student-all-exam-enrollments-tab', component: ListEnrolledExamsTabComponent },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-student-exam-enrollments-tab',
+          },
         ]
       },
       {

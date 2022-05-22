@@ -9,10 +9,12 @@ import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.extensions.update
+import io.uvera.eobrazovanje.util.principalDelegate
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
@@ -20,9 +22,13 @@ class PaymentService(
     protected val paymentRepo: PaymentRepository,
     protected val studentRepo: StudentRepository
 ) {
+    @Transactional
     fun createPayment(paymentDTO: PaymentCreateDTO): PaymentViewDTO = paymentRepo {
-        // TODO add addition of funds to the balance of students
-
+        studentRepo {
+            val student = findByIdOrNull(paymentDTO.studentId) ?: notFoundById<Student>(paymentDTO.studentId)
+            student.balance += paymentDTO.amount
+            student.save()
+        }
         getPayment(paymentDTOToEntity(paymentDTO).save().id)
     }
 
@@ -35,6 +41,11 @@ class PaymentService(
         dbPayments.update {
             amount = dto.amount
             depositedAt = dto.depositedAt
+        }
+        val student = dbPayments.student
+        studentRepo {
+            student.balance += dto.amount
+            student.save()
         }
         return@paymentRepo findByIdAsDto(id) ?: notFoundById<Payments>(id)
     }

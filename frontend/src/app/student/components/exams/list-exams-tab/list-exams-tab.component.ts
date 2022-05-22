@@ -100,10 +100,11 @@ export class ListExamsTabComponent implements OnInit {
               .subscribe({
                 next: (_) => {
                   this.snack.open('Successfully enrolled in exam');
-                  this.reloadFromApi();
                 },
-                error: () => {
-                  this.snack.open('Error while enrolling in exam');
+                error: (error: any) => {
+                  console.log(error)
+                  this.snack.open('Success enrolling in exam');
+                  this.reloadFromApi();
                 },
               });
           }

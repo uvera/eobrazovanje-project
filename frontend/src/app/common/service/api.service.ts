@@ -47,7 +47,7 @@ export class ApiService implements CommonApiService {
     });
   }
 
-  post<T>(route: string, body: any): Observable<HttpResponse<T>> {
+  post<T>(route: string, body?: any): Observable<HttpResponse<T>> {
     return this.httpClient.post<T>(this.generateRouteUrl(route), body, {
       observe: 'response',
       headers: this.headers,

@@ -19,7 +19,7 @@ export class ListExamsTabService {
   }
 
   enrollInExam(examPeriodID: string, subjectExecutionID: string) {
-    return this.api.post(`/api/admin/exam-period/${examPeriodID}/${subjectExecutionID}/enroll`, {});
+    return this.api.post(`/api/admin/exam-period/${examPeriodID}/${subjectExecutionID}/enroll`);
   }
   
   getExamPeriods() {
