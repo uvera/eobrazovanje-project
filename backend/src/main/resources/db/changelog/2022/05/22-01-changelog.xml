@@ -5,21 +5,588 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1653209263517-1" author="ivke (generated)">
-        <addColumn tableName="exam_enrollment">
-            <column name="exam_period_enrollment_id" type="UUID"/>
-        </addColumn>
+    <changeSet id="1653250573147-1" author="ivke (generated)">
+        <createTable tableName="announcement">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_announcement"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="post_text" type="CLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_execution_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
-    <changeSet id="1653209263517-2" author="ivke (generated)">
-        <addNotNullConstraint columnName="exam_period_enrollment_id" tableName="exam_enrollment"/>
+    <changeSet id="1653250573147-2" author="ivke (generated)">
+        <createTable tableName="announcement_comment">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_announcement_comment"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="announcement_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="CLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_comment_id" type="UUID"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
-    <changeSet id="1653209263517-3" author="ivke (generated)">
+    <changeSet id="1653250573147-3" author="ivke (generated)">
+        <createTable tableName="app_user">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_app_user"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-4" author="ivke (generated)">
+        <createTable tableName="document_file">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_document_file"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="ordering" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="extension" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_document_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-5" author="ivke (generated)">
+        <createTable tableName="exam_enrollment">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_exam_enrollment"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="student_enrollment_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="execution_enrollment_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exam_period_enrollment_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-6" author="ivke (generated)">
+        <createTable tableName="exam_period">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_exam_period"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-7" author="ivke (generated)">
+        <createTable tableName="held_exam">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_held_exam"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exam_period_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_execution_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-8" author="ivke (generated)">
+        <createTable tableName="held_exam_result">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_held_exam_result"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="score" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="held_exam_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-9" author="ivke (generated)">
+        <createTable tableName="payments">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_payments"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="amount" type="DECIMAL(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deposited_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-10" author="ivke (generated)">
+        <createTable tableName="pre_exam_activity">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pre_exam_activity"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="points" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_execution_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-11" author="ivke (generated)">
+        <createTable tableName="pre_exam_activity_result">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pre_exam_activity_result"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="score" type="INT"/>
+            <column name="pre_exam_activity_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-12" author="ivke (generated)">
+        <createTable tableName="student">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_student"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="transcript_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identification_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="current_year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_password" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="study_program_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-13" author="ivke (generated)">
+        <createTable tableName="student_document">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_student_document"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valid_till" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registered_at" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-14" author="ivke (generated)">
+        <createTable tableName="study_program">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_study_program"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="code_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-15" author="ivke (generated)">
+        <createTable tableName="subject">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_subject"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="espb" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="study_program_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-16" author="ivke (generated)">
+        <createTable tableName="subject_enrollment">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_subject_enrollment"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_execution_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-17" author="ivke (generated)">
+        <createTable tableName="subject_execution">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_subject_execution"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="place" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="study_program_subject_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-18" author="ivke (generated)">
+        <createTable tableName="subject_execution_exam_periods">
+            <column name="exam_periods_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_execution_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-19" author="ivke (generated)">
+        <createTable tableName="subject_professor_enrollment">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_subject_professor_enrollment"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="subject_execution_id" type="UUID"/>
+            <column name="year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-20" author="ivke (generated)">
+        <createTable tableName="teacher">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_teacher"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="teaching_since" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1653250573147-21" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_announcement_comment_id"
+                             tableName="announcement_comment"/>
+    </changeSet>
+    <changeSet id="1653250573147-22" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_announcement_id" tableName="announcement"/>
+    </changeSet>
+    <changeSet id="1653250573147-23" author="ivke (generated)">
+        <addUniqueConstraint columnNames="email" constraintName="uc_app_user_email" tableName="app_user"/>
+    </changeSet>
+    <changeSet id="1653250573147-24" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_app_user_id" tableName="app_user"/>
+    </changeSet>
+    <changeSet id="1653250573147-25" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_document_file_id" tableName="document_file"/>
+    </changeSet>
+    <changeSet id="1653250573147-26" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_exam_enrollment_id" tableName="exam_enrollment"/>
+    </changeSet>
+    <changeSet id="1653250573147-27" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_exam_period_id" tableName="exam_period"/>
+    </changeSet>
+    <changeSet id="1653250573147-28" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_held_exam_id" tableName="held_exam"/>
+    </changeSet>
+    <changeSet id="1653250573147-29" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_held_exam_result_id" tableName="held_exam_result"/>
+    </changeSet>
+    <changeSet id="1653250573147-30" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_payments_id" tableName="payments"/>
+    </changeSet>
+    <changeSet id="1653250573147-31" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_pre_exam_activity_id" tableName="pre_exam_activity"/>
+    </changeSet>
+    <changeSet id="1653250573147-32" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_pre_exam_activity_result_id"
+                             tableName="pre_exam_activity_result"/>
+    </changeSet>
+    <changeSet id="1653250573147-33" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_student_document_id" tableName="student_document"/>
+    </changeSet>
+    <changeSet id="1653250573147-34" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_student_id" tableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-35" author="ivke (generated)">
+        <addUniqueConstraint columnNames="identification_number" constraintName="uc_student_identification_number"
+                             tableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-36" author="ivke (generated)">
+        <addUniqueConstraint columnNames="transcript_number" constraintName="uc_student_transcript_number"
+                             tableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-37" author="ivke (generated)">
+        <addUniqueConstraint columnNames="code_name" constraintName="uc_study_program_code_name"
+                             tableName="study_program"/>
+    </changeSet>
+    <changeSet id="1653250573147-38" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_study_program_id" tableName="study_program"/>
+    </changeSet>
+    <changeSet id="1653250573147-39" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_subject_enrollment_id" tableName="subject_enrollment"/>
+    </changeSet>
+    <changeSet id="1653250573147-40" author="ivke (generated)">
+        <addUniqueConstraint columnNames="subject_execution_id"
+                             constraintName="uc_subject_execution_exam_periods_subject_execution"
+                             tableName="subject_execution_exam_periods"/>
+    </changeSet>
+    <changeSet id="1653250573147-41" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_subject_execution_id" tableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-42" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_subject_id" tableName="subject"/>
+    </changeSet>
+    <changeSet id="1653250573147-43" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_subject_professor_enrollment_id"
+                             tableName="subject_professor_enrollment"/>
+    </changeSet>
+    <changeSet id="1653250573147-44" author="ivke (generated)">
+        <addUniqueConstraint columnNames="id" constraintName="uc_teacher_id" tableName="teacher"/>
+    </changeSet>
+    <changeSet id="1653250573147-45" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="announcement_id" baseTableName="announcement_comment"
+                                 constraintName="FK_ANNOUNCEMENT_COMMENT_ON_ANNOUNCEMENT" referencedColumnNames="id"
+                                 referencedTableName="announcement"/>
+    </changeSet>
+    <changeSet id="1653250573147-46" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="parent_comment_id" baseTableName="announcement_comment"
+                                 constraintName="FK_ANNOUNCEMENT_COMMENT_ON_PARENT_COMMENT" referencedColumnNames="id"
+                                 referencedTableName="announcement_comment"/>
+    </changeSet>
+    <changeSet id="1653250573147-47" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="announcement_comment"
+                                 constraintName="FK_ANNOUNCEMENT_COMMENT_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+    </changeSet>
+    <changeSet id="1653250573147-48" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_execution_id" baseTableName="announcement"
+                                 constraintName="FK_ANNOUNCEMENT_ON_SUBJECT_EXECUTION" referencedColumnNames="id"
+                                 referencedTableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-49" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="teacher_id" baseTableName="announcement"
+                                 constraintName="FK_ANNOUNCEMENT_ON_TEACHER" referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
+    </changeSet>
+    <changeSet id="1653250573147-50" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="student_document_id" baseTableName="document_file"
+                                 constraintName="FK_DOCUMENT_FILE_ON_STUDENT_DOCUMENT" referencedColumnNames="id"
+                                 referencedTableName="student_document"/>
+    </changeSet>
+    <changeSet id="1653250573147-51" author="ivke (generated)">
         <addForeignKeyConstraint baseColumnNames="exam_period_enrollment_id" baseTableName="exam_enrollment"
                                  constraintName="FK_EXAM_ENROLLMENT_ON_EXAM_PERIOD_ENROLLMENT"
                                  referencedColumnNames="id" referencedTableName="exam_period"/>
     </changeSet>
-    <changeSet id="1653209263517-4" author="ivke (generated)">
-        <dropColumn columnName="attempt" tableName="exam_enrollment"/>
+    <changeSet id="1653250573147-52" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="execution_enrollment_id" baseTableName="exam_enrollment"
+                                 constraintName="FK_EXAM_ENROLLMENT_ON_EXECUTION_ENROLLMENT" referencedColumnNames="id"
+                                 referencedTableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-53" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="student_enrollment_id" baseTableName="exam_enrollment"
+                                 constraintName="FK_EXAM_ENROLLMENT_ON_STUDENT_ENROLLMENT" referencedColumnNames="id"
+                                 referencedTableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-54" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="exam_period_id" baseTableName="held_exam"
+                                 constraintName="FK_HELD_EXAM_ON_EXAM_PERIOD" referencedColumnNames="id"
+                                 referencedTableName="exam_period"/>
+    </changeSet>
+    <changeSet id="1653250573147-55" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_execution_id" baseTableName="held_exam"
+                                 constraintName="FK_HELD_EXAM_ON_SUBJECT_EXECUTION" referencedColumnNames="id"
+                                 referencedTableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-56" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="teacher_id" baseTableName="held_exam"
+                                 constraintName="FK_HELD_EXAM_ON_TEACHER" referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
+    </changeSet>
+    <changeSet id="1653250573147-57" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="held_exam_id" baseTableName="held_exam_result"
+                                 constraintName="FK_HELD_EXAM_RESULT_ON_HELD_EXAM" referencedColumnNames="id"
+                                 referencedTableName="held_exam"/>
+    </changeSet>
+    <changeSet id="1653250573147-58" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="held_exam_result"
+                                 constraintName="FK_HELD_EXAM_RESULT_ON_STUDENT" referencedColumnNames="id"
+                                 referencedTableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-59" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="payments"
+                                 constraintName="FK_PAYMENTS_ON_STUDENT" referencedColumnNames="id"
+                                 referencedTableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-60" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_execution_id" baseTableName="pre_exam_activity"
+                                 constraintName="FK_PRE_EXAM_ACTIVITY_ON_SUBJECT_EXECUTION" referencedColumnNames="id"
+                                 referencedTableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-61" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="pre_exam_activity_id" baseTableName="pre_exam_activity_result"
+                                 constraintName="FK_PRE_EXAM_ACTIVITY_RESULT_ON_PRE_EXAM_ACTIVITY"
+                                 referencedColumnNames="id" referencedTableName="pre_exam_activity"/>
+    </changeSet>
+    <changeSet id="1653250573147-62" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="pre_exam_activity_result"
+                                 constraintName="FK_PRE_EXAM_ACTIVITY_RESULT_ON_STUDENT" referencedColumnNames="id"
+                                 referencedTableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-63" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="study_program_id" baseTableName="student"
+                                 constraintName="FK_STUDENT_ON_STUDY_PROGRAM" referencedColumnNames="id"
+                                 referencedTableName="study_program"/>
+    </changeSet>
+    <changeSet id="1653250573147-64" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="student" constraintName="FK_STUDENT_ON_USER"
+                                 referencedColumnNames="id" referencedTableName="app_user"/>
+    </changeSet>
+    <changeSet id="1653250573147-65" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="subject_enrollment"
+                                 constraintName="FK_SUBJECT_ENROLLMENT_ON_STUDENT" referencedColumnNames="id"
+                                 referencedTableName="student"/>
+    </changeSet>
+    <changeSet id="1653250573147-66" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_execution_id" baseTableName="subject_enrollment"
+                                 constraintName="FK_SUBJECT_ENROLLMENT_ON_SUBJECT_EXECUTION" referencedColumnNames="id"
+                                 referencedTableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-67" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="study_program_subject_id" baseTableName="subject_execution"
+                                 constraintName="FK_SUBJECT_EXECUTION_ON_STUDY_PROGRAM_SUBJECT"
+                                 referencedColumnNames="id" referencedTableName="study_program"/>
+    </changeSet>
+    <changeSet id="1653250573147-68" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_id" baseTableName="subject_execution"
+                                 constraintName="FK_SUBJECT_EXECUTION_ON_SUBJECT" referencedColumnNames="id"
+                                 referencedTableName="subject"/>
+    </changeSet>
+    <changeSet id="1653250573147-69" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="study_program_id" baseTableName="subject"
+                                 constraintName="FK_SUBJECT_ON_STUDY_PROGRAM" referencedColumnNames="id"
+                                 referencedTableName="study_program"/>
+    </changeSet>
+    <changeSet id="1653250573147-70" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_execution_id" baseTableName="subject_professor_enrollment"
+                                 constraintName="FK_SUBJECT_PROFESSOR_ENROLLMENT_ON_SUBJECT_EXECUTION"
+                                 referencedColumnNames="id" referencedTableName="subject_execution"/>
+    </changeSet>
+    <changeSet id="1653250573147-71" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="teacher_id" baseTableName="subject_professor_enrollment"
+                                 constraintName="FK_SUBJECT_PROFESSOR_ENROLLMENT_ON_TEACHER" referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
+    </changeSet>
+    <changeSet id="1653250573147-72" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="teacher" constraintName="FK_TEACHER_ON_USER"
+                                 referencedColumnNames="id" referencedTableName="app_user"/>
+    </changeSet>
+    <changeSet id="1653250573147-73" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="exam_periods_id" baseTableName="subject_execution_exam_periods"
+                                 constraintName="fk_subexeexaper_on_exam_period" referencedColumnNames="id"
+                                 referencedTableName="exam_period"/>
+    </changeSet>
+    <changeSet id="1653250573147-74" author="ivke (generated)">
+        <addForeignKeyConstraint baseColumnNames="subject_execution_id" baseTableName="subject_execution_exam_periods"
+                                 constraintName="fk_subexeexaper_on_subject_execution" referencedColumnNames="id"
+                                 referencedTableName="subject_execution"/>
     </changeSet>
 
 </databaseChangeLog>
