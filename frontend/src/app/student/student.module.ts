@@ -20,6 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { StudentPaymentComponent } from './components/student-payment/student-payment.component';
 import { CreateStudentPaymentsTabComponent } from './components/student-payment/create-student-payments-tab/create-student-payments-tab.component';
 import { ListStudentPaymentsTabComponent } from './components/student-payment/list-student-payments-tab/list-student-payments-tab.component';
+import { LogoutComponent } from '../common/components/logout/logout.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,10 @@ const routes: Routes = [
       {
         path: 'exams',
         component: ExamsComponent
+      },
+      {
+        path: 'logout',
+        component: LogoutComponent
       },
       {
         path: '',

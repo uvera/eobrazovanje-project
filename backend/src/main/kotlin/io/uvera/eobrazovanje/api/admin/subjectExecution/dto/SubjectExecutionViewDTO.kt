@@ -10,6 +10,7 @@ import java.util.UUID
 
 @EntityView(SubjectExecution::class)
 interface SubjectExecutionViewDTO {
+    var id: UUID
     var place: String
     var time: LocalDateTime
     @get:CollectionMapping

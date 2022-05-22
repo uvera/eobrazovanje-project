@@ -1,22 +1,23 @@
-
 <mat-drawer-container class="sidenav">
-    <mat-drawer mode="side" opened class="sidenav-drawer">
-      <h2>Electronic education</h2>
-      <div>
-        <a mat-button [routerLink]="'profile'" [routerLinkActive]="'is-active'">Profile</a>
-      </div>
-      <div>
-        <a mat-button [routerLink]="'subjects'" [routerLinkActive]="'is-active'">Subjects</a>
-      </div>
-      <div>
-        <a mat-button [routerLink]="'payments'" [routerLinkActive]="'is-active'">Payments</a>
-      </div>
-      <div>
-        <a mat-button [routerLink]="'exams'" [routerLinkActive]="'is-active'">Exam registrations</a>
-      </div>
-    </mat-drawer>
-    <mat-drawer-content class="sidenav-content">
-      <router-outlet></router-outlet>
-    </mat-drawer-content>
+  <mat-drawer mode="side" opened class="sidenav-drawer">
+    <h2>Electronic education</h2>
+    <div>
+      <a mat-button [routerLink]="'profile'" [routerLinkActive]="'is-active'">Profile</a>
+    </div>
+    <div>
+      <a mat-button [routerLink]="'subjects'" [routerLinkActive]="'is-active'">Subjects</a>
+    </div>
+    <div>
+      <a mat-button [routerLink]="'payments'" [routerLinkActive]="'is-active'">Payments</a>
+    </div>
+    <div>
+      <a mat-button [routerLink]="'exams'" [routerLinkActive]="'is-active'">Exam registrations</a>
+    </div>
+    <div>
+      <a mat-button [routerLink]="'logout'" [routerLinkActive]="'is-active'">LOGOUT</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="sidenav-content">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
 </mat-drawer-container>
-  

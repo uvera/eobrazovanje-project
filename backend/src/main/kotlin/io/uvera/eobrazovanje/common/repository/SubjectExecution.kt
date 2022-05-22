@@ -77,4 +77,10 @@ interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecuti
 
     @Query("select t from SubjectExecution t")
     fun findAllAsDto(page: Pageable): Page<SubjectExecutionTableViewDTO>
+
+    @org.springframework.data.jpa.repository.EntityGraph("subject-entity-graph")
+    @Query(
+        "select t from SubjectExecution t",
+    )
+    fun findAllForDisplay(): List<SubjectExecutionViewDTO>
 }

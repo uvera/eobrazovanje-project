@@ -75,6 +75,11 @@ class SubjectExecutionService(
     }
 
     @Transactional
+    fun getAllSubjectExecutions() = repo {
+        return@repo findAllForDisplay()
+    }
+
+    @Transactional
     fun getSubjectExecution(subjExecutionId: UUID): SubjectExecutionViewDTO =
         repo.findByIdAsDto(subjExecutionId) ?: notFoundById<SubjectExecution>(subjExecutionId)
 
