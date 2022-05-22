@@ -16,6 +16,7 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
   form!: FormGroup;
   opSubjects: Array<SubjectViewDTO> = [];
   opPreExamActivities: Array<PreExamActivityViewDTO> = [];
+  opTeachers: Array<TeacherViewDTO> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -31,11 +32,15 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
     this.service.getPreExamActivities().pipe(first()).subscribe((res) => {
       this.opPreExamActivities = res?.body as Array<PreExamActivityViewDTO>
     })
+    this.service.getProfessors().pipe(first()).subscribe((res) => {
+      this.opTeachers = res?.body as Array<TeacherViewDTO>
+    })
     this.form = this.fb.group({
       place: [null, [Validators.required]],
       time: [null, [Validators.required]],
       subjectId: [null, [Validators.required]],
       preExamActivityIds: [null, [Validators.required]],
+      teacherIds: [null, [Validators.required]]
     });
   }
 
@@ -53,5 +58,15 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
         this.snack.open('Error occurred');
       },
     });
+  }
+}
+
+interface TeacherViewDTO {
+  id: string;
+  teacherType: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
   }
 }

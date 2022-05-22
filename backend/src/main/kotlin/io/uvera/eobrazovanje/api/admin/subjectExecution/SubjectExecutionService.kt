@@ -23,6 +23,7 @@ class SubjectExecutionService(
     protected val preExamRepo: PreExamActivityRepository,
     protected val professorRepo: TeacherRepository,
     protected val studyRepo: StudyProgramRepository,
+    protected val profEnrolRepo: SubjectProfessorEnrollmentRepository
 ) {
     @Transactional
     fun createSubjectExecution(subjectExecutionDTO: SubjectExecutionCreateDTO): SubjectExecutionViewDTO = repo {
@@ -37,10 +38,22 @@ class SubjectExecutionService(
                 subjectEx.studyProgram = dbStudy
                 subjectEx.save()
             }
+        }.also {
+            professorRepo.findAllById(subjectExecutionDTO.teacherIds).forEach { teacher ->
+                teacher.subjectProfessorEnrollments.add(
+                    profEnrolRepo {
+                        SubjectProfessorEnrollment(
+                            subjectExecution = it,
+                            year = 1,
+                            teacher = teacher
+                        ).save()
+                    }
+                )
+            }
         }.let {
-            getSubjectExecution(it.id)
+                getSubjectExecution(it.id)
+            }
         }
-    }
 
     @Transactional
     fun updateSubjectExecution(id: UUID, dto: SubjectExecutionUpdateDTO): SubjectExecutionViewDTO = repo {
@@ -53,6 +66,8 @@ class SubjectExecutionService(
                 exam.save()
             }
         }
+
+        // TODO: add edit current professors
 
         sub.update {
             place = dto.place

@@ -57,6 +57,7 @@ class TeacherService(
         return@repo deleteById(id)
     }
 
+    @Transactional
     fun addTeacherToSubject(dto: TeacherSubjectExecutionDTO) {
         val teacher = repo.findByIdOrNull(dto.teacherId) ?: notFoundById<Teacher>(dto.teacherId)
         dto.subjectExecutionIds.forEach {

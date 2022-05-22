@@ -25,6 +25,15 @@
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Select teacher</mat-label>
+        <mat-select formControlName="teacherIds" multiple>
+          <mat-option *ngFor="let teacher of opTeachers" [value]="teacher.id">
+           {{ teacher.user.firstName + " " + teacher.user.lastName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlexFill>
         <mat-label>Select pre-exam activities</mat-label>
         <mat-select formControlName="preExamActivityIds" multiple>
           <mat-option *ngFor="let activity of opPreExamActivities" [value]="activity.id">

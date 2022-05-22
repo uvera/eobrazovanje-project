@@ -16,7 +16,7 @@ export class CreateSubjectExecutionsTabService {
   }
 
   getProfessors() {
-    return this.api.get('/api/admin/teacher/all')
+    return this.api.get('/api/teacher/all')
   }
 
   getPreExamActivities() {
