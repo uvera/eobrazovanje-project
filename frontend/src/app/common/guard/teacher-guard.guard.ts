@@ -54,7 +54,7 @@ export class TeacherGuard implements CanActivate, CanActivateChild, CanLoad {
   handle(): Observable<boolean> {
     return this.service.currentUser$.pipe(
       debounceTime(500),
-      map((user) => (user ? user.role === 'STUDENT' : false))
+      map((user) => (user ? user.role === 'TEACHER' : false))
     );
   }
 }

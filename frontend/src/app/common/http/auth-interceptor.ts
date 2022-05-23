@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // catch the error, make specific functions for catching specific errors and you can chain through them with more catch operators
     return next.handle(req).pipe(catchError(error => {
-      if (error.status == 401) {
+      if (error.status == 401 || error.status == 403) {
         return this.reAuth().pipe(
           catchError(() => {
             this.sessionService.clearAccessToken();
