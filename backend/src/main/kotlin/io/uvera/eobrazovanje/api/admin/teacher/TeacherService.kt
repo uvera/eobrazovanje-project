@@ -1,5 +1,7 @@
 package io.uvera.eobrazovanje.api.admin.teacher
 
+import io.uvera.eobrazovanje.api.admin.student.dto.EnrollmentViewDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.api.admin.teacher.dto.*
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
@@ -16,11 +18,16 @@ import java.util.*
 class TeacherService(
     protected val repo: TeacherRepository,
     protected val subjectExRepo: SubjectExecutionRepository,
-    protected val profEnrolRepo: SubjectProfessorEnrollmentRepository
+    protected val subjectRepo: SubjectRepository,
+    protected val profEnrolRepo: SubjectProfessorEnrollmentRepository,
 ) {
 
     fun getTeacher(id: UUID): TeacherResponseDTO =
         repo.findByIdAsDto(id) ?: notFoundById<Teacher>(id)
+
+    @Transactional
+    fun getTeacherByEmail(email: String): TeacherResponseDTO =
+        repo.findByUserEmailAsDto(email) ?: notFoundByEmail<Teacher>(email)
 
     fun getTeachersByPage(page: Int, records: Int): Page<TeacherResponseDTO> = repo {
         val req = PageRequest.of(page - 1, records)
@@ -66,8 +73,14 @@ class TeacherService(
             profEnrolRepo.save(enrollment)
         }
     }
+    fun getTeacherSubjects(page: Int, records: Int, teacherId: UUID): Page<TeacherEnrollmentViewDTO> {
+        val req = PageRequest.of(page - 1, records)
+        val enrollment = repo {
+            findTeacherByIdWithExecutions(req, teacherId)
+        }
+        return enrollment
+    }
 }
-
 fun teacherDTOToEntity(dto: TeacherDTO): Teacher {
     return Teacher(
         teachingSince = LocalDate.now(),

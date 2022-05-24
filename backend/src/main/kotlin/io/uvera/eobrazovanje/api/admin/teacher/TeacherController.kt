@@ -71,4 +71,17 @@ class TeacherController(protected val service: TeacherService) {
     ): Any {
         return service.addTeacherToSubject(dto).ok
     }
+
+    @GetMapping("/whoami")
+    fun getCurrentlyLoggedInTeacherByEmail(
+        @RequestParam(value = "email", required = true, defaultValue = "") email: String
+    ): ResponseEntity<TeacherResponseDTO> = service.getTeacherByEmail(email).ok
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @GetMapping("/subjects")
+    fun getTeacherSubjects(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
+    ): Any = service.getTeacherSubjects(page, records, id).ok
 }
