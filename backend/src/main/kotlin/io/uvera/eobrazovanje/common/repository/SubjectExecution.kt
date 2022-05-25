@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 
@@ -24,7 +25,9 @@ class SubjectExecution(
     @Column(name = "place", nullable = false)
     var place: String,
     @Column(name = "time", nullable = false)
-    var time: LocalDateTime,
+    var time: LocalTime,
+    @Column(name = "weekDay", nullable = false)
+    var weekDay: String,
     @ManyToOne(optional = false)
     @JoinColumn(name = "subject_id", nullable = false)
     var subject: Subject,

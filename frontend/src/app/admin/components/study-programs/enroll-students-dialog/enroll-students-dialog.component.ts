@@ -20,7 +20,7 @@ export class EnrollStudentsDialogComponent implements OnInit {
   constructor(
     private service: EnrollStudentsDialogService,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private dialogData: { id: string },
+    @Inject(MAT_DIALOG_DATA) private dialogData: { codeName: string },
     public readonly dialogRef: MatDialogRef<EnrollStudentsDialogComponent>,
     private snack: MatSnackBar,
     private papa: Papa,
@@ -37,7 +37,7 @@ export class EnrollStudentsDialogComponent implements OnInit {
     if (this.selectedFile) {
       this.papa.parse(this.selectedFile, {
         complete: (result) => {
-          this.service.enrollStudents(this.dialogData.id, result?.data).subscribe({
+          this.service.enrollStudents(result?.data).subscribe({
             next: (_) => {
               this.snack.open('Students enrolled succesfully');
               this.dialogRef.close('success');

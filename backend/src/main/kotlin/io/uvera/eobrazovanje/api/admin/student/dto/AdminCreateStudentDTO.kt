@@ -15,7 +15,7 @@ class AdminCreateStudentDTO(
     @StudentTranscriptNumberExists
     val identificationNumber: String,
 
-    @field:NotNull
+    @field:NotBlank
     val currentYear: String,
 
     @field:NotBlank
@@ -27,6 +27,6 @@ class AdminCreateStudentDTO(
     @field:NotBlank
     var email: String,
 
-    @field:NotNull
-    var studyProgramId: UUID
+    @field:NotBlank
+    var studyProgramCode: String
 )

@@ -48,4 +48,6 @@ interface StudyProgramRepository : JpaSpecificationRepository<StudyProgram, UUID
 
     @Query("select t from StudyProgram t left join fetch t.subjectExecutions where t.id = :id")
     fun findByIdWithExecutions(id: UUID): StudyProgram?
+
+    fun findByCodeName(codeName: String): StudyProgram?
 }

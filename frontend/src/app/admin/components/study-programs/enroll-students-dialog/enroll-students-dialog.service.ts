@@ -8,7 +8,7 @@ import { StudentsViewDTO } from '../../students/list-students-tab/list-students-
 export class EnrollStudentsDialogService {
   constructor(private readonly api: ApiService) {}
 
-  enrollStudents(id: string, data: Record<string, unknown>) {
+  enrollStudents(data: Record<string, unknown>) {
     return this.api.post(`/api/admin/student`, data);
   }
 }

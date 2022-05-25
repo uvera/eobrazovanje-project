@@ -17,6 +17,7 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
   opSubjects: Array<SubjectViewDTO> = [];
   opPreExamActivities: Array<PreExamActivityViewDTO> = [];
   opTeachers: Array<TeacherViewDTO> = [];
+  opWeekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
 
   constructor(
     private fb: FormBuilder,
