@@ -40,6 +40,7 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
       place: [null, [Validators.required]],
       time: [null, [Validators.required]],
       subjectId: [null, [Validators.required]],
+      weekDay: [null, [Validators.required]],
       preExamActivityIds: [null, [Validators.required]],
       teacherIds: [null, [Validators.required]]
     });
@@ -48,7 +49,7 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
   submitForm(form: Record<string, unknown>) {
     this.service.createSubjectExecution(form).subscribe({
       next: (_) => {
-        this.snack.open('Subject execution created created');
+        this.snack.open('Subject execution created');
         of(
           this.router.navigate(['list-subject-executions-tab'], {
             relativeTo: this.ar.parent,
@@ -62,7 +63,7 @@ export class CreateSubjectExecutionsTabComponent implements OnInit {
   }
 }
 
-interface TeacherViewDTO {
+export interface TeacherViewDTO {
   id: string;
   teacherType: string;
   user: {

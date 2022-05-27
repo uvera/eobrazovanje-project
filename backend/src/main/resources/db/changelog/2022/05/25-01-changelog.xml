@@ -50,9 +50,6 @@
             <column name="week_day" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
-    <changeSet id="1653511072435-6" author="ivke (generated)">
-        <addNotNullConstraint columnName="week_day" tableName="subject_execution"/>
-    </changeSet>
     <changeSet id="1653511072435-7" author="ivke (generated)">
         <addUniqueConstraint columnNames="id" constraintName="uc_document_file_id" tableName="document_file"/>
     </changeSet>
@@ -70,7 +67,7 @@
     <changeSet id="1653511072435-2" author="ivke (generated)">
         <addColumn tableName="subject_execution">
             <column name="time" type="TIME">
-                <constraints nullable="false" validateNullable="true"/>
+                <constraints nullable="true" validateNullable="true"/>
             </column>
         </addColumn>
     </changeSet>

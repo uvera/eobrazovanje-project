@@ -9,11 +9,8 @@
       </mat-form-field>
   
       <mat-form-field appearance="standard" fxFlexFill>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a time" formControlName="time">
-        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker [showSeconds]="true" [touchUi]="true">
-        </ngx-mat-datetime-picker>
-     </mat-form-field>
+        <input matInput type="time" formControlName="time" />
+      </mat-form-field>
   
       <mat-form-field appearance="standard" fxFlexFill>
         <mat-label>Select subject</mat-label>
