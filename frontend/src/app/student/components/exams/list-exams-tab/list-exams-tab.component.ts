@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -100,11 +101,10 @@ export class ListExamsTabComponent implements OnInit {
               .subscribe({
                 next: (_) => {
                   this.snack.open('Successfully enrolled in exam');
-                },
-                error: (error: any) => {
-                  console.log(error)
-                  this.snack.open('Success enrolling in exam');
                   this.reloadFromApi();
+                },
+                error: (error: HttpErrorResponse) => {
+                  this.snack.open(error.error.message);
                 },
               });
           }

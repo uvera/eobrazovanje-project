@@ -82,7 +82,7 @@ class ExamPeriodService(
     }
 
     @Transactional
-    fun enrollStudentToExamPeriod(examPeriodID: UUID, principal: CustomUserDetails, subjectExecutionID: UUID): String {
+    fun enrollStudentToExamPeriod(examPeriodID: UUID, principal: CustomUserDetails, subjectExecutionID: UUID): Boolean {
         val student = studentRepo.findByUserEmailOrNull(principal.email) ?: notFoundByEmail<Student>(principal.email)
         val examPeriod = repo.findByIdOrNull(examPeriodID) ?: notFoundById<ExamPeriod>(examPeriodID)
         val subjectExecution = subjectExRepo.findByIdOrNull(subjectExecutionID) ?: notFoundById<SubjectExecution>(subjectExecutionID)
@@ -96,9 +96,9 @@ class ExamPeriodService(
                     examPeriod = examPeriod
                 ).save()
             }
-            "success"
+            true
         } else {
-            "Insufficient funds"
+            entityStateError("Insufficient funds")
         }
     }
 

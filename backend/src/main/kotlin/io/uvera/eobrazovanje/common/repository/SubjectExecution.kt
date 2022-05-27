@@ -47,14 +47,13 @@ class SubjectExecution(
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var studentExamEnrollments: MutableList<ExamEnrollment> = mutableListOf(),
 
-    @ManyToMany(cascade = [CascadeType.MERGE])
+    @ManyToMany
     @JoinTable(
         name = "subject_execution_exam_periods",
+        uniqueConstraints = [UniqueConstraint(columnNames = ["exam_periods_id", "subject_execution_id"])],
         joinColumns = [JoinColumn(name = "subject_execution_id")],
         inverseJoinColumns = [
             JoinColumn(name = "exam_periods_id"),
-            JoinColumn(name = "exam_periods_start_date"),
-            JoinColumn(name = "exam_periods_end_date")
         ]
     )
     var examPeriods: MutableSet<ExamPeriod> = mutableSetOf(),

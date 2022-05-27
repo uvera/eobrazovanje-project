@@ -3,6 +3,7 @@ package io.uvera.eobrazovanje.util.extensions
 import io.uvera.eobrazovanje.common.repository.BaseEntity
 import io.uvera.eobrazovanje.error.dto.ObjectErrorCompact
 import io.uvera.eobrazovanje.error.exception.EntityNotFoundException
+import io.uvera.eobrazovanje.error.exception.EntityStateException
 import io.uvera.eobrazovanje.util.AnyResponseEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.ObjectError
@@ -41,4 +42,8 @@ inline fun <reified T : BaseEntity> notFoundByEmail(email: String): Nothing {
 
 inline fun <reified T : BaseEntity> notFoundByCodeName(code: String): Nothing {
     throw EntityNotFoundException("${T::class.simpleName}: not found by code: $code")
+}
+
+fun entityStateError(message: String): Nothing {
+    throw EntityStateException(message)
 }

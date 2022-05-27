@@ -6,6 +6,7 @@ import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodCreateDTO
 import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodViewDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
 import io.uvera.eobrazovanje.util.AnyResponseEntity
+import io.uvera.eobrazovanje.util.extensions.emptyOk
 import io.uvera.eobrazovanje.util.extensions.ok
 import io.uvera.eobrazovanje.util.principalDelegate
 import org.springframework.data.domain.Page
@@ -43,9 +44,10 @@ class ExamPeriodController(protected val service: ExamPeriodService) {
     fun enrollStudentIntoExamPeriod(
         @PathVariable("id") examPeriodID: UUID,
         @PathVariable("subjectExecutionID") subjectExecutionID: UUID,
-        ): ResponseEntity<String> {
+        ): AnyResponseEntity {
         val principal by principalDelegate()
-        return service.enrollStudentToExamPeriod(examPeriodID, principal, subjectExecutionID).ok
+        service.enrollStudentToExamPeriod(examPeriodID, principal, subjectExecutionID)
+        return emptyOk
     }
 
     @GetMapping("/all")
