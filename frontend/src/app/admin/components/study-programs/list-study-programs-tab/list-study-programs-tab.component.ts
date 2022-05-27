@@ -68,13 +68,9 @@ export class ListStudyProgramsTabComponent implements OnInit {
     this.pageIndex.next(event.pageIndex);
   }
 
-  enrollStudents(id: string) {
+  enrollStudents() {
     this.dialog
-      .open(EnrollStudentsDialogComponent, {
-        data: {
-          id: id,
-        },
-      })
+      .open(EnrollStudentsDialogComponent)
       .afterClosed()
       .subscribe({
         next: (value) => {

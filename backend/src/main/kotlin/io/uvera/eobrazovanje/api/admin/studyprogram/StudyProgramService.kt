@@ -81,8 +81,8 @@ class StudyProgramService(
     }
 
     @Transactional
-    fun enrollStudentsToStudyProgram(id: UUID, studentIds: List<UUID>): Any = repo {
-        val dbStudy = findByIdOrNull(id) ?: notFoundById<StudyProgram>(id)
+    fun enrollStudentsToStudyProgram(studyProgramCode: String, studentIds: List<UUID>): Any = repo {
+        val dbStudy = findByCodeName(studyProgramCode) ?: notFoundByCodeName<StudyProgram>(studyProgramCode)
         studentRepo {
                 studentIds.forEach {
                     val student = studentRepo.findByIdOrNull(it) ?: notFoundById<Student>(it)

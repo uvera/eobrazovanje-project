@@ -92,7 +92,7 @@ class AdminStudentService(
                 changedPassword = false,
                 balance = BigDecimal.ZERO,
                 user = user,
-                studyProgram = studyRepo.findByIdOrNull(it.studyProgramId) ?: notFoundById<StudyProgram>(it.studyProgramId)
+                studyProgram = studyRepo.findByCodeName(it.studyProgramCode) ?: notFoundByCodeName<StudyProgram>(it.studyProgramCode)
             )
         }
     }

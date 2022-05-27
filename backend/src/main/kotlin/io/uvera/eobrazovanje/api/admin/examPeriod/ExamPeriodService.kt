@@ -26,7 +26,7 @@ class ExamPeriodService(
     protected val subjectEnRepo: SubjectEnrollmentRepository
 ) {
 
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional
     fun createExamPeriod(dto: ExamPeriodCreateDTO): ExamPeriodViewDTO = repo {
         dtoToEntity(dto).save().also { examEntity ->
             subjectExRepo {

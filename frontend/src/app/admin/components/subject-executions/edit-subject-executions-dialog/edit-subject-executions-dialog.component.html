@@ -11,10 +11,25 @@
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlexFill>
-            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="time">
-            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-            <ngx-mat-datetime-picker #picker [showSeconds]="true" [touchUi]="true">
-            </ngx-mat-datetime-picker>
+            <input matInput type="time" formControlName="time" />
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Select weekday</mat-label>
+            <mat-select formControlName="weekDay">
+                <mat-option *ngFor="let weekday of opWeekDays" [value]="weekday">
+                    {{ weekday }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlexFill>
+            <mat-label>Select teacher</mat-label>
+            <mat-select formControlName="teacherIds" [(ngModel)]="existentTeachers" multiple>
+                <mat-option *ngFor="let teacher of opTeachers" [value]="teacher.id">
+                    {{ teacher.user.firstName + " " + teacher.user.lastName }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlexFill>

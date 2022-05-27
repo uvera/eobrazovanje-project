@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../common/service/api.service';
+import { TeacherViewDTO } from './create-subject-executions-tab.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class CreateSubjectExecutionsTabService {
   }
 
   getProfessors() {
-    return this.api.get('/api/teacher/all')
+    return this.api.get<TeacherViewDTO[]>('/api/teacher/all')
   }
 
   getPreExamActivities() {

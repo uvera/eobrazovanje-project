@@ -6,6 +6,7 @@ import io.uvera.eobrazovanje.common.repository.ExamPeriod
 import io.uvera.eobrazovanje.common.repository.SubjectExecution
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 
 @EntityView(ExamPeriod::class)
@@ -21,6 +22,7 @@ interface ExamPeriodViewDTO {
     interface SubjectExecutionViewDTO {
         var id: UUID
         var place: String
-        var time: LocalDateTime
+        var time: LocalTime
+        var weekDay: String
     }
 }

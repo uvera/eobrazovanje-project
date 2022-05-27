@@ -5,6 +5,7 @@ import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.User
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 
 @EntityView(Student::class)
@@ -16,7 +17,8 @@ interface EnrollmentViewDTO {
     @EntityView(User::class)
     interface SubjectExecutionViewDTO {
         val place: String
-        val time: LocalDateTime
+        val weekDay: String
+        val time: LocalTime
         val subject: SubjectViewDTO
     }
 }

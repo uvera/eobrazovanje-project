@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -118,5 +119,6 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
 export interface SubjectExecutionTableViewDTO {
   id: string;
   place: string;
-  time: Date;
+  time: Time;
+  weekDay: string;
 }
