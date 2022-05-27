@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
+import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { MySubjectsService, SubjectViewDTO } from './my-subjects.service';
 
 @Component({
@@ -60,7 +61,7 @@ export class MySubjectsComponent implements OnInit {
                     if (responseBody) {
                       const { content, totalElements } = responseBody;
                       this.total.next(totalElements);
-                      this.dataSet.next(content);
+                      this.dataSet.next(content[0]['subjectProfessorEnrollments']);
                     }
                   })
               }
@@ -72,16 +73,6 @@ export class MySubjectsComponent implements OnInit {
 }
 
 interface TeacherViewSubjectsDTO {
-  id: string,
-  year: number,
-  subjectExecution: {
-    place: string,
-    time: Date,
-    subject: {
-      id: string,
-      espb: number,
-      name: string,
-      year: number
-    }
-  }
+  subjectExecution: SubjectExecutionViewDTO
+  year: number
 }

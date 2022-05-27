@@ -25,12 +25,6 @@ const routes: Routes = [
       {
         path: 'my-subjects',
         component: MySubjectsComponent,
-        children: [
-          {
-            path: 'my-subjects',
-            component: MySubjectsComponent,
-          },
-        ]
       },
       {
         path: 'logout',
@@ -39,7 +33,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
+        redirectTo: 'my-subjects',
       },
     ]
   },

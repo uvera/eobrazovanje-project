@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 
@@ -17,14 +18,17 @@ import javax.persistence.*
     attributeNodes = [
         NamedAttributeNode("preExamActivities"),
         NamedAttributeNode("subject"),
+        NamedAttributeNode("subjectProfessorEnrollments")
     ]
 )
 @Table(name = "subject_execution")
 class SubjectExecution(
     @Column(name = "place", nullable = false)
     var place: String,
-    @Column(name = "time", nullable = false)
-    var time: LocalDateTime,
+    @Column(name = "time", nullable = true)
+    var time: LocalTime,
+    @Column(name = "weekDay", nullable = true)
+    var weekDay: String,
     @ManyToOne(optional = false)
     @JoinColumn(name = "subject_id", nullable = false)
     var subject: Subject,
@@ -36,7 +40,7 @@ class SubjectExecution(
     var studyProgram: StudyProgram? = null,
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
-    var subjectProfessorEnrollments: MutableList<SubjectProfessorEnrollment> = mutableListOf(),
+    var subjectProfessorEnrollments: MutableSet<SubjectProfessorEnrollment> = mutableSetOf(),
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var preExamActivities: MutableList<PreExamActivity> = mutableListOf(),
@@ -50,15 +54,14 @@ class SubjectExecution(
         joinColumns = [JoinColumn(name = "subject_execution_id")],
         inverseJoinColumns = [JoinColumn(name = "exam_periods_id")]
     )
-    var examPeriods: MutableList<ExamPeriod> = mutableListOf(),
+    var examPeriods: MutableSet<ExamPeriod> = mutableSetOf(),
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var heldExams: MutableList<HeldExam> = mutableListOf(),
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var announcements: MutableList<Announcement> = mutableListOf(),
-) : BaseEntity()
-
+): BaseEntity()
 @Repository
 interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecution, UUID> {
     @Query(

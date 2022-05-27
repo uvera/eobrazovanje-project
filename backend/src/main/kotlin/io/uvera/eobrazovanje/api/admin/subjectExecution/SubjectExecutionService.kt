@@ -72,6 +72,7 @@ class SubjectExecutionService(
         sub.update {
             place = dto.place
             time = dto.time
+            weekDay = dto.weekDay
         }.let { subEntity ->
             preExamRepo {
                 findAllById(dto.preExamActivityIds).updateEach {
@@ -102,6 +103,7 @@ class SubjectExecutionService(
         return SubjectExecution(
             place = dto.place,
             time = dto.time,
+            weekDay = dto.weekDay,
             subject = subjectRepo.findByIdOrNull(dto.subjectId) ?: notFoundById<Subject>(dto.subjectId),
         )
     }

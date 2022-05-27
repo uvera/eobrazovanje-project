@@ -18,6 +18,7 @@
         <tr>
           <th>Subject name</th>
           <th>Time of class</th>
+          <th>Day of the class</th>
           <th>Enroll</th>
         </tr>
       </thead>
@@ -25,6 +26,7 @@
         <tr *ngFor="let i of dataTable.data">
           <td>{{i.subject.name}}</td>
           <td>{{i.time}}</td>
+          <td>{{i.weekDay}}</td>
           <td>
             <button (click)="enrollInExam(i.id)" mat-raised-button color="primary" type="button">Enroll</button>
           </td>

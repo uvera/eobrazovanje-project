@@ -27,7 +27,7 @@ class ExamPeriod(
     @OneToMany(mappedBy = "examPeriod", orphanRemoval = true)
     var heldExams: MutableList<HeldExam> = mutableListOf(),
     @OneToMany(mappedBy = "examPeriod", orphanRemoval = true)
-    var examEnrollments: MutableList<ExamEnrollment> = mutableListOf()
+    var examEnrollments: MutableSet<ExamEnrollment> = mutableSetOf()
 ) : BaseEntity()
 
 @Repository

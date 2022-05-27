@@ -49,7 +49,7 @@ class StudyProgramController(protected val service: StudyProgramService) {
 
     @PutMapping("/{id}/enroll")
     fun enrollStudentsToStudyProgram(
-        @PathVariable("id") studyProgramId: UUID,
+        @PathVariable("id") studyProgramCode: String,
         @RequestBody students: EnrollStudentsDTO
-    ) = service.enrollStudentsToStudyProgram(studyProgramId, students.studentIds).ok
+    ) = service.enrollStudentsToStudyProgram(studyProgramCode, students.studentIds).ok
 }

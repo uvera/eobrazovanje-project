@@ -38,3 +38,7 @@ inline fun <reified T : BaseEntity> notFoundById(id: UUID): Nothing {
 inline fun <reified T : BaseEntity> notFoundByEmail(email: String): Nothing {
     throw EntityNotFoundException("${T::class.simpleName}: not found by email: $email")
 }
+
+inline fun <reified T : BaseEntity> notFoundByCodeName(code: String): Nothing {
+    throw EntityNotFoundException("${T::class.simpleName}: not found by code: $code")
+}

@@ -422,11 +422,6 @@
     <changeSet id="1653250573147-39" author="ivke (generated)">
         <addUniqueConstraint columnNames="id" constraintName="uc_subject_enrollment_id" tableName="subject_enrollment"/>
     </changeSet>
-    <changeSet id="1653250573147-40" author="ivke (generated)">
-        <addUniqueConstraint columnNames="subject_execution_id"
-                             constraintName="uc_subject_execution_exam_periods_subject_execution"
-                             tableName="subject_execution_exam_periods"/>
-    </changeSet>
     <changeSet id="1653250573147-41" author="ivke (generated)">
         <addUniqueConstraint columnNames="id" constraintName="uc_subject_execution_id" tableName="subject_execution"/>
     </changeSet>
