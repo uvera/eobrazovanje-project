@@ -77,7 +77,8 @@ interface StudentViewSubjectsDTO {
   year: number,
   subjectExecution: {
     place: string,
-    time: Date,
+    time: string,
+    weekDay: string,
     subject: {
       id: string,
       espb: number,
