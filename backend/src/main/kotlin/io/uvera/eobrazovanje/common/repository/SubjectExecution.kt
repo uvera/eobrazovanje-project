@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
@@ -52,7 +51,11 @@ class SubjectExecution(
     @JoinTable(
         name = "subject_execution_exam_periods",
         joinColumns = [JoinColumn(name = "subject_execution_id")],
-        inverseJoinColumns = [JoinColumn(name = "exam_periods_id")]
+        inverseJoinColumns = [
+            JoinColumn(name = "exam_periods_id"),
+            JoinColumn(name = "exam_periods_start_date"),
+            JoinColumn(name = "exam_periods_end_date")
+        ]
     )
     var examPeriods: MutableSet<ExamPeriod> = mutableSetOf(),
 
@@ -61,7 +64,16 @@ class SubjectExecution(
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var announcements: MutableList<Announcement> = mutableListOf(),
-): BaseEntity()
+) : BaseEntity() {
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+}
+
 @Repository
 interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecution, UUID> {
     @Query(
