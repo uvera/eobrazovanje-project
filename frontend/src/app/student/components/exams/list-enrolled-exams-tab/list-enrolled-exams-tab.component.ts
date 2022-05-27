@@ -9,7 +9,7 @@ import { ListEnrolledExamsTabService } from './list-enrolled-exams-tab.service';
 @Component({
   selector: 'app-list-enrolled-exams-tab',
   templateUrl: './list-enrolled-exams-tab.component.html',
-  styleUrls: ['./list-enrolled-exams-tab.component.scss']
+  styleUrls: ['./list-enrolled-exams-tab.component.scss'],
 })
 export class ListEnrolledExamsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -17,9 +17,7 @@ export class ListEnrolledExamsTabComponent implements OnInit {
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<ExamEnrollmentDTO[]>([]);
 
-  constructor(
-    private service: ListEnrolledExamsTabService,
-  ) { }
+  constructor(private service: ListEnrolledExamsTabService) {}
 
   ngOnInit(): void {
     this.pageNumberAndSizeCombined$.subscribe((value) => {
@@ -64,11 +62,11 @@ export class ListEnrolledExamsTabComponent implements OnInit {
 }
 
 interface ExamEnrollmentDTO {
-  id: string,
-  subjectExecution: SubjectExecutionTableViewDTO,
+  id: string;
+  subjectExecution: SubjectExecutionTableViewDTO;
   examPeriod: {
-    id: string,
-    startDate: Date,
-    endDate: Date
-  }
+    id: string;
+    startDate: Date;
+    endDate: Date;
+  };
 }

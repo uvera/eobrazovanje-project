@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { PageEntity } from '../../../../common/http/page-entity';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListProfesorsTabService {
   constructor(private readonly api: ApiService) {}

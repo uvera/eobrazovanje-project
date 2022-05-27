@@ -12,7 +12,7 @@ import { EditSubjectExecutionsDialogService } from './edit-subject-executions-di
 @Component({
   selector: 'app-edit-subject-executions-dialog',
   templateUrl: './edit-subject-executions-dialog.component.html',
-  styleUrls: ['./edit-subject-executions-dialog.component.scss']
+  styleUrls: ['./edit-subject-executions-dialog.component.scss'],
 })
 export class EditSubjectExecutionsDialogComponent implements OnInit {
   form!: FormGroup;
@@ -20,8 +20,16 @@ export class EditSubjectExecutionsDialogComponent implements OnInit {
   opTeachers: TeacherViewDTO[] = [];
   existentPreExamActivities: string[] = [];
   existentTeachers: string[] = [];
-  subjectName: string = "";
-  opWeekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+  subjectName: string = '';
+  opWeekDays = [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY',
+  ];
 
   constructor(
     private service: EditSubjectExecutionsDialogService,
@@ -33,12 +41,18 @@ export class EditSubjectExecutionsDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.mainService.getPreExamActivities().pipe(first()).subscribe((res) => {
-      this.opPreExamActivities = res?.body as Array<PreExamActivityViewDTO>
-    })
-    this.mainService.getProfessors().pipe(first()).subscribe((res) => {
-      this.opTeachers = res?.body!!
-    })
+    this.mainService
+      .getPreExamActivities()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opPreExamActivities = res?.body as Array<PreExamActivityViewDTO>;
+      });
+    this.mainService
+      .getProfessors()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opTeachers = res?.body!!;
+      });
     this.form = this.fb.group({
       place: [null, [Validators.required]],
       time: [null, [Validators.required]],
@@ -54,20 +68,35 @@ export class EditSubjectExecutionsDialogComponent implements OnInit {
           place: body.place,
           time: body.time,
           weekday: body.weekDay,
-          teacherIds: body.subjectProfessorEnrollments.map(a => a.teacher),
+          teacherIds: body.subjectProfessorEnrollments.map((a) => a.teacher),
           preExamActivityIds: body.preExamActivities,
         });
-        this.subjectName =  body.subject.name
-        this.opPreExamActivities = this.opPreExamActivities.concat(body.preExamActivities)
+        this.subjectName = body.subject.name;
+        this.opPreExamActivities = this.opPreExamActivities.concat(
+          body.preExamActivities
+        );
         //budz
-        this.opTeachers = this.opTeachers.concat(body.subjectProfessorEnrollments.map(a => a.teacher))
-        this.opTeachers = this.opTeachers.filter((a, i) => this.opTeachers.findIndex((s) => a.id == s.id) === i)
-        this.opPreExamActivities = this.opPreExamActivities.filter((a, i) => this.opPreExamActivities.findIndex((s) => a.id == s.id) === i)
-        this.existentPreExamActivities = body.preExamActivities.map(a => a.id)
-        this.existentTeachers = body.subjectProfessorEnrollments.map(a => a.teacher.id)
+        this.opTeachers = this.opTeachers.concat(
+          body.subjectProfessorEnrollments.map((a) => a.teacher)
+        );
+        this.opTeachers = this.opTeachers.filter(
+          (a, i) => this.opTeachers.findIndex((s) => a.id == s.id) === i
+        );
+        this.opPreExamActivities = this.opPreExamActivities.filter(
+          (a, i) =>
+            this.opPreExamActivities.findIndex((s) => a.id == s.id) === i
+        );
+        this.existentPreExamActivities = body.preExamActivities.map(
+          (a) => a.id
+        );
+        this.existentTeachers = body.subjectProfessorEnrollments.map(
+          (a) => a.teacher.id
+        );
       },
       error: (_) => {
-        this.snack.open('Error occurred fetching subject execution for editing');
+        this.snack.open(
+          'Error occurred fetching subject execution for editing'
+        );
         this.dialogRef.close('error');
       },
     });
@@ -91,9 +120,9 @@ export interface SubjectExecutionViewDTO {
   place: string;
   time: string;
   weekDay: string;
-  preExamActivities: PreExamActivityViewDTO[]
-  subject: SubjectViewDTO
+  preExamActivities: PreExamActivityViewDTO[];
+  subject: SubjectViewDTO;
   subjectProfessorEnrollments: {
-    teacher: TeacherViewDTO
-  }[]
+    teacher: TeacherViewDTO;
+  }[];
 }

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-subject-executions',
   templateUrl: './subject-executions.component.html',
-  styleUrls: ['./subject-executions.component.scss']
+  styleUrls: ['./subject-executions.component.scss'],
 })
 export class SubjectExecutionsComponent implements OnInit {
   links = [

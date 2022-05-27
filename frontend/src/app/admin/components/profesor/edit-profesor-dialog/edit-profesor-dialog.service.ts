@@ -3,7 +3,7 @@ import { ApiService } from '../../../../common/service/api.service';
 import { EditProfesorData } from './edit-profesor-dialog-dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EditProfesorDialogService {
   constructor(private api: ApiService) {}

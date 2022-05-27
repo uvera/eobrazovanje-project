@@ -7,7 +7,7 @@ import { MySubjectsService, SubjectViewDTO } from './my-subjects.service';
 @Component({
   selector: 'app-my-subjects',
   templateUrl: './my-subjects.component.html',
-  styleUrls: ['./my-subjects.component.scss']
+  styleUrls: ['./my-subjects.component.scss'],
 })
 export class MySubjectsComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -15,9 +15,7 @@ export class MySubjectsComponent implements OnInit {
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<TeacherViewSubjectsDTO[]>([]);
 
-  constructor(
-    private readonly service: MySubjectsService
-  ) { }
+  constructor(private readonly service: MySubjectsService) {}
 
   ngOnInit(): void {
     this.pageNumberAndSizeCombined$.subscribe((value) => {
@@ -43,36 +41,37 @@ export class MySubjectsComponent implements OnInit {
   }
 
   fetchCurrentTeacherSubjects(pageIndex: number, pageSize: number) {
-    this.service.fetchCurrentUser()
+    this.service
+      .fetchCurrentUser()
       .pipe()
       .subscribe((res) => {
         const responseBody = res?.body;
         if (responseBody) {
           const { email } = responseBody;
-          this.service.
-            fetchCurrentTeacher(email)
-            .subscribe((res) => {
-              const responseBody = res?.body
-              if (responseBody) {
-                const { id } = responseBody;
-                this.service.fetchTeacherSubjects(id, pageIndex, pageSize)
-                  .subscribe((res) => {
-                    const responseBody = res?.body;
-                    if (responseBody) {
-                      const { content, totalElements } = responseBody;
-                      this.total.next(totalElements);
-                      this.dataSet.next(content[0]['subjectProfessorEnrollments']);
-                    }
-                  })
-              }
-            })
+          this.service.fetchCurrentTeacher(email).subscribe((res) => {
+            const responseBody = res?.body;
+            if (responseBody) {
+              const { id } = responseBody;
+              this.service
+                .fetchTeacherSubjects(id, pageIndex, pageSize)
+                .subscribe((res) => {
+                  const responseBody = res?.body;
+                  if (responseBody) {
+                    const { content, totalElements } = responseBody;
+                    this.total.next(totalElements);
+                    this.dataSet.next(
+                      content[0]['subjectProfessorEnrollments']
+                    );
+                  }
+                });
+            }
+          });
         }
-      })
+      });
   }
-
 }
 
 interface TeacherViewSubjectsDTO {
-  subjectExecution: SubjectExecutionViewDTO
-  year: number
+  subjectExecution: SubjectExecutionViewDTO;
+  year: number;
 }

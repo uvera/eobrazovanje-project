@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-profesor',
   templateUrl: './profesor.component.html',
-  styleUrls: ['./profesor.component.scss']
+  styleUrls: ['./profesor.component.scss'],
 })
 export class ProfesorComponent implements OnInit {
   links = [
@@ -12,9 +12,7 @@ export class ProfesorComponent implements OnInit {
   ];
   activeLink = this.links[0][0];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -8,9 +8,8 @@ describe('EditExamPeriodDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditExamPeriodDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [EditExamPeriodDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

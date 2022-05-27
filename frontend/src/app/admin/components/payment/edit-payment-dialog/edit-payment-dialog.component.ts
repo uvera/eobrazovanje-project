@@ -7,7 +7,7 @@ import { EditPaymentDialogService } from './edit-payment-dialog.service';
 @Component({
   selector: 'app-edit-payment-dialog',
   templateUrl: './edit-payment-dialog.component.html',
-  styleUrls: ['./edit-payment-dialog.component.scss']
+  styleUrls: ['./edit-payment-dialog.component.scss'],
 })
 export class EditPaymentDialogComponent implements OnInit {
   form!: FormGroup;

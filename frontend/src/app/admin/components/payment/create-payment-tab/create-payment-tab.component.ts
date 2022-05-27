@@ -9,7 +9,7 @@ import { CreatePaymentTabService } from './create-payment-tab.service';
 @Component({
   selector: 'app-create-payment-tab',
   templateUrl: './create-payment-tab.component.html',
-  styleUrls: ['./create-payment-tab.component.scss']
+  styleUrls: ['./create-payment-tab.component.scss'],
 })
 export class CreatePaymentTabComponent implements OnInit {
   form!: FormGroup;
@@ -24,9 +24,12 @@ export class CreatePaymentTabComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.service.getStudents().pipe(first()).subscribe((res) => {
-      this.opStudents = res?.body as Array<StudentsViewDTO>
-    })
+    this.service
+      .getStudents()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opStudents = res?.body as Array<StudentsViewDTO>;
+      });
     this.form = this.fb.group({
       amount: [null, [Validators.required]],
       depositedAt: [null, [Validators.required]],
@@ -50,4 +53,3 @@ export class CreatePaymentTabComponent implements OnInit {
     });
   }
 }
-

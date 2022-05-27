@@ -3,7 +3,7 @@ import { ApiService } from '../../../../common/service/api.service';
 import { TeacherViewDTO } from './create-subject-executions-tab.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CreateSubjectExecutionsTabService {
   constructor(private readonly api: ApiService) {}
@@ -13,14 +13,14 @@ export class CreateSubjectExecutionsTabService {
   }
 
   getSubjects() {
-    return this.api.get('/api/admin/subject/all')
+    return this.api.get('/api/admin/subject/all');
   }
 
   getProfessors() {
-    return this.api.get<TeacherViewDTO[]>('/api/teacher/all')
+    return this.api.get<TeacherViewDTO[]>('/api/teacher/all');
   }
 
   getPreExamActivities() {
-    return this.api.get('/api/admin/pre-exam-activity/all')
+    return this.api.get('/api/admin/pre-exam-activity/all');
   }
 }

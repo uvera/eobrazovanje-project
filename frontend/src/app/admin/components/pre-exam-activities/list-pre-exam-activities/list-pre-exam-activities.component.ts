@@ -4,13 +4,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { AreYouSureDialogComponent } from 'src/app/common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
-import { EditPreExamActivityComponent, PreExamActivityViewDTO } from '../edit-pre-exam-activity/edit-pre-exam-activity.component';
+import {
+  EditPreExamActivityComponent,
+  PreExamActivityViewDTO,
+} from '../edit-pre-exam-activity/edit-pre-exam-activity.component';
 import { ListPreExamActivitiesService } from './list-pre-exam-activities.service';
 
 @Component({
   selector: 'app-list-pre-exam-activities',
   templateUrl: './list-pre-exam-activities.component.html',
-  styleUrls: ['./list-pre-exam-activities.component.scss']
+  styleUrls: ['./list-pre-exam-activities.component.scss'],
 })
 export class ListPreExamActivitiesComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -86,7 +89,8 @@ export class ListPreExamActivitiesComponent implements OnInit {
     this.dialog
       .open(AreYouSureDialogComponent, {
         data: {
-          dialogTitle: 'Are you sure you want to delete this pre exam activity?',
+          dialogTitle:
+            'Are you sure you want to delete this pre exam activity?',
           yesButtonText: 'Delete',
         },
       })
@@ -111,4 +115,4 @@ export class ListPreExamActivitiesComponent implements OnInit {
         },
       });
   }
-  }
+}

@@ -4,7 +4,7 @@ import { PageEntity } from 'src/app/common/http/page-entity';
 import { ApiService } from 'src/app/common/service/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListStudyProgramsTabService {
   constructor(private readonly api: ApiService) {}

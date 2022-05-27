@@ -3,14 +3,14 @@
   <div fxLayout="column" fxLayoutAlign="start center" style="width: 300px">
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Name</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="name">
+      <input matInput inputmode="text" type="text" formControlName="name" />
       <mat-error *ngIf="!!(form.get('name'))?.errors?.['required']">
         Name is required
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>ESPB</mat-label>
-      <input matInput inputmode="number" type="number" formControlName="espb">
+      <input matInput inputmode="number" type="number" formControlName="espb" />
       <mat-error *ngIf="!!(form.get('espb'))?.errors?.['required']">
         ESPB is required
       </mat-error>
@@ -20,7 +20,7 @@
     </mat-form-field>
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Year</mat-label>
-      <input matInput inputmode="number" type="number" formControlName="year">
+      <input matInput inputmode="number" type="number" formControlName="year" />
       <mat-error *ngIf="!!(form.get('year'))?.errors?.['required']">
         Year is required
       </mat-error>
@@ -30,12 +30,25 @@
     </mat-form-field>
     <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%">
       <div mat-dialog-actions>
-        <button mat-raised-button color="secondary" type="button" (click)="dialogRef.close('closed')">Close</button>
+        <button
+          mat-raised-button
+          color="secondary"
+          type="button"
+          (click)="dialogRef.close('closed')"
+        >
+          Close
+        </button>
       </div>
       <div mat-dialog-actions>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Submit
+        </button>
       </div>
     </div>
   </div>
 </form>
-

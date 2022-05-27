@@ -3,7 +3,7 @@ import { ApiService } from '../../../../common/service/api.service';
 import { PaymentViewDTO } from '../list-payment-tab/list-payment-tab.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EditPaymentDialogService {
   constructor(private api: ApiService) {}

@@ -10,39 +10,56 @@ import { CreateSubjectExecutionsTabService } from './create-subject-executions-t
 @Component({
   selector: 'app-create-subject-executions-tab',
   templateUrl: './create-subject-executions-tab.component.html',
-  styleUrls: ['./create-subject-executions-tab.component.scss']
+  styleUrls: ['./create-subject-executions-tab.component.scss'],
 })
 export class CreateSubjectExecutionsTabComponent implements OnInit {
   form!: FormGroup;
   opSubjects: Array<SubjectViewDTO> = [];
   opPreExamActivities: Array<PreExamActivityViewDTO> = [];
   opTeachers: Array<TeacherViewDTO> = [];
-  opWeekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+  opWeekDays = [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY',
+  ];
 
   constructor(
     private fb: FormBuilder,
     private readonly service: CreateSubjectExecutionsTabService,
     private readonly snack: MatSnackBar,
     private readonly router: Router,
-    private readonly ar: ActivatedRoute,
+    private readonly ar: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    this.service.getSubjects().pipe(first()).subscribe((res) => {
-      this.opSubjects = res?.body as Array<SubjectViewDTO>
-    })
-    this.service.getPreExamActivities().pipe(first()).subscribe((res) => {
-      this.opPreExamActivities = res?.body as Array<PreExamActivityViewDTO>
-    })
-    this.service.getProfessors().pipe(first()).subscribe((res) => {
-      this.opTeachers = res?.body as Array<TeacherViewDTO>
-    })
+    this.service
+      .getSubjects()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opSubjects = res?.body as Array<SubjectViewDTO>;
+      });
+    this.service
+      .getPreExamActivities()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opPreExamActivities = res?.body as Array<PreExamActivityViewDTO>;
+      });
+    this.service
+      .getProfessors()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opTeachers = res?.body as Array<TeacherViewDTO>;
+      });
     this.form = this.fb.group({
       place: [null, [Validators.required]],
       time: [null, [Validators.required]],
       subjectId: [null, [Validators.required]],
       weekDay: [null, [Validators.required]],
       preExamActivityIds: [null, [Validators.required]],
-      teacherIds: [null, [Validators.required]]
+      teacherIds: [null, [Validators.required]],
     });
   }
 
@@ -70,5 +87,5 @@ export interface TeacherViewDTO {
     firstName: string;
     lastName: string;
     email: string;
-  }
+  };
 }

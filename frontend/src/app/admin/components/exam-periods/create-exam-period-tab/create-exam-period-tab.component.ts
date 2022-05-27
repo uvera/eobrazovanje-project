@@ -9,7 +9,7 @@ import { CreateExamPeriodTabService } from './create-exam-period-tab.service';
 @Component({
   selector: 'app-create-exam-period-tab',
   templateUrl: './create-exam-period-tab.component.html',
-  styleUrls: ['./create-exam-period-tab.component.scss']
+  styleUrls: ['./create-exam-period-tab.component.scss'],
 })
 export class CreateExamPeriodTabComponent implements OnInit {
   form!: FormGroup;
@@ -24,14 +24,17 @@ export class CreateExamPeriodTabComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.service.getSubjectExecutions().pipe(first()).subscribe((res) => {
-      this.opSubjects = res?.body!!
-    })
+    this.service
+      .getSubjectExecutions()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opSubjects = res?.body!!;
+      });
     this.form = this.fb.group({
       name: [null, [Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      subjectExecutionIds: [null, Validators.required]
+      subjectExecutionIds: [null, Validators.required],
     });
   }
 

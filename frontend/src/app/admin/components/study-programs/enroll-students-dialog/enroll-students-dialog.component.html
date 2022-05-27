@@ -1,7 +1,9 @@
 <h1 mat-dialog-title>Enroll students to selected study program</h1>
 <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
-    <input type="file" id="fileUpload" (change)="onFileSelected($event)">
-    <div mat-dialog-actions fxFlexAlign="flex-end">
-        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
-    </div>
+  <input type="file" id="fileUpload" (change)="onFileSelected($event)" />
+  <div mat-dialog-actions fxFlexAlign="flex-end">
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      Submit
+    </button>
+  </div>
 </div>

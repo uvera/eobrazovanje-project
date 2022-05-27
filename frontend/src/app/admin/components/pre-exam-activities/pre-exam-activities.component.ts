@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-pre-exam-activities',
   templateUrl: './pre-exam-activities.component.html',
-  styleUrls: ['./pre-exam-activities.component.scss']
+  styleUrls: ['./pre-exam-activities.component.scss'],
 })
 export class PreExamActivitiesComponent implements OnInit {
   links = [

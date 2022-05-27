@@ -8,9 +8,8 @@ describe('CreateSubjectExecutionsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateSubjectExecutionsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateSubjectExecutionsTabComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -101,7 +101,7 @@ const routes: Routes = [
     CommonModule,
     AppCommonModule,
     MatSnackBarModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000 } },

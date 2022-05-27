@@ -8,9 +8,8 @@ describe('AreYouSureDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AreYouSureDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [AreYouSureDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,7 +8,7 @@ import { CreatePreExamActivityService } from './create-pre-exam-activity.service
 @Component({
   selector: 'app-create-pre-exam-activity',
   templateUrl: './create-pre-exam-activity.component.html',
-  styleUrls: ['./create-pre-exam-activity.component.scss']
+  styleUrls: ['./create-pre-exam-activity.component.scss'],
 })
 export class CreatePreExamActivityComponent implements OnInit {
   form!: FormGroup;
@@ -18,7 +18,7 @@ export class CreatePreExamActivityComponent implements OnInit {
     private readonly service: CreatePreExamActivityService,
     private readonly snack: MatSnackBar,
     private readonly router: Router,
-    private readonly ar: ActivatedRoute,
+    private readonly ar: ActivatedRoute
   ) {}
   ngOnInit(): void {
     this.form = this.fb.group({

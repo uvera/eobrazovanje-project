@@ -1,20 +1,29 @@
 <div>
-    <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
-    <nz-table #dataTable [nzData]="dataSet.value" nzShowPagination [nzFrontPagination]="false"
-      [nzPageIndex]="pageIndex.value" [nzPageSize]="pageSize.value" [nzTotal]="total.value"
-      [nzVirtualItemSize]="total.value" (nzQueryParams)="queryParamsChange($event)"
-      [nzPageSizeOptions]="[1, 5, 10, 25, 50]" [nzShowSizeChanger]="true">
-      <thead>
-        <tr>
-          <th>Subject execution place and time</th>
-          <th>Exam period duration</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let i of dataTable.data">
-          <td>{{i.subjectExecution.place + " " + i.subjectExecution.time}}</td>
-          <td>{{i.examPeriod.startDate + " to " + i.examPeriod.endDate}}</td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </div>
+  <ng-template #totalTemplate let-total> Total {{ total }} items</ng-template>
+  <nz-table
+    #dataTable
+    [nzData]="dataSet.value"
+    nzShowPagination
+    [nzFrontPagination]="false"
+    [nzPageIndex]="pageIndex.value"
+    [nzPageSize]="pageSize.value"
+    [nzTotal]="total.value"
+    [nzVirtualItemSize]="total.value"
+    (nzQueryParams)="queryParamsChange($event)"
+    [nzPageSizeOptions]="[1, 5, 10, 25, 50]"
+    [nzShowSizeChanger]="true"
+  >
+    <thead>
+      <tr>
+        <th>Subject execution place and time</th>
+        <th>Exam period duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of dataTable.data">
+        <td>{{ i.subjectExecution.place + " " + i.subjectExecution.time }}</td>
+        <td>{{ i.examPeriod.startDate + " to " + i.examPeriod.endDate }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

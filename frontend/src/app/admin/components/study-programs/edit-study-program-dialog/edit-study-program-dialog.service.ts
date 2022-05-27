@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/common/service/api.service';
 import { StudyProgramsViewDTO } from '../list-study-programs-tab/list-study-programs-tab.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EditStudyProgramDialogService {
   constructor(private readonly api: ApiService) {}
@@ -13,6 +13,6 @@ export class EditStudyProgramDialogService {
   }
 
   getStudyProgramById(id: string) {
-    return this.api.get<StudyProgramsViewDTO>(`/api/admin/study-program/${id}`)
+    return this.api.get<StudyProgramsViewDTO>(`/api/admin/study-program/${id}`);
   }
 }

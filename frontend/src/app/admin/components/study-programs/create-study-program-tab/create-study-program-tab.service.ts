@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/common/service/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CreateStudyProgramTabService {
   constructor(private readonly api: ApiService) {}
@@ -12,6 +12,6 @@ export class CreateStudyProgramTabService {
   }
 
   getAvailableSubjects() {
-    return this.api.get('/api/admin/subject/available')
+    return this.api.get('/api/admin/subject/available');
   }
 }

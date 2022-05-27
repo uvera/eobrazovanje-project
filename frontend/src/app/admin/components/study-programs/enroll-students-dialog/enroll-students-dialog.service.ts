@@ -3,7 +3,7 @@ import { ApiService } from '../../../../common/service/api.service';
 import { StudentsViewDTO } from '../../students/list-students-tab/list-students-tab.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EnrollStudentsDialogService {
   constructor(private readonly api: ApiService) {}
@@ -12,4 +12,3 @@ export class EnrollStudentsDialogService {
     return this.api.post(`/api/admin/student`, data);
   }
 }
-

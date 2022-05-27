@@ -8,7 +8,7 @@ import { EnrollToSubjectDialogService } from './enroll-to-subject-dialog.service
 @Component({
   selector: 'app-enroll-to-subject-dialog',
   templateUrl: './enroll-to-subject-dialog.component.html',
-  styleUrls: ['./enroll-to-subject-dialog.component.scss']
+  styleUrls: ['./enroll-to-subject-dialog.component.scss'],
 })
 export class EnrollToSubjectDialogComponent implements OnInit {
   form!: FormGroup;
@@ -24,12 +24,12 @@ export class EnrollToSubjectDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  //   this.service.getAvailableStudents().pipe(first()).subscribe((res) => {
-  //     this.opStudents = res?.body!
-  //   })
-  //   this.form = this.fb.group({
-  //     studentIds: [null, [Validators.required]],
-  //   });
+    //   this.service.getAvailableStudents().pipe(first()).subscribe((res) => {
+    //     this.opStudents = res?.body!
+    //   })
+    //   this.form = this.fb.group({
+    //     studentIds: [null, [Validators.required]],
+    //   });
   }
 
   // submitForm(form: Record<string, unknown>) {

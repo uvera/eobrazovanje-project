@@ -9,11 +9,10 @@ import { EditStudyProgramDialogComponent } from '../edit-study-program-dialog/ed
 import { EnrollStudentsDialogComponent } from '../enroll-students-dialog/enroll-students-dialog.component';
 import { ListStudyProgramsTabService } from './list-study-programs-tab.service';
 
-
 @Component({
   selector: 'app-list-study-programs-tab',
   templateUrl: './list-study-programs-tab.component.html',
-  styleUrls: ['./list-study-programs-tab.component.scss']
+  styleUrls: ['./list-study-programs-tab.component.scss'],
 })
 export class ListStudyProgramsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -127,7 +126,7 @@ export class ListStudyProgramsTabComponent implements OnInit {
         },
       });
   }
-  }
+}
 
 export interface StudyProgramsViewDTO {
   id: string;
@@ -141,9 +140,9 @@ export interface StudyProgramsViewDTO {
   }>;
 }
 
-@Pipe({name: 'subjectsNamePipe'})
+@Pipe({ name: 'subjectsNamePipe' })
 export class SubjectsNamePipe implements PipeTransform {
   transform(value: SubjectViewDTO[]): any {
-    return value.map(v => v.name).join(',')
+    return value.map((v) => v.name).join(',');
   }
 }

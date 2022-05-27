@@ -36,7 +36,6 @@ export class CurrentUserService implements OnDestroy {
             next: (user) => {
               this._currentUser.next(user.body);
             },
-            
           });
       },
     });

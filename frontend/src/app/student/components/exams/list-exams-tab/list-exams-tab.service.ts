@@ -5,7 +5,7 @@ import { PageEntity } from 'src/app/common/http/page-entity';
 import { ApiService } from 'src/app/common/service/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListExamsTabService {
   constructor(private readonly api: ApiService) {}
@@ -15,14 +15,19 @@ export class ListExamsTabService {
       .set('page', pageIndex)
       .set('records', pageSize)
       .set('id', id);
-    return this.api.get<PageEntity>(`/api/admin/exam-period/${id}/enrollments`, params);
+    return this.api.get<PageEntity>(
+      `/api/admin/exam-period/${id}/enrollments`,
+      params
+    );
   }
 
   enrollInExam(examPeriodID: string, subjectExecutionID: string) {
-    return this.api.post(`/api/admin/exam-period/${examPeriodID}/${subjectExecutionID}/enroll`);
+    return this.api.post(
+      `/api/admin/exam-period/${examPeriodID}/${subjectExecutionID}/enroll`
+    );
   }
-  
+
   getExamPeriods() {
-    return this.api.get<ExamPeriodsViewDTO[]>('/api/admin/exam-period/all')
+    return this.api.get<ExamPeriodsViewDTO[]>('/api/admin/exam-period/all');
   }
 }

@@ -11,7 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
 import { TeacherDashboardComponent } from './components/teacher-dashboard/teacher-dashboard.component';
 import { LogoutComponent } from '../common/components/logout/logout.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -28,14 +32,14 @@ const routes: Routes = [
       },
       {
         path: 'logout',
-        component: LogoutComponent
+        component: LogoutComponent,
       },
       {
         path: '',
         pathMatch: 'full',
         redirectTo: 'my-subjects',
       },
-    ]
+    ],
   },
   {
     path: '',
@@ -44,15 +48,12 @@ const routes: Routes = [
   },
   {
     path: 'logout',
-    component: LogoutComponent
+    component: LogoutComponent,
   },
 ];
 
 @NgModule({
-  declarations: [
-    TeacherDashboardComponent,
-    MySubjectsComponent,
-  ],
+  declarations: [TeacherDashboardComponent, MySubjectsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -69,7 +70,7 @@ const routes: Routes = [
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
   ],
 })
 export class TeacherModule {}

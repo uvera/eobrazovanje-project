@@ -9,7 +9,7 @@ import { ListStudentPaymentTabService } from './list-student-payments-tab.servic
 @Component({
   selector: 'app-list-student-payments-tab',
   templateUrl: './list-student-payments-tab.component.html',
-  styleUrls: ['./list-student-payments-tab.component.scss']
+  styleUrls: ['./list-student-payments-tab.component.scss'],
 })
 export class ListStudentPaymentsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -23,20 +23,20 @@ export class ListStudentPaymentsTabComponent implements OnInit {
     private service: ListStudentPaymentTabService,
     private snack: MatSnackBar,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       email: [''],
     });
 
-    this.fetchCurrentStudentsPayments(1, 10)
-    
+    this.fetchCurrentStudentsPayments(1, 10);
+
     this.pageNumberAndSizeCombined$.subscribe((value) => {
       this.fetchCurrentStudentsPayments(value.pageIndex, value.pageSize);
     });
   }
-  
+
   pageIndex$ = this.pageIndex.asObservable();
   pageSize$ = this.pageSize.asObservable();
   pageNumberAndSizeCombined$ = combineLatest([
@@ -50,50 +50,50 @@ export class ListStudentPaymentsTabComponent implements OnInit {
   );
 
   fetchCurrentStudentsPayments(pageIndex: number, pageSize: number) {
-    this.service.fetchCurrentUser()
-    .pipe()
-    .subscribe((res) => {
-      const responseBody = res?.body;
-      if (responseBody) {
-        const { email }  = responseBody;
-        this.service.
-        fetchCurrentStudent(email)
-          .subscribe((res) => {
-            const responseBody = res?.body
+    this.service
+      .fetchCurrentUser()
+      .pipe()
+      .subscribe((res) => {
+        const responseBody = res?.body;
+        if (responseBody) {
+          const { email } = responseBody;
+          this.service.fetchCurrentStudent(email).subscribe((res) => {
+            const responseBody = res?.body;
             if (responseBody) {
-              const { id }  = responseBody;
-              this.service.
-              fetchStudentPaymentsPaged(pageIndex, pageSize, id)
-              .pipe(first())
-              .subscribe((res) => {
-                const responseBody = res?.body
-                if(responseBody) {
-                  const { content, totalElements } = responseBody;
-                  this.total.next(totalElements);
-                  this.dataSet.next(content);
-                }
-              })
-          }
-        })
-      }
-    })
+              const { id } = responseBody;
+              this.service
+                .fetchStudentPaymentsPaged(pageIndex, pageSize, id)
+                .pipe(first())
+                .subscribe((res) => {
+                  const responseBody = res?.body;
+                  if (responseBody) {
+                    const { content, totalElements } = responseBody;
+                    this.total.next(totalElements);
+                    this.dataSet.next(content);
+                  }
+                });
+            }
+          });
+        }
+      });
   }
-  
+
   fetchStudentPaymentsFromApi() {
-    console.log(this.form.get('email')?.value)
-    
+    console.log(this.form.get('email')?.value);
   }
 
   reloadFromApi() {
-    this.fetchCurrentStudentsPayments(this.pageIndex.value, this.pageSize.value);
+    this.fetchCurrentStudentsPayments(
+      this.pageIndex.value,
+      this.pageSize.value
+    );
   }
-  
+
   queryParamsChange(event: NzTableQueryParams) {
     this.pageSize.next(event.pageSize);
     this.pageIndex.next(event.pageIndex);
   }
 }
-
 
 export interface PaymentViewDTO {
   id: string;
@@ -105,6 +105,6 @@ export interface PaymentViewDTO {
       firstName: string;
       lastName: string;
       email: string;
-    }
+    };
   };
 }

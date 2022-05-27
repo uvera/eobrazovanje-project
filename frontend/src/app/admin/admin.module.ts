@@ -11,7 +11,11 @@ import { ListSubjectsTabComponent } from './components/subjects/list-subjects-ta
 import { MatTabsModule } from '@angular/material/tabs';
 import { CreateSubjectTabComponent } from './components/subjects/create-subject-tab/create-subject-tab.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -33,7 +37,10 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { ListPaymentTabComponent } from './components/payment/list-payment-tab/list-payment-tab.component';
 import { EditPaymentDialogComponent } from './components/payment/edit-payment-dialog/edit-payment-dialog.component';
 import { CreatePaymentTabComponent } from './components/payment/create-payment-tab/create-payment-tab.component';
-import { ListStudyProgramsTabComponent, SubjectsNamePipe } from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
+import {
+  ListStudyProgramsTabComponent,
+  SubjectsNamePipe,
+} from './components/study-programs/list-study-programs-tab/list-study-programs-tab.component';
 import { EditStudyProgramDialogComponent } from './components/study-programs/edit-study-program-dialog/edit-study-program-dialog.component';
 import { PreExamActivitiesComponent } from './components/pre-exam-activities/pre-exam-activities.component';
 import { ListPreExamActivitiesComponent } from './components/pre-exam-activities/list-pre-exam-activities/list-pre-exam-activities.component';
@@ -47,7 +54,10 @@ import { EnrollStudentsDialogComponent } from './components/study-programs/enrol
 import { EnrollToSubjectDialogComponent } from './components/subject-executions/enroll-to-subject-dialog/enroll-to-subject-dialog.component';
 import { LogoutComponent } from '../common/components/logout/logout.component';
 import { ExamPeriodsComponent } from './components/exam-periods/exam-periods.component';
-import { ListExamPeriodsTabComponent, SubjectExecutionNamePipe } from './components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
+import {
+  ListExamPeriodsTabComponent,
+  SubjectExecutionNamePipe,
+} from './components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
 import { CreateExamPeriodTabComponent } from './components/exam-periods/create-exam-period-tab/create-exam-period-tab.component';
 import { EditExamPeriodDialogComponent } from './components/exam-periods/edit-exam-period-dialog/edit-exam-period-dialog.component';
 
@@ -67,14 +77,17 @@ const routes: Routes = [
       },
       {
         path: 'logout',
-        component: LogoutComponent
+        component: LogoutComponent,
       },
       {
         path: 'profesors',
         component: ProfesorComponent,
         children: [
           { path: 'list-profesors-tab', component: ListProfesorTabComponent },
-          { path: 'create-profesor-tab', component: CreateProfesorTabComponent },
+          {
+            path: 'create-profesor-tab',
+            component: CreateProfesorTabComponent,
+          },
           { path: '', pathMatch: 'full', redirectTo: 'list-profesors-tab' },
         ],
       },
@@ -82,8 +95,14 @@ const routes: Routes = [
         path: 'exam-periods',
         component: ExamPeriodsComponent,
         children: [
-          { path: 'list-exam-periods-tab', component: ListExamPeriodsTabComponent },
-          { path: 'create-exam-period-tab', component: CreateExamPeriodTabComponent },
+          {
+            path: 'list-exam-periods-tab',
+            component: ListExamPeriodsTabComponent,
+          },
+          {
+            path: 'create-exam-period-tab',
+            component: CreateExamPeriodTabComponent,
+          },
           { path: '', pathMatch: 'full', redirectTo: 'list-exam-periods-tab' },
         ],
       },
@@ -132,7 +151,7 @@ const routes: Routes = [
             pathMatch: 'full',
             redirectTo: 'list-study-programs-tab',
           },
-        ]
+        ],
       },
       {
         path: 'pre-exam-activities',
@@ -151,7 +170,7 @@ const routes: Routes = [
             pathMatch: 'full',
             redirectTo: 'list-pre-exam-activities',
           },
-        ]
+        ],
       },
       {
         path: 'subject-executions',
@@ -170,7 +189,7 @@ const routes: Routes = [
             pathMatch: 'full',
             redirectTo: 'list-subject-executions-tab',
           },
-        ]
+        ],
       },
       {
         path: '',
@@ -243,7 +262,7 @@ const routes: Routes = [
     MatSelectModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
 })
-export class AdminModule { }
+export class AdminModule {}

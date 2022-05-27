@@ -1,9 +1,18 @@
 <h1 mat-dialog-title>Subject edit</h1>
 <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-  <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="flex-start flex-end"
+    style="width: 300px"
+  >
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>First name</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="firstName">
+      <input
+        matInput
+        inputmode="text"
+        type="text"
+        formControlName="firstName"
+      />
       <mat-error *ngIf="!!(form.get('firstName'))?.errors?.['required']">
         First name is required
       </mat-error>
@@ -11,7 +20,7 @@
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Last name</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="lastName">
+      <input matInput inputmode="text" type="text" formControlName="lastName" />
       <mat-error *ngIf="!!(form.get('lastName'))?.errors?.['required']">
         Last name is required
       </mat-error>
@@ -19,15 +28,27 @@
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Identification number</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="identificationNumber">
-      <mat-error *ngIf="!!(form.get('identificationNumber'))?.errors?.['required']">
+      <input
+        matInput
+        inputmode="text"
+        type="text"
+        formControlName="identificationNumber"
+      />
+      <mat-error
+        *ngIf="!!(form.get('identificationNumber'))?.errors?.['required']"
+      >
         Identification number is required
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Transcript number</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="transcriptNumber">
+      <input
+        matInput
+        inputmode="text"
+        type="text"
+        formControlName="transcriptNumber"
+      />
       <mat-error *ngIf="!!(form.get('transcriptNumber'))?.errors?.['required']">
         Transcript number is required
       </mat-error>
@@ -35,10 +56,24 @@
 
     <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%">
       <div mat-dialog-actions>
-        <button mat-raised-button color="secondary" type="button" (click)="dialogRef.close('closed')">Close</button>
+        <button
+          mat-raised-button
+          color="secondary"
+          type="button"
+          (click)="dialogRef.close('closed')"
+        >
+          Close
+        </button>
       </div>
       <div mat-dialog-actions>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Submit
+        </button>
       </div>
     </div>
   </div>

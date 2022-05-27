@@ -4,7 +4,7 @@ import { PageEntity } from '../../../../common/http/page-entity';
 import { ApiService } from '../../../../common/service/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListSubjectExecutionsTabService {
   constructor(private readonly api: ApiService) {}
@@ -13,7 +13,10 @@ export class ListSubjectExecutionsTabService {
     const params = new HttpParams()
       .set('page', pageIndex)
       .set('records', pageSize);
-    return this.api.get<PageEntity>('/api/admin/subject-execution/paged', params);
+    return this.api.get<PageEntity>(
+      '/api/admin/subject-execution/paged',
+      params
+    );
   }
 
   deleteById(id: string) {

@@ -8,11 +8,11 @@ import { EditProfesorDialogService } from './edit-profesor-dialog.service';
 @Component({
   selector: 'app-edit-profesor-dialog',
   templateUrl: './edit-profesor-dialog.component.html',
-  styleUrls: ['./edit-profesor-dialog.component.scss']
+  styleUrls: ['./edit-profesor-dialog.component.scss'],
 })
 export class EditProfesorDialogComponent implements OnInit {
   form!: FormGroup;
-  teacherTypes = ["PROFESSOR", "ASSISTANT"];
+  teacherTypes = ['PROFESSOR', 'ASSISTANT'];
 
   constructor(
     private service: EditProfesorDialogService,

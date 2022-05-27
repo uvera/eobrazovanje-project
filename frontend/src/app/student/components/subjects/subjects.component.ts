@@ -6,7 +6,7 @@ import { SubjectsComponentService, SubjectViewDTO } from './subjects.service';
 @Component({
   selector: 'app-subjects',
   templateUrl: './subjects.component.html',
-  styleUrls: ['./subjects.component.scss']
+  styleUrls: ['./subjects.component.scss'],
 })
 export class SubjectsComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -14,9 +14,7 @@ export class SubjectsComponent implements OnInit {
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<StudentViewSubjectsDTO[]>([]);
 
-  constructor(
-    private readonly service: SubjectsComponentService
-  ) { }
+  constructor(private readonly service: SubjectsComponentService) {}
 
   ngOnInit(): void {
     this.pageNumberAndSizeCombined$.subscribe((value) => {
@@ -42,48 +40,46 @@ export class SubjectsComponent implements OnInit {
   }
 
   fetchCurrentStudentSubjects(pageIndex: number, pageSize: number) {
-    this.service.fetchCurrentUser()
+    this.service
+      .fetchCurrentUser()
       .pipe()
       .subscribe((res) => {
         const responseBody = res?.body;
         if (responseBody) {
           const { email } = responseBody;
-          this.service.
-            fetchCurrentStudent(email)
-            .subscribe((res) => {
-              const responseBody = res?.body
-              if (responseBody) {
-                const { id } = responseBody;
-                this.service.fetchStudentSubjects(id, pageIndex, pageSize)
-                  .subscribe((res) => {
-                    const responseBody = res?.body;
-                    if (responseBody) {
-                      const { content, totalElements } = responseBody;
-                      this.total.next(totalElements);
-                      this.dataSet.next(content);
-                    }
-                  })
-              }
-            })
+          this.service.fetchCurrentStudent(email).subscribe((res) => {
+            const responseBody = res?.body;
+            if (responseBody) {
+              const { id } = responseBody;
+              this.service
+                .fetchStudentSubjects(id, pageIndex, pageSize)
+                .subscribe((res) => {
+                  const responseBody = res?.body;
+                  if (responseBody) {
+                    const { content, totalElements } = responseBody;
+                    this.total.next(totalElements);
+                    this.dataSet.next(content);
+                  }
+                });
+            }
+          });
         }
-      })
+      });
   }
-
 }
 
-
 interface StudentViewSubjectsDTO {
-  id: string,
-  year: number,
+  id: string;
+  year: number;
   subjectExecution: {
-    place: string,
-    time: string,
-    weekDay: string,
+    place: string;
+    time: string;
+    weekDay: string;
     subject: {
-      id: string,
-      espb: number,
-      name: string,
-      year: number
-    }
-  }
+      id: string;
+      espb: number;
+      name: string;
+      year: number;
+    };
+  };
 }

@@ -9,7 +9,7 @@ import { ListExamPeriodsTabService } from './list-exam-periods-tab.service';
 @Component({
   selector: 'app-list-exam-periods-tab',
   templateUrl: './list-exam-periods-tab.component.html',
-  styleUrls: ['./list-exam-periods-tab.component.scss']
+  styleUrls: ['./list-exam-periods-tab.component.scss'],
 })
 export class ListExamPeriodsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -66,16 +66,16 @@ export class ListExamPeriodsTabComponent implements OnInit {
 }
 
 export interface ExamPeriodsViewDTO {
-  id: string,
-  name: string,
-  startDate: Date,
-  endDate: Date,
-  subjectExecutions: SubjectExecutionTableViewDTO[]
+  id: string;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  subjectExecutions: SubjectExecutionTableViewDTO[];
 }
 
-@Pipe({name: 'subjectExecutionNamePipe'})
+@Pipe({ name: 'subjectExecutionNamePipe' })
 export class SubjectExecutionNamePipe implements PipeTransform {
   transform(value: SubjectExecutionTableViewDTO[]): any {
-    return value.map(v => v.place).join(',')
+    return value.map((v) => v.place).join(',');
   }
 }

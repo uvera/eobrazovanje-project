@@ -13,7 +13,7 @@ import { ListSubjectExecutionsTabService } from './list-subject-executions-tab.s
 @Component({
   selector: 'app-list-subject-executions-tab',
   templateUrl: './list-subject-executions-tab.component.html',
-  styleUrls: ['./list-subject-executions-tab.component.scss']
+  styleUrls: ['./list-subject-executions-tab.component.scss'],
 })
 export class ListSubjectExecutionsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -89,7 +89,8 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
     this.dialog
       .open(AreYouSureDialogComponent, {
         data: {
-          dialogTitle: 'Are you sure you want to delete this subject execution?',
+          dialogTitle:
+            'Are you sure you want to delete this subject execution?',
           yesButtonText: 'Delete',
         },
       })
@@ -114,7 +115,7 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
         },
       });
   }
-  }
+}
 
 export interface SubjectExecutionTableViewDTO {
   id: string;

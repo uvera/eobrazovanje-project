@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-list-payment-tab',
   templateUrl: './list-payment-tab.component.html',
-  styleUrls: ['./list-payment-tab.component.scss']
+  styleUrls: ['./list-payment-tab.component.scss'],
 })
 export class ListPaymentTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -27,20 +27,27 @@ export class ListPaymentTabComponent implements OnInit {
     private service: ListPaymentTabService,
     private snack: MatSnackBar,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [null],
     });
-    this.service.getStudents().pipe(first()).subscribe((res) => {
-      this.opStudents = res?.body as Array<StudentsViewDTO>
-    })
+    this.service
+      .getStudents()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opStudents = res?.body as Array<StudentsViewDTO>;
+      });
     this.pageNumberAndSizeCombined$.subscribe((value) => {
-      this.fetchFromApi(value.pageIndex, value.pageSize, this.form.get('id')?.value);
+      this.fetchFromApi(
+        value.pageIndex,
+        value.pageSize,
+        this.form.get('id')?.value
+      );
     });
-    this.form.valueChanges.subscribe(x => {
-      this.reloadFromApi()
+    this.form.valueChanges.subscribe((x) => {
+      this.reloadFromApi();
     });
   }
 
@@ -73,7 +80,11 @@ export class ListPaymentTabComponent implements OnInit {
   }
 
   reloadFromApi() {
-    this.fetchFromApi(this.pageIndex.value, this.pageSize.value, this.form.get('id')?.value);
+    this.fetchFromApi(
+      this.pageIndex.value,
+      this.pageSize.value,
+      this.form.get('id')?.value
+    );
   }
 
   queryParamsChange(event: NzTableQueryParams) {
@@ -139,6 +150,6 @@ export interface PaymentViewDTO {
       firstName: string;
       lastName: string;
       email: string;
-    }
+    };
   };
 }

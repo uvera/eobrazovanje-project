@@ -9,7 +9,7 @@ import { CreateStudyProgramTabService } from './create-study-program-tab.service
 @Component({
   selector: 'app-create-study-program-tab',
   templateUrl: './create-study-program-tab.component.html',
-  styleUrls: ['./create-study-program-tab.component.scss']
+  styleUrls: ['./create-study-program-tab.component.scss'],
 })
 export class CreateStudyProgramTabComponent implements OnInit {
   form!: FormGroup;
@@ -20,12 +20,15 @@ export class CreateStudyProgramTabComponent implements OnInit {
     private readonly service: CreateStudyProgramTabService,
     private readonly snack: MatSnackBar,
     private readonly router: Router,
-    private readonly ar: ActivatedRoute,
+    private readonly ar: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    this.service.getAvailableSubjects().pipe(first()).subscribe((res) => {
-      this.opSubjects = res?.body as Array<SubjectViewDTO>
-    })
+    this.service
+      .getAvailableSubjects()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opSubjects = res?.body as Array<SubjectViewDTO>;
+      });
     this.form = this.fb.group({
       name: [null, [Validators.required]],
       codeName: [null, [Validators.required]],

@@ -4,7 +4,7 @@ import { SubjectExecutionViewDTO } from '../../subject-executions/edit-subject-e
 import { SubjectExecutionTableViewDTO } from '../../subject-executions/list-subject-executions-tab/list-subject-executions-tab.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CreateExamPeriodTabService {
   constructor(private readonly api: ApiService) {}
@@ -14,7 +14,8 @@ export class CreateExamPeriodTabService {
   }
 
   getSubjectExecutions() {
-    return this.api.get<SubjectExecutionViewDTO[]>('/api/admin/subject-execution/all')
+    return this.api.get<SubjectExecutionViewDTO[]>(
+      '/api/admin/subject-execution/all'
+    );
   }
 }
-

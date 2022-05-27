@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/common/service/api.service';
 import { PreExamActivityViewDTO } from './edit-pre-exam-activity.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EditPreExamActivityService {
   constructor(private readonly api: ApiService) {}
@@ -13,6 +13,8 @@ export class EditPreExamActivityService {
   }
 
   getPreExamActivityById(id: string) {
-    return this.api.get<PreExamActivityViewDTO>(`/api/admin/pre-exam-activity/${id}`)
+    return this.api.get<PreExamActivityViewDTO>(
+      `/api/admin/pre-exam-activity/${id}`
+    );
   }
 }

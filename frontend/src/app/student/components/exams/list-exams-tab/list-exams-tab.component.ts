@@ -13,7 +13,7 @@ import { ListExamsTabService } from './list-exams-tab.service';
 @Component({
   selector: 'app-list-exams-tab',
   templateUrl: './list-exams-tab.component.html',
-  styleUrls: ['./list-exams-tab.component.scss']
+  styleUrls: ['./list-exams-tab.component.scss'],
 })
 export class ListExamsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
@@ -28,20 +28,27 @@ export class ListExamsTabComponent implements OnInit {
     private service: ListExamsTabService,
     private snack: MatSnackBar,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [null],
     });
-    this.service.getExamPeriods().pipe(first()).subscribe((res) => {
-      this.opExamPeriods = res?.body ?? []
-    })
+    this.service
+      .getExamPeriods()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opExamPeriods = res?.body ?? [];
+      });
     this.pageNumberAndSizeCombined$.subscribe((value) => {
-      this.fetchFromApi(value.pageIndex, value.pageSize, this.form.get('id')?.value);
+      this.fetchFromApi(
+        value.pageIndex,
+        value.pageSize,
+        this.form.get('id')?.value
+      );
     });
-    this.form.valueChanges.subscribe(x => {
-      this.reloadFromApi()
+    this.form.valueChanges.subscribe((x) => {
+      this.reloadFromApi();
     });
   }
 
@@ -74,7 +81,11 @@ export class ListExamsTabComponent implements OnInit {
   }
 
   reloadFromApi() {
-    this.fetchFromApi(this.pageIndex.value, this.pageSize.value, this.form.get('id')?.value);
+    this.fetchFromApi(
+      this.pageIndex.value,
+      this.pageSize.value,
+      this.form.get('id')?.value
+    );
   }
 
   queryParamsChange(event: NzTableQueryParams) {
@@ -112,4 +123,3 @@ export class ListExamsTabComponent implements OnInit {
       });
   }
 }
-

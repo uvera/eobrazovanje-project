@@ -8,9 +8,8 @@ describe('EnrollToSubjectDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EnrollToSubjectDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [EnrollToSubjectDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

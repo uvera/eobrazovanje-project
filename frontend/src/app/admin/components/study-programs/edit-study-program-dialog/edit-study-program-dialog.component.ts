@@ -10,7 +10,7 @@ import { EditStudyProgramDialogService } from './edit-study-program-dialog.servi
 @Component({
   selector: 'app-edit-study-program-dialog',
   templateUrl: './edit-study-program-dialog.component.html',
-  styleUrls: ['./edit-study-program-dialog.component.scss']
+  styleUrls: ['./edit-study-program-dialog.component.scss'],
 })
 export class EditStudyProgramDialogComponent implements OnInit {
   form!: FormGroup;
@@ -27,9 +27,12 @@ export class EditStudyProgramDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.mainService.getAvailableSubjects().pipe(first()).subscribe((res) => {
-      this.opSubjects = res?.body as Array<SubjectViewDTO>
-    })
+    this.mainService
+      .getAvailableSubjects()
+      .pipe(first())
+      .subscribe((res) => {
+        this.opSubjects = res?.body as Array<SubjectViewDTO>;
+      });
     this.form = this.fb.group({
       name: [null, [Validators.required]],
       codeName: [null, [Validators.required]],
@@ -44,8 +47,8 @@ export class EditStudyProgramDialogComponent implements OnInit {
           codeName: body.codeName,
           subjects: body.subjects,
         });
-        this.opSubjects = this.opSubjects.concat(body.subjects)
-        this.existentSubjectsIds = body.subjects.map(a => a.id)
+        this.opSubjects = this.opSubjects.concat(body.subjects);
+        this.existentSubjectsIds = body.subjects.map((a) => a.id);
       },
       error: (_) => {
         this.snack.open('Error occurred fetching study program for editing');

@@ -8,11 +8,11 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-create-profesor-tab',
   templateUrl: './create-profesor-tab.component.html',
-  styleUrls: ['./create-profesor-tab.component.scss']
+  styleUrls: ['./create-profesor-tab.component.scss'],
 })
 export class CreateProfesorTabComponent implements OnInit {
   form!: FormGroup;
-  teacherTypes = ["PROFESSOR", "ASSISTANT"];
+  teacherTypes = ['PROFESSOR', 'ASSISTANT'];
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +28,7 @@ export class CreateProfesorTabComponent implements OnInit {
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
+      password: [null, [Validators.required]],
     });
   }
 
@@ -51,9 +51,7 @@ export class CreateProfesorTabComponent implements OnInit {
 
 enum TeacherType {
   PROFESSOR,
-  ASSISTANT
+  ASSISTANT,
 }
 
-interface TeacherTypeDTO {
-  
-}
+interface TeacherTypeDTO {}

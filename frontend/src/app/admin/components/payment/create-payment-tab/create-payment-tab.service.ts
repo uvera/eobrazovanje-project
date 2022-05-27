@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../common/service/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CreatePaymentTabService {
   constructor(private readonly api: ApiService) {}
@@ -12,6 +12,6 @@ export class CreatePaymentTabService {
   }
 
   getStudents() {
-    return this.api.get('/api/admin/student/all')
+    return this.api.get('/api/admin/student/all');
   }
 }

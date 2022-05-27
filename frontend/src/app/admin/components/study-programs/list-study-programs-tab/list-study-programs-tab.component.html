@@ -1,10 +1,26 @@
 <div>
-  <button (click)="enrollStudents()" mat-raised-button color="primary" type="button">Enroll new students</button>
-  <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
-  <nz-table #dataTable [nzData]="dataSet.value" nzShowPagination [nzFrontPagination]="false"
-    [nzPageIndex]="pageIndex.value" [nzPageSize]="pageSize.value" [nzTotal]="total.value"
-    [nzVirtualItemSize]="total.value" (nzQueryParams)="queryParamsChange($event)"
-    [nzPageSizeOptions]="[1, 5, 10, 25, 50]" [nzShowSizeChanger]="true">
+  <button
+    (click)="enrollStudents()"
+    mat-raised-button
+    color="primary"
+    type="button"
+  >
+    Enroll new students
+  </button>
+  <ng-template #totalTemplate let-total> Total {{ total }} items</ng-template>
+  <nz-table
+    #dataTable
+    [nzData]="dataSet.value"
+    nzShowPagination
+    [nzFrontPagination]="false"
+    [nzPageIndex]="pageIndex.value"
+    [nzPageSize]="pageSize.value"
+    [nzTotal]="total.value"
+    [nzVirtualItemSize]="total.value"
+    (nzQueryParams)="queryParamsChange($event)"
+    [nzPageSizeOptions]="[1, 5, 10, 25, 50]"
+    [nzShowSizeChanger]="true"
+  >
     <thead>
       <tr>
         <th>Code name</th>
@@ -16,14 +32,28 @@
     </thead>
     <tbody>
       <tr *ngFor="let i of dataTable.data">
-        <td>{{i.codeName}}</td>
-        <td>{{i.name}}</td>
-        <td>{{i.subjects | subjectsNamePipe }}</td>
+        <td>{{ i.codeName }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.subjects | subjectsNamePipe }}</td>
         <td>
-          <button (click)="editStudyProgram(i.id)" mat-raised-button color="primary" type="button">Edit</button>
+          <button
+            (click)="editStudyProgram(i.id)"
+            mat-raised-button
+            color="primary"
+            type="button"
+          >
+            Edit
+          </button>
         </td>
         <td>
-          <button (click)="deleteStudyProgram(i.id)" mat-raised-button color="secondary" type="button">Delete</button>
+          <button
+            (click)="deleteStudyProgram(i.id)"
+            mat-raised-button
+            color="secondary"
+            type="button"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>

@@ -1,8 +1,17 @@
 <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-  <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="flex-start flex-end"
+    style="width: 300px"
+  >
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>First name</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="firstName">
+      <input
+        matInput
+        inputmode="text"
+        type="text"
+        formControlName="firstName"
+      />
       <mat-error *ngIf="!!(form.get('firstName'))?.errors?.['required']">
         First name is required
       </mat-error>
@@ -10,7 +19,7 @@
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Last name</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="lastName">
+      <input matInput inputmode="text" type="text" formControlName="lastName" />
       <mat-error *ngIf="!!(form.get('lastName'))?.errors?.['required']">
         Last name is required
       </mat-error>
@@ -18,15 +27,27 @@
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Identification number</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="identificationNumber">
-      <mat-error *ngIf="!!(form.get('identificationNumber'))?.errors?.['required']">
-       Identification number is required
+      <input
+        matInput
+        inputmode="text"
+        type="text"
+        formControlName="identificationNumber"
+      />
+      <mat-error
+        *ngIf="!!(form.get('identificationNumber'))?.errors?.['required']"
+      >
+        Identification number is required
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Transcript number</mat-label>
-      <input matInput inputmode="text" type="text" formControlName="transcriptNumber">
+      <input
+        matInput
+        inputmode="text"
+        type="text"
+        formControlName="transcriptNumber"
+      />
       <mat-error *ngIf="!!(form.get('transcriptNumber'))?.errors?.['required']">
         Transcript number is required
       </mat-error>
@@ -34,7 +55,7 @@
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Email</mat-label>
-      <input matInput inputmode="email" type="email" formControlName="email">
+      <input matInput inputmode="email" type="email" formControlName="email" />
       <mat-error *ngIf="!!(form.get('email'))?.errors?.['required']">
         Email is required
       </mat-error>
@@ -45,7 +66,12 @@
 
     <mat-form-field appearance="standard" fxFlexFill>
       <mat-label>Current year</mat-label>
-      <input matInput inputmode="number" type="number" formControlName="currentYear">
+      <input
+        matInput
+        inputmode="number"
+        type="number"
+        formControlName="currentYear"
+      />
       <mat-error *ngIf="!!(form.get('currentYear'))?.errors?.['required']">
         Current year is required
       </mat-error>
@@ -55,7 +81,14 @@
     </mat-form-field>
 
     <div mat-dialog-actions fxFlexAlign="flex-end">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Submit
+      </button>
     </div>
   </div>
 </form>

@@ -7,7 +7,7 @@ import { EditPreExamActivityService } from './edit-pre-exam-activity.service';
 @Component({
   selector: 'app-edit-pre-exam-activity',
   templateUrl: './edit-pre-exam-activity.component.html',
-  styleUrls: ['./edit-pre-exam-activity.component.scss']
+  styleUrls: ['./edit-pre-exam-activity.component.scss'],
 })
 export class EditPreExamActivityComponent implements OnInit {
   form!: FormGroup;
@@ -55,7 +55,7 @@ export class EditPreExamActivityComponent implements OnInit {
 }
 
 export interface PreExamActivityViewDTO {
-  id: string,
-  name: string,
-  points: number
+  id: string;
+  name: string;
+  points: number;
 }

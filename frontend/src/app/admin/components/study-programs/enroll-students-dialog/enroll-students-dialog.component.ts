@@ -9,13 +9,13 @@ import { Papa } from 'ngx-papaparse';
 @Component({
   selector: 'app-enroll-students-dialog',
   templateUrl: './enroll-students-dialog.component.html',
-  styleUrls: ['./enroll-students-dialog.component.scss']
+  styleUrls: ['./enroll-students-dialog.component.scss'],
 })
 export class EnrollStudentsDialogComponent implements OnInit {
   form!: FormGroup;
   opStudents: StudentsViewDTO[] = [];
   existentStudentIds: string[] = [];
-  selectedFile: any = null
+  selectedFile: any = null;
 
   constructor(
     private service: EnrollStudentsDialogService,
@@ -23,11 +23,10 @@ export class EnrollStudentsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private dialogData: { codeName: string },
     public readonly dialogRef: MatDialogRef<EnrollStudentsDialogComponent>,
     private snack: MatSnackBar,
-    private papa: Papa,
-  ) { }
+    private papa: Papa
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] ?? null;
@@ -49,7 +48,7 @@ export class EnrollStudentsDialogComponent implements OnInit {
         },
         skipEmptyLines: 'greedy',
         header: true,
-      })
+      });
     }
   }
 }

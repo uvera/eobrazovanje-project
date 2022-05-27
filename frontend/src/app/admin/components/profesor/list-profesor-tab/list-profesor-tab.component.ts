@@ -10,7 +10,7 @@ import { EditProfesorDialogComponent } from '../edit-profesor-dialog/edit-profes
 @Component({
   selector: 'app-list-profesor-tab',
   templateUrl: './list-profesor-tab.component.html',
-  styleUrls: ['./list-profesor-tab.component.scss']
+  styleUrls: ['./list-profesor-tab.component.scss'],
 })
 export class ListProfesorTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);

@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { PageEntity } from '../../../../common/http/page-entity';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListPaymentTabService {
   constructor(private readonly api: ApiService) {}
@@ -20,8 +20,8 @@ export class ListPaymentTabService {
   deletePaymentById(id: string) {
     return this.api.delete(`/api/payment/${id}`);
   }
-  
+
   getStudents() {
-    return this.api.get('/api/admin/student/all')
+    return this.api.get('/api/admin/student/all');
   }
 }

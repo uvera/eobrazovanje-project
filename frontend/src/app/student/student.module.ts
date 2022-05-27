@@ -13,7 +13,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
 import { SubjectsComponent } from './components/subjects/subjects.component';
 import { ExamsComponent } from './components/exams/exams.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -24,7 +28,6 @@ import { LogoutComponent } from '../common/components/logout/logout.component';
 import { ListExamsTabComponent } from './components/exams/list-exams-tab/list-exams-tab.component';
 import { ListEnrolledExamsTabComponent } from './components/exams/list-enrolled-exams-tab/list-enrolled-exams-tab.component';
 
-
 const routes: Routes = [
   {
     path: 'dashboard',
@@ -32,44 +35,60 @@ const routes: Routes = [
     children: [
       {
         path: 'profile',
-        component: ProfileComponent
+        component: ProfileComponent,
       },
       {
         path: 'subjects',
-        component: SubjectsComponent
+        component: SubjectsComponent,
       },
       {
         path: 'payments',
         component: StudentPaymentComponent,
         children: [
-          { path: 'list-student-payments-tab', component: ListStudentPaymentsTabComponent },
-          { path: 'create-student-payment-tab', component: CreateStudentPaymentsTabComponent },
-          { path: '', pathMatch: 'full', redirectTo: 'list-student-payments-tab' },
+          {
+            path: 'list-student-payments-tab',
+            component: ListStudentPaymentsTabComponent,
+          },
+          {
+            path: 'create-student-payment-tab',
+            component: CreateStudentPaymentsTabComponent,
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-student-payments-tab',
+          },
         ],
       },
       {
         path: 'exams',
         component: ExamsComponent,
         children: [
-          { path: 'list-student-exam-enrollments-tab', component: ListExamsTabComponent },
-          { path: 'list-student-all-exam-enrollments-tab', component: ListEnrolledExamsTabComponent },
+          {
+            path: 'list-student-exam-enrollments-tab',
+            component: ListExamsTabComponent,
+          },
+          {
+            path: 'list-student-all-exam-enrollments-tab',
+            component: ListEnrolledExamsTabComponent,
+          },
           {
             path: '',
             pathMatch: 'full',
             redirectTo: 'list-student-exam-enrollments-tab',
           },
-        ]
+        ],
       },
       {
         path: 'logout',
-        component: LogoutComponent
+        component: LogoutComponent,
       },
       {
         path: '',
         pathMatch: 'full',
         redirectTo: 'subjects',
       },
-    ]
+    ],
   },
   {
     path: '',
@@ -106,7 +125,7 @@ const routes: Routes = [
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
   ],
 })
-export class StudentModule { }
+export class StudentModule {}

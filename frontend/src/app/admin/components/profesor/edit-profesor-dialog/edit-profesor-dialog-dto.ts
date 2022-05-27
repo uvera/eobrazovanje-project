@@ -1,8 +1,7 @@
 export type EditProfesorData = {
-    user: {
-      firstName: string;
-      lastName: string;
-    };
-    teacherType: string;
+  user: {
+    firstName: string;
+    lastName: string;
   };
-  
+  teacherType: string;
+};
