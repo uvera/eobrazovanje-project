@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1653427982988-1" author="ivke (generated)">
+        <dropForeignKeyConstraint baseTableName="document_file" constraintName="fk_document_file_on_student_document"/>
+    </changeSet>
+    <changeSet id="1653427982988-4" author="ivke (generated)">
+        <dropTable cascadeConstraints="true" tableName="document_file"/>
+    </changeSet>
+    <changeSet id="1653427982988-5" author="ivke (generated)">
+        <dropTable cascadeConstraints="true" tableName="student_document"/>
+    </changeSet>
+
+</databaseChangeLog>

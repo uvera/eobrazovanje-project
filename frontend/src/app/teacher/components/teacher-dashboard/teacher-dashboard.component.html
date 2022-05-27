@@ -1,1 +1,14 @@
-<p>teacher-dashboard works!</p>
+<mat-drawer-container class="sidenav">
+    <mat-drawer mode="side" opened class="sidenav-drawer">
+      <h2>Electronic education</h2>
+      <div>
+        <a mat-button [routerLink]="'my-subjects'" [routerLinkActive]="'is-active'">My Subjects</a>
+      </div>
+      <div>
+        <a mat-button [routerLink]="'logout'" [routerLinkActive]="'is-active'">LOGOUT</a>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="sidenav-content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>

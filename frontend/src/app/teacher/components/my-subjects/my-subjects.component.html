@@ -1,0 +1,31 @@
+<div>
+    <ng-template #totalTemplate let-total> Total {{total}} items</ng-template>
+    <nz-table #dataTable [nzData]="dataSet.value" nzShowPagination [nzFrontPagination]="false"
+    [nzPageIndex]="pageIndex.value" [nzPageSize]="pageSize.value" [nzTotal]="total.value"
+    [nzVirtualItemSize]="total.value" (nzQueryParams)="queryParamsChange($event)"
+    [nzPageSizeOptions]="[1, 5, 10, 25, 50]" [nzShowSizeChanger]="true">
+    <thead>
+      <tr>
+        <th>Place(classroom/building)</th>
+        <th>Year of enrollment</th>
+        <th>Time of the class</th>
+        <th>Weekday</th>
+        <th>Subject name</th>
+        <th>ESPB</th>
+        <th>Year of the subject</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of dataTable.data">
+        <td>{{i.subjectExecution.place}}</td>
+        <td>{{i.year}}</td>
+        <td>{{i.subjectExecution.time}}</td>
+        <td>{{i.subjectExecution.weekDay}}</td>
+        <td>{{i.subjectExecution.subject.name}}</td>
+        <td>{{i.subjectExecution.subject.espb}}</td>
+        <td>{{i.subjectExecution.subject.year}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  </div>
+  
