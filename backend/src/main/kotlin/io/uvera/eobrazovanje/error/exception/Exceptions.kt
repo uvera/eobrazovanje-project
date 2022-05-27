@@ -1,9 +1,6 @@
 package io.uvera.eobrazovanje.error.exception
 import org.springframework.core.NestedRuntimeException
 
-import org.springframework.http.HttpStatus
-import org.springframework.web.server.ResponseStatusException
-
 // base
 open class BadRequestException(message: String) : NestedRuntimeException(message)
 open class NotFoundException(message: String) : NestedRuntimeException(message)

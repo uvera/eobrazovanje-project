@@ -6,8 +6,8 @@ import java.util.*
 import javax.validation.constraints.NotEmpty
 
 @Validated
-class EnrollStudentsDTO (
+class EnrollStudentsDTO(
     @field:NotEmpty
     @field:JsonDeserialize
     val studentIds: List<UUID>
-    )
+)

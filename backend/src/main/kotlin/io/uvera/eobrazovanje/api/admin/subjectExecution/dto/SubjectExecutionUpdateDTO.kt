@@ -2,7 +2,6 @@ package io.uvera.eobrazovanje.api.admin.subjectExecution.dto
 
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.validation.annotation.Validated
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 import javax.validation.constraints.NotBlank

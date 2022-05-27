@@ -4,7 +4,6 @@ import com.blazebit.persistence.view.EntityView
 import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.User
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 

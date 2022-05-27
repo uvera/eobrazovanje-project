@@ -4,7 +4,6 @@ import io.uvera.eobrazovanje.constraint.StudentTranscriptNumberExists
 import org.springframework.validation.annotation.Validated
 import java.util.*
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 @Validated
 class AdminCreateStudentDTO(

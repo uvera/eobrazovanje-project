@@ -7,7 +7,6 @@ import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
 import io.uvera.eobrazovanje.common.repository.PreExamActivity
 import io.uvera.eobrazovanje.common.repository.SubjectExecution
 import io.uvera.eobrazovanje.common.repository.SubjectProfessorEnrollment
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.UUID
 

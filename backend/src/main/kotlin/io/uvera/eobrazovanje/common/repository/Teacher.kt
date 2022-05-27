@@ -1,9 +1,6 @@
 package io.uvera.eobrazovanje.common.repository
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import io.uvera.eobrazovanje.api.admin.student.dto.EnrollmentViewDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherDTO
 import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherEnrollmentViewDTO
 import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
@@ -76,5 +73,5 @@ interface TeacherRepository : JpaSpecificationRepository<Teacher, UUID> {
 
     @Query("select t from Teacher t where t.id = :id")
     @org.springframework.data.jpa.repository.EntityGraph("teacher-graph")
-    fun findTeacherByIdWithExecutions(page: Pageable, id: UUID):Page<TeacherEnrollmentViewDTO>
+    fun findTeacherByIdWithExecutions(page: Pageable, id: UUID): Page<TeacherEnrollmentViewDTO>
 }

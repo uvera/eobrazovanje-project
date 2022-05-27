@@ -1,6 +1,5 @@
 package io.uvera.eobrazovanje.api.admin.payment
 
-import io.uvera.eobrazovanje.api.admin.payment.dto.StudentPaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO

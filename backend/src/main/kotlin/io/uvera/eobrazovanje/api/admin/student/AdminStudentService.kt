@@ -1,20 +1,18 @@
 package io.uvera.eobrazovanje.api.admin.student
 
-import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
+import io.uvera.eobrazovanje.api.admin.student.dto.*
 import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentUpdateDTO
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
-import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.*
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.common.service.DigitGenerationService
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
+import io.uvera.eobrazovanje.util.extensions.*
 import io.uvera.eobrazovanje.util.extensions.invoke
-import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
+import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import io.uvera.eobrazovanje.util.extensions.update
-import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
@@ -59,7 +57,7 @@ class AdminStudentService(
                 executions?.forEach { execution ->
                     subjEnrolRepo {
                         SubjectEnrollment(
-                            year = it.currentYear, //not sure if this will be this but leave it for now
+                            year = it.currentYear, // not sure if this will be this but leave it for now
                             subjectExecution = execution,
                             student = it
                         ).save()

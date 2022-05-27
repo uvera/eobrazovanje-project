@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
-class PreExamActivityService (protected val repo: PreExamActivityRepository) {
+class PreExamActivityService(protected val repo: PreExamActivityRepository) {
     @Transactional(propagation = Propagation.NEVER)
     fun createPreExamActivity(acDTO: PreExamActivityCreateDTO): PreExamActivityViewDTO = repo {
         getPreExamActivity(preExamDTOToEntity(acDTO).save().id)

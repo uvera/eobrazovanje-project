@@ -1,7 +1,5 @@
 package io.uvera.eobrazovanje.api.admin.teacher
 
-import io.uvera.eobrazovanje.api.admin.student.dto.EnrollmentViewDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.api.admin.teacher.dto.*
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.security.configuration.RoleEnum
@@ -90,5 +88,3 @@ class TeacherService(
         )
     }
 }
-
-

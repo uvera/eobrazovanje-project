@@ -58,10 +58,10 @@ interface StudentRepository : JpaSpecificationRepository<Student, UUID> {
 
     @Query("select s from Student s where s.user.email = :email")
     fun findByUserEmailOrNull(email: String): Student?
-    
+
     @Query("select s from Student s where s.user.email = :email")
     fun findByUserEmailAsDto(email: String): StudentViewDTO?
-    
+
     fun findByTranscriptNumber(value: String): Student?
 
     @Query("select t from Student t where t.id = :id")

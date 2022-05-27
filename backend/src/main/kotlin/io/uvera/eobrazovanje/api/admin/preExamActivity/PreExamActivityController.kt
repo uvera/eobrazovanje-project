@@ -47,5 +47,4 @@ class PreExamActivityController(protected val service: PreExamActivityService) {
 
     @GetMapping("/all")
     fun findAllPreExamActivities() = service.getAllPreExamActivities().ok
-
 }

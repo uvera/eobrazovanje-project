@@ -9,7 +9,7 @@ class CustomUserDetails(user: User) : UserDetails {
     val email: String = user.email
     private val password: String = user.password
     private val active = user.active
-    private val authorities: MutableList<GrantedAuthority> = mutableListOf( SimpleGrantedAuthority("${RoleEnum.ROLE_PREFIX_VALUE}${user.role}"))
+    private val authorities: MutableList<GrantedAuthority> = mutableListOf(SimpleGrantedAuthority("${RoleEnum.ROLE_PREFIX_VALUE}${user.role}"))
 
     override fun getUsername(): String = this.email
 

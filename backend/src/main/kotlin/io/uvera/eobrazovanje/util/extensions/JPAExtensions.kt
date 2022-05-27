@@ -14,7 +14,6 @@ import java.util.*
 operator fun <T, ID, K : Any?, X : JpaSpecificationRepository<T, ID>> X.invoke(block: X.() -> K) =
     with(this, block)
 
-
 context(JpaRepository<T, ID>)
 fun <ID, T : BaseEntity> T.update(selfUpdateBlock: T.() -> Unit): T {
     selfUpdateBlock(this@update)
@@ -37,14 +36,13 @@ fun <ID, T : BaseEntity> T.save(): T {
     return this@JpaRepository.save(this@save)
 }
 
-
 context(JpaRepository<T, ID>)
 fun <ID, T : BaseEntity> Collection<T>.saveAll(): List<T> {
     return this@JpaRepository.saveAll(this@saveAll)
 }
 
 context(JpaRepository<T, UUID>)
-        inline val <reified T : BaseEntity> T.reload: T
+inline val <reified T : BaseEntity> T.reload: T
     get() = this@JpaRepository.findByIdOrNull(this@reload.id)
         ?: throw EntityNotFoundException("${T::class.simpleName}: not found by id: ${this@reload.id}")
 

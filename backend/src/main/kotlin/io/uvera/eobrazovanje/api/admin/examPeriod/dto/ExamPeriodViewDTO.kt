@@ -5,7 +5,6 @@ import com.blazebit.persistence.view.EntityView
 import io.uvera.eobrazovanje.common.repository.ExamPeriod
 import io.uvera.eobrazovanje.common.repository.SubjectExecution
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 

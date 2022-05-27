@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionCreateDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionUpdateDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.util.extensions.ok
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize

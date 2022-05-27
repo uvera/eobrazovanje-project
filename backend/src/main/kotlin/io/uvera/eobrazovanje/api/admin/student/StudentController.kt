@@ -1,15 +1,9 @@
 package io.uvera.eobrazovanje.api.admin.student
 
 import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
-import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
-import io.uvera.eobrazovanje.common.repository.Student
-import io.uvera.eobrazovanje.util.AnyResponseEntity
-import io.uvera.eobrazovanje.util.extensions.emptyOk
 import io.uvera.eobrazovanje.util.extensions.ok
-import io.uvera.eobrazovanje.util.loggerDelegate
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -18,7 +12,7 @@ import java.util.*
 @PreAuthorize("hasRole('STUDENT')")
 class StudentController(
     protected val service: AdminStudentService
-    ) {
+) {
 
     @GetMapping("/whoami")
     fun getCurrentlyLoggedInStudentByEmail(
@@ -31,6 +25,4 @@ class StudentController(
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
         @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
     ): Any = service.getStudentSubjects(page, records, id).ok
-
-
 }

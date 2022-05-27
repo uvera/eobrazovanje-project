@@ -84,13 +84,12 @@ class StudyProgramService(
     fun enrollStudentsToStudyProgram(studyProgramCode: String, studentIds: List<UUID>): Any = repo {
         val dbStudy = findByCodeName(studyProgramCode) ?: notFoundByCodeName<StudyProgram>(studyProgramCode)
         studentRepo {
-                studentIds.forEach {
-                    val student = studentRepo.findByIdOrNull(it) ?: notFoundById<Student>(it)
-                    student.studyProgram = dbStudy
-                    student.currentYear = 1
-                    student.save()
-                }
+            studentIds.forEach {
+                val student = studentRepo.findByIdOrNull(it) ?: notFoundById<Student>(it)
+                student.studyProgram = dbStudy
+                student.currentYear = 1
+                student.save()
             }
         }
     }
-
+}
