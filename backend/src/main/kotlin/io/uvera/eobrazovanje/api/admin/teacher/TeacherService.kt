@@ -9,6 +9,7 @@ import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -20,6 +21,7 @@ class TeacherService(
     protected val subjectExRepo: SubjectExecutionRepository,
     protected val subjectRepo: SubjectRepository,
     protected val profEnrolRepo: SubjectProfessorEnrollmentRepository,
+    protected val paEc: PasswordEncoder
 ) {
 
     fun getTeacher(id: UUID): TeacherResponseDTO =
@@ -80,11 +82,13 @@ class TeacherService(
         }
         return enrollment
     }
+    fun teacherDTOToEntity(dto: TeacherDTO): Teacher {
+        return Teacher(
+            teachingSince = LocalDate.now(),
+            teacherType = dto.teacherType,
+            user = User(dto.firstName, dto.lastName, dto.email, paEc.encode(dto.password), true, RoleEnum.TEACHER)
+        )
+    }
 }
-fun teacherDTOToEntity(dto: TeacherDTO): Teacher {
-    return Teacher(
-        teachingSince = LocalDate.now(),
-        teacherType = dto.teacherType,
-        user = User(dto.firstName, dto.lastName, dto.email, dto.password, true, RoleEnum.TEACHER)
-    )
-}
+
+

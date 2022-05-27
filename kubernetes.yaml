@@ -36,6 +36,9 @@ spec:
     spec:
       containers:
         - name: java-backend
+          env:
+            - name: DATABASE_CONTAINER_NAME
+              value: postgres-db-lb
           image: java-backend-image-tilt_docker_build_with_restart_base
           imagePullPolicy: "Always"
           ports:
