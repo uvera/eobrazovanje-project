@@ -61,7 +61,7 @@ class SubjectExecution(
 
     @OneToMany(mappedBy = "subjectExecution", orphanRemoval = true)
     var announcements: MutableList<Announcement> = mutableListOf(),
-)
+): BaseEntity()
 @Repository
 interface SubjectExecutionRepository : JpaSpecificationRepository<SubjectExecution, UUID> {
     @Query(
