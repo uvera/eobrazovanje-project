@@ -1,0 +1,14 @@
+# PostgreSQL StatefulSet Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-db-lb
+  labels:
+    app: minio-db-lb
+spec:
+  selector:
+    app: minio-db
+  type: LoadBalancer
+  ports:
+    - port: 9000
+      targetPort: 9000 

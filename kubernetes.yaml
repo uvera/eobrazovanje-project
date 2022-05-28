@@ -87,3 +87,61 @@ spec:
           imagePullPolicy: "Always"
           ports:
             - containerPort: 4200
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rails-svc
+  labels:
+    app: rails-svc
+spec:
+  ports:
+    - port: 8081 
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: rails-svc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-app
+  labels:
+    app: rails-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails-svc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: rails-svc
+    spec:
+      containers:
+        - name:  rails-app
+          entrypoint: bash
+          args:
+            - bin/prod-run
+          env:
+            - name: MINIO_URL
+              value: http://minio-db-lb:9000
+            - name: SPRING_APP_URL
+              value: http://java-svc:8080
+            - name: PORT
+              value: "8081"
+            - name: DATABASE_URL
+              value: postgresql://postgres-db-lb:5432
+            - name: DATABASE_PASSWORD
+              value: postgres
+          image: rails-app-image 
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8081

@@ -1,0 +1,44 @@
+# PostgreSQL StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio-db
+  labels:
+    app: minio-db
+spec:
+  serviceName: minio-db-service
+  selector:
+    matchLabels:
+      app: minio-db
+  template:
+    metadata:
+      labels:
+        app: minio-db
+    spec:
+      containers:
+        - name: minio-db
+          image: quay.io/minio/minio
+          args:
+            - server
+            - --console-address
+            - ":9001"
+            - /data
+          volumeMounts:
+            - name: minio-db-disk
+              mountPath: /data
+          env:
+            - name: MINIO_DOMAIN
+              value: localhost
+            - name: MINIO_ROOT_USER
+              value: minioadmin
+            - name: MINIO_ROOT_PASSWORD
+              value: minioadmin
+# Volume Claim
+  volumeClaimTemplates:
+    - metadata:
+        name: minio-db-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 2Gi

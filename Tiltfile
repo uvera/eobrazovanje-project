@@ -40,6 +40,12 @@ docker_build(
     ],
     )
 
+docker_build(
+    'rails-app-image',
+    './image-eobra-service',
+    dockerfile='./image-eobra-service/Dockerfile.prod'
+    )
+
 k8s_yaml('kubernetes.yaml')
 k8s_yaml('postgresql.k8s.yaml')
 k8s_yaml('postgresql.service.k8s.yaml')
@@ -47,4 +53,11 @@ k8s_resource('java-backend', port_forwards=8080,
              resource_deps=['java-backend-compile', 'postgresql-db'],
              )
 k8s_resource('angular-frontend', port_forwards=4200)
+k8s_resource('rails-app', port_forwards=8081)
 k8s_resource('postgresql-db', port_forwards=5432)
+
+k8s_resource('minio-db', port_forwards=['9000','9001'])
+
+k8s_yaml('minio.k8s.yaml')
+k8s_yaml('minio.service.k8s.yaml')
+k8s_yaml('minio.console.service.k8s.yaml')

@@ -1,0 +1,1 @@
+json = @documents.map(&:to_jb_json)

@@ -1,0 +1,35 @@
+<div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+  <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+    <div
+      fxLayout="column"
+      fxLayoutAlign="flex-start flex-end"
+      style="width: 300px"
+    >
+      <mat-form-field appearance="standard" fxFlexFill>
+        <mat-label>Name</mat-label>
+        <input matInput inputmode="text" type="text" formControlName="name"/>
+        <mat-error *ngIf="!!(form.get('name'))?.errors?.['required']">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+
+      <input type="file" id="fileUpload" (change)="onFileSelected($event)" multiple/>
+      <mat-error *ngIf="!!(form.get('files'))?.errors?.['required']">
+        Files are required
+      </mat-error>
+
+
+      <div mat-dialog-actions fxFlexAlign="flex-end">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
