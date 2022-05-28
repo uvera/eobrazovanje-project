@@ -84,4 +84,18 @@ class TeacherController(protected val service: TeacherService) {
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
         @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
     ): Any = service.getTeacherSubjects(page, records, id).ok
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @GetMapping("/subjects-all")
+    fun getTeacherSubjects(
+        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
+    ): Any = service.getTeachersSubjects(id).ok
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @GetMapping("/subject-students")
+    fun getTeacherStudentsBySubjectExecution(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+        @RequestParam(value = "id", required = true, defaultValue = "") subjectId: UUID
+    ): Any = service.getTeacherStudentsBySubject(page, records, subjectId).ok
 }

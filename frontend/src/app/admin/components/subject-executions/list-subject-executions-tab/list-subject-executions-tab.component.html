@@ -18,6 +18,8 @@
         <th>ID</th>
         <th>Place</th>
         <th>Time</th>
+        <th>Weekday</th>
+        <th>Subject name</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -28,6 +30,7 @@
         <td>{{ i.place }}</td>
         <td>{{ i.time }}</td>
         <td>{{ i.weekDay }}</td>
+        <td>{{ i.subject.name }}</td>
         <td>
           <button
             (click)="editSubjectExecution(i.id)"

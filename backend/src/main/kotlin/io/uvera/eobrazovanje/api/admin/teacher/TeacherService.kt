@@ -17,6 +17,7 @@ import java.util.*
 class TeacherService(
     protected val repo: TeacherRepository,
     protected val subjectExRepo: SubjectExecutionRepository,
+    protected val studEnrollRepo: SubjectEnrollmentRepository,
     protected val subjectRepo: SubjectRepository,
     protected val profEnrolRepo: SubjectProfessorEnrollmentRepository,
     protected val paEc: PasswordEncoder
@@ -77,6 +78,18 @@ class TeacherService(
         val req = PageRequest.of(page - 1, records)
         val enrollment = repo {
             findTeacherByIdWithExecutions(req, teacherId)
+        }
+        return enrollment
+    }
+
+    fun getTeachersSubjects(teacherID: UUID): List<TeacherEnrollmentViewDTO> = repo {
+        return@repo findTeacherByIdWithExecutions(teacherID)
+    }
+
+    fun getTeacherStudentsBySubject(page: Int, records: Int, subjectId: UUID): Any {
+        val req = PageRequest.of(page - 1, records)
+        val enrollment = studEnrollRepo {
+            findAllStudentsBySubjectExecution(req, subjectId)
         }
         return enrollment
     }

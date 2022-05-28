@@ -20,6 +20,9 @@ import { TeacherDashboardComponent } from './components/teacher-dashboard/teache
 import { LogoutComponent } from '../common/components/logout/logout.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MySubjectsComponent } from './components/my-subjects/my-subjects.component';
+import { StudentPreExamActivitiesComponent } from './components/student-pre-exam-activities/student-pre-exam-activities.component';
+import { ListStudentsComponent } from './components/student-pre-exam-activities/list-students/list-students.component';
+import { AddPreExamActivityResultDialogComponent } from './components/student-pre-exam-activities/add-pre-exam-activity-result-dialog/add-pre-exam-activity-result-dialog.component';
 
 const routes: Routes = [
   {
@@ -29,6 +32,21 @@ const routes: Routes = [
       {
         path: 'my-subjects',
         component: MySubjectsComponent,
+      },
+      {
+        path: 'my-students',
+        component: StudentPreExamActivitiesComponent,
+        children: [
+          {
+            path: 'view-students',
+            component: ListStudentsComponent
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'view-students'
+          }
+        ]
       },
       {
         path: 'logout',
@@ -53,7 +71,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [TeacherDashboardComponent, MySubjectsComponent],
+  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -73,4 +91,4 @@ const routes: Routes = [
     NgxMatNativeDateModule,
   ],
 })
-export class TeacherModule {}
+export class TeacherModule { }

@@ -1,6 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.api.admin.student.dto.EnrollmentViewDTO
+import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherStudentViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -37,7 +38,11 @@ interface SubjectEnrollmentRepository : JpaSpecificationRepository<SubjectEnroll
     @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
     fun findAllByStudentId(page: Pageable, id: UUID): Page<EnrollmentViewDTO>
 
-    @Query("select s from SubjectEnrollment s where s.student.id = :id")
+    @Query("select s from SubjectEnrollment s where s.student.id = :id and s.subjectExecution.subject.year = s.student.currentYear")
     @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
     fun findAllByStudentId(id: UUID): List<SubjectEnrollment>
+
+    @Query("select s from SubjectEnrollment s where s.subjectExecution.id = :id and s.subjectExecution.subject.year = s.student.currentYear")
+    @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
+    fun findAllStudentsBySubjectExecution(page: Pageable, id: UUID): Page<TeacherStudentViewDTO>
 }

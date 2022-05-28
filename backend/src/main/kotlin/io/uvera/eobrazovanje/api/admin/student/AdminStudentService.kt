@@ -30,9 +30,14 @@ class AdminStudentService(
     protected val userRepository: UserRepository,
     protected val subjectRepository: SubjectRepository,
     protected val digitGenerationService: DigitGenerationService,
+<<<<<<< Updated upstream
     protected val studyRepo: StudyProgramRepository,
     protected val subjEnrolRepo: SubjectEnrollmentRepository,
     protected val paEc: PasswordEncoder
+||||||| constructed merge base
+=======
+    protected val enrollmentRepo: SubjectEnrollmentRepository
+>>>>>>> Stashed changes
 ) {
 
     @Transactional

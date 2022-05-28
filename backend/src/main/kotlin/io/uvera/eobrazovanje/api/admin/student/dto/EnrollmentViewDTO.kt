@@ -15,6 +15,7 @@ interface EnrollmentViewDTO {
 
     @EntityView(User::class)
     interface SubjectExecutionViewDTO {
+        val id: UUID
         val place: String
         val weekDay: String
         val time: LocalTime

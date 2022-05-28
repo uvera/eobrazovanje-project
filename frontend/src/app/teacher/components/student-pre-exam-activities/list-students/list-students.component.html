@@ -1,0 +1,42 @@
+<div>
+    <form [formGroup]="form">
+        <mat-form-field appearance="standard">
+            <mat-label>Select subject execution</mat-label>
+            <mat-select formControlName="id">
+                <mat-option *ngFor="let subject of opSubjects" [value]="subject.id">
+                    {{
+                    subject.name
+                    }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <ng-template #totalTemplate let-total> Total {{ total }} items</ng-template>
+    <nz-table #dataTable [nzData]="dataSet.value" nzShowPagination [nzFrontPagination]="false"
+        [nzPageIndex]="pageIndex.value" [nzPageSize]="pageSize.value" [nzTotal]="total.value"
+        [nzVirtualItemSize]="total.value" (nzQueryParams)="queryParamsChange($event)"
+        [nzPageSizeOptions]="[1, 5, 10, 25, 50]" [nzShowSizeChanger]="true">
+        <thead>
+            <tr>
+                <th>Transcript number</th>
+                <th>Email</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Edit pre-exam activites</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of dataTable.data">
+                <td>{{ i.student.transcriptNumber }}</td>
+                <td>{{ i.student.user.email }}</td>
+                <td>{{ i.student.user.firstName }}</td>
+                <td>{{ i.student.user.lastName }}</td>
+                <td>
+                    <button (click)="editPreExamActivities(i.student.id)" mat-raised-button color="primary" type="button">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
