@@ -17,7 +17,7 @@ import javax.persistence.*
     attributeNodes = [
         NamedAttributeNode("preExamActivities"),
         NamedAttributeNode("subject"),
-        NamedAttributeNode("subjectProfessorEnrollments")
+        NamedAttributeNode("subjectProfessorEnrollments"),
     ]
 )
 @Table(name = "subject_execution")

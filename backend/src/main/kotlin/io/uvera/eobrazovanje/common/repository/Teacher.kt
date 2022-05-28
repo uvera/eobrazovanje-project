@@ -62,6 +62,9 @@ interface TeacherRepository : JpaSpecificationRepository<Teacher, UUID> {
     @Query("select t from Teacher t where t.user.email = :email")
     fun findByUserEmailAsDto(email: String): TeacherResponseDTO?
 
+    @Query("select t from Teacher t where t.user.email = :email")
+    fun findByUserEmail(email: String): Teacher?
+
     @Query("select t from Teacher t")
     fun findAllAsDto(pageable: Pageable): Page<TeacherResponseDTO>
 

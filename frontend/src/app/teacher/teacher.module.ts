@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import {
   NgxMatDatetimePickerModule,
@@ -23,6 +24,9 @@ import { MySubjectsComponent } from './components/my-subjects/my-subjects.compon
 import { StudentPreExamActivitiesComponent } from './components/student-pre-exam-activities/student-pre-exam-activities.component';
 import { ListStudentsComponent } from './components/student-pre-exam-activities/list-students/list-students.component';
 import { AddPreExamActivityResultDialogComponent } from './components/student-pre-exam-activities/add-pre-exam-activity-result-dialog/add-pre-exam-activity-result-dialog.component';
+import { MyExamPeriodsComponent } from './components/my-exam-periods/my-exam-periods.component';
+import { ListExamPeriodsComponent } from './components/my-exam-periods/list-exam-periods/list-exam-periods.component';
+import { ScheduleExamDialogComponent } from './components/my-exam-periods/schedule-exam-dialog/schedule-exam-dialog.component';
 
 const routes: Routes = [
   {
@@ -49,6 +53,21 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'exam-periods',
+        component: MyExamPeriodsComponent,
+        children: [
+          {
+            path: 'list-exam-periods',
+            component: ListExamPeriodsComponent
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-exam-periods'
+          }
+        ]
+      },
+      {
         path: 'logout',
         component: LogoutComponent,
       },
@@ -71,7 +90,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent],
+  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent, MyExamPeriodsComponent, ListExamPeriodsComponent, ScheduleExamDialogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -89,6 +108,7 @@ const routes: Routes = [
     MatSelectModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
+    MatNativeDateModule
   ],
 })
 export class TeacherModule { }

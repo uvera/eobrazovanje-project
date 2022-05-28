@@ -51,7 +51,7 @@ class ExamPeriodController(protected val service: ExamPeriodService) {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasAnyRole('STUDENT', 'TEACHER')")
     fun getAllExamPeriods() = service.getExamPeriods().ok
 
     @GetMapping("/exam-enrollments")
@@ -73,5 +73,16 @@ class ExamPeriodController(protected val service: ExamPeriodService) {
     ): ResponseEntity<Page<SubjectExecutionViewDTO>> {
         val principal by principalDelegate()
         return service.getStudentAvailableEnrollments(page, records, examPeriodID, principal).ok
+    }
+
+    @GetMapping("/{id}/professor-exams")
+    @PreAuthorize("hasRole('TEACHER')")
+    fun getAvailableProfessorExamPeriodExecutions(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+        @PathVariable("id") examPeriodID: UUID,
+    ): ResponseEntity<Page<SubjectExecutionViewDTO>> {
+        val principal by principalDelegate()
+        return service.getProfessorAvailableExamPeriodExecutions(page, records, examPeriodID, principal).ok
     }
 }
