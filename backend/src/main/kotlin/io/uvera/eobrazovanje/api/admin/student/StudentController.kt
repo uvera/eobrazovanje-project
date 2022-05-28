@@ -11,18 +11,21 @@ import java.util.*
 @RestController
 @PreAuthorize("hasRole('STUDENT')")
 class StudentController(
-    protected val service: AdminStudentService
+    protected val service: AdminStudentService,
 ) {
 
     @GetMapping("/whoami")
     fun getCurrentlyLoggedInStudentByEmail(
-        @RequestParam(value = "email", required = true, defaultValue = "") email: String
-    ): ResponseEntity<StudentViewDTO> = service.getStudentByEmail(email).ok
+        @RequestParam(value = "email", required = false) email: String?,
+    ): ResponseEntity<StudentViewDTO> {
+        return if (email != null) service.getStudentByEmail(email).ok
+        else service.getStudentFromPrincipal().ok
+    }
 
     @GetMapping("/subjects")
     fun getStudentSubjects(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
+        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID,
     ): Any = service.getStudentSubjects(page, records, id).ok
 }

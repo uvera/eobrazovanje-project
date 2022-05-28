@@ -13,6 +13,7 @@ import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.extensions.saveAll
 import io.uvera.eobrazovanje.util.extensions.update
+import io.uvera.eobrazovanje.util.principalDelegate
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
@@ -32,7 +33,7 @@ class AdminStudentService(
     protected val digitGenerationService: DigitGenerationService,
     protected val studyRepo: StudyProgramRepository,
     protected val subjEnrolRepo: SubjectEnrollmentRepository,
-    protected val paEc: PasswordEncoder
+    protected val paEc: PasswordEncoder,
 ) {
 
     @Transactional
@@ -90,7 +91,8 @@ class AdminStudentService(
                 changedPassword = false,
                 balance = BigDecimal.ZERO,
                 user = user,
-                studyProgram = studyRepo.findByCodeName(it.studyProgramCode) ?: notFoundByCodeName<StudyProgram>(it.studyProgramCode)
+                studyProgram = studyRepo.findByCodeName(it.studyProgramCode)
+                    ?: notFoundByCodeName<StudyProgram>(it.studyProgramCode)
             )
         }
     }
@@ -130,5 +132,11 @@ class AdminStudentService(
             findAllByStudentId(req, studentId)
         }
         return enrolments
+    }
+
+    fun getStudentFromPrincipal() = repo {
+        val principal by principalDelegate()
+        val email = principal.email
+        return@repo findByUserEmailAsDto(email) ?: notFoundByEmail<Student>(email)
     }
 }

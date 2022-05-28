@@ -27,6 +27,13 @@ import { ListStudentPaymentsTabComponent } from './components/student-payment/li
 import { LogoutComponent } from '../common/components/logout/logout.component';
 import { ListExamsTabComponent } from './components/exams/list-exams-tab/list-exams-tab.component';
 import { ListEnrolledExamsTabComponent } from './components/exams/list-enrolled-exams-tab/list-enrolled-exams-tab.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+import { ListDocumentsTabComponent } from './components/documents/list-documents-tab/list-documents-tab.component';
+import { CreateDocumentTabComponent } from './components/documents/create-document-tab/create-document-tab.component';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 const routes: Routes = [
   {
@@ -79,6 +86,26 @@ const routes: Routes = [
           },
         ],
       },
+
+      {
+        path: 'documents',
+        component: DocumentsComponent,
+        children: [
+          {
+            path: 'list-documents-tab',
+            component: ListDocumentsTabComponent,
+          },
+          {
+            path: 'create-documents-tab',
+            component: CreateDocumentTabComponent,
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-documents-tab',
+          },
+        ],
+      },
       {
         path: 'logout',
         component: LogoutComponent,
@@ -108,6 +135,9 @@ const routes: Routes = [
     ProfileComponent,
     ListExamsTabComponent,
     ListEnrolledExamsTabComponent,
+    DocumentsComponent,
+    ListDocumentsTabComponent,
+    CreateDocumentTabComponent,
   ],
   imports: [
     CommonModule,
@@ -126,6 +156,10 @@ const routes: Routes = [
     MatSelectModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    NzListModule,
   ],
 })
 export class StudentModule {}
