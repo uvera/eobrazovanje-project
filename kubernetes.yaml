@@ -131,6 +131,8 @@ spec:
           args:
             - bin/prod-run
           env:
+            - name: SECRET_KEY_BASE
+              value: secret_key_123
             - name: MINIO_URL
               value: http://minio-db-lb:9000
             - name: SPRING_APP_URL
