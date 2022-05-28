@@ -40,10 +40,10 @@ interface PreExamActivityRepository : JpaSpecificationRepository<PreExamActivity
     @Query("select t from PreExamActivity t")
     fun findAllAsDto(page: Pageable): Page<PreExamActivityViewDTO>
 
-    @Query("select t from PreExamActivity t")
+    @Query("select t from PreExamActivity t where t.subjectExecution is null")
     fun findAllPreExamActivities(): List<PreExamActivityViewDTO>
 
-    @Query("select t from PreExamActivity t where t.subjectExecution.id = :id")
+    @Query("select t from PreExamActivity t where t.subjectExecution.id = :subjectId")
     @org.springframework.data.jpa.repository.EntityGraph("pre-exam-graph")
     fun findAllPreExamActivitiesBySubject(subjectId: UUID): List<PreExamActivityViewDTO>
 }
