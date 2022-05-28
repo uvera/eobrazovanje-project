@@ -15,7 +15,7 @@ export class MySubjectsComponent implements OnInit {
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<TeacherViewSubjectsDTO[]>([]);
 
-  constructor(private readonly service: MySubjectsService) {}
+  constructor(private readonly service: MySubjectsService) { }
 
   ngOnInit(): void {
     this.pageNumberAndSizeCombined$.subscribe((value) => {
@@ -71,7 +71,7 @@ export class MySubjectsComponent implements OnInit {
   }
 }
 
-interface TeacherViewSubjectsDTO {
+export interface TeacherViewSubjectsDTO {
   subjectExecution: SubjectExecutionViewDTO;
   year: number;
 }

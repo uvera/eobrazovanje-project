@@ -76,6 +76,6 @@ export interface ExamPeriodsViewDTO {
 @Pipe({ name: 'subjectExecutionNamePipe' })
 export class SubjectExecutionNamePipe implements PipeTransform {
   transform(value: SubjectExecutionTableViewDTO[]): any {
-    return value.map((v) => v.place).join(',');
+    return value.map((v) => v.place + " " + v.subject.name).join(',');
   }
 }

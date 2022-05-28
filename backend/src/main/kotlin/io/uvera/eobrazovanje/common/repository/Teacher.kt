@@ -74,4 +74,8 @@ interface TeacherRepository : JpaSpecificationRepository<Teacher, UUID> {
     @Query("select t from Teacher t where t.id = :id")
     @org.springframework.data.jpa.repository.EntityGraph("teacher-graph")
     fun findTeacherByIdWithExecutions(page: Pageable, id: UUID): Page<TeacherEnrollmentViewDTO>
+
+    @Query("select t from Teacher t where t.id = :id")
+    @org.springframework.data.jpa.repository.EntityGraph("teacher-graph")
+    fun findTeacherByIdWithExecutions(id: UUID): List<TeacherEnrollmentViewDTO>
 }

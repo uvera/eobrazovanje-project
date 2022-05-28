@@ -1,0 +1,31 @@
+<div *ngIf="isDisabled == false; else showResults">
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+        <mat-form-field appearance="standard" fxFlexFill *ngFor="let preExamActivity of opActivities">
+            <h4>Activity name: {{ preExamActivity.name }}</h4>
+            <h4>Max points: {{ preExamActivity.points }}</h4>
+            <h4>Enter student score:</h4>
+            <input matInput inputmode="numeric" type="number" [formControlName]=" 'points-' + preExamActivity.id" />
+            <mat-error *ngIf="!!(form.get('points-' + preExamActivity.id))?.errors?.['required']">
+                Points are required
+            </mat-error>
+        </mat-form-field>
+
+        <div mat-dialog-actions fxFlexAlign="flex-end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+                Submit
+            </button>
+        </div>
+    </div>
+</form>
+</div>
+<ng-template #showResults>
+    <div fxLayout="column" fxLayoutAlign="flex-start flex-end" style="width: 300px">
+    <div *ngFor="let obj of viewActivities">
+        <h4>Name: {{ obj.preExamActivity.name }}</h4>
+        <h4>Student score: {{ obj.score }}</h4>
+        <h4>Max score: {{ obj.preExamActivity.points }}</h4>
+        <hr>
+    </div>
+    </div>
+</ng-template>

@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.api.admin.examPeriod.dto
 
 import com.blazebit.persistence.view.CollectionMapping
 import com.blazebit.persistence.view.EntityView
+import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.ExamPeriod
 import io.uvera.eobrazovanje.common.repository.SubjectExecution
 import java.time.LocalDate
@@ -23,5 +24,6 @@ interface ExamPeriodViewDTO {
         var place: String
         var time: LocalTime
         var weekDay: String
+        var subject: SubjectViewDTO
     }
 }

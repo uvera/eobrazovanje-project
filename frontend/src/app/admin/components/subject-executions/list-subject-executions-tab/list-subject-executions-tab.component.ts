@@ -5,9 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { AreYouSureDialogComponent } from '../../../../common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
-import { EditPreExamActivityComponent } from '../../pre-exam-activities/edit-pre-exam-activity/edit-pre-exam-activity.component';
-import { ListStudentsTabService } from '../../students/list-students-tab/list-students-tab.service';
-import { EditSubjectExecutionsDialogComponent } from '../edit-subject-executions-dialog/edit-subject-executions-dialog.component';
+import { SubjectViewDTO } from '../../subjects/list-subjects-tab/list-subjects-tab.component';
+import { EditSubjectExecutionsDialogComponent, SubjectExecutionViewDTO } from '../edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { ListSubjectExecutionsTabService } from './list-subject-executions-tab.service';
 
 @Component({
@@ -19,7 +18,7 @@ export class ListSubjectExecutionsTabComponent implements OnInit {
   readonly pageIndex = new BehaviorSubject<number>(1);
   readonly total = new BehaviorSubject<number>(1);
   readonly pageSize = new BehaviorSubject<number>(10);
-  readonly dataSet = new BehaviorSubject<SubjectExecutionTableViewDTO[]>([]);
+  readonly dataSet = new BehaviorSubject<SubjectExecutionViewDTO[]>([]);
 
   constructor(
     private service: ListSubjectExecutionsTabService,
@@ -122,4 +121,5 @@ export interface SubjectExecutionTableViewDTO {
   place: string;
   time: Time;
   weekDay: string;
+  subject: SubjectViewDTO;
 }

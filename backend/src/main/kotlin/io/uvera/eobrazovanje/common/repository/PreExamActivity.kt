@@ -11,6 +11,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "pre_exam_activity")
+@NamedEntityGraph(
+    name = "pre-exam-graph",
+    attributeNodes = [
+        NamedAttributeNode("subjectExecution"),
+    ]
+)
 class PreExamActivity(
     @Column(name = "name", nullable = false)
     var name: String,
@@ -34,6 +40,10 @@ interface PreExamActivityRepository : JpaSpecificationRepository<PreExamActivity
     @Query("select t from PreExamActivity t")
     fun findAllAsDto(page: Pageable): Page<PreExamActivityViewDTO>
 
-    @Query("select t from PreExamActivity t")
+    @Query("select t from PreExamActivity t where t.subjectExecution is null")
     fun findAllPreExamActivities(): List<PreExamActivityViewDTO>
+
+    @Query("select t from PreExamActivity t where t.subjectExecution.id = :subjectId")
+    @org.springframework.data.jpa.repository.EntityGraph("pre-exam-graph")
+    fun findAllPreExamActivitiesBySubject(subjectId: UUID): List<PreExamActivityViewDTO>
 }

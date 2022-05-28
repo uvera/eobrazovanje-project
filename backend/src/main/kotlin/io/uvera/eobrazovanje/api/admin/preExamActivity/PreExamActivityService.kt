@@ -1,13 +1,10 @@
 package io.uvera.eobrazovanje.api.admin.preExamActivity
 
 import io.uvera.eobrazovanje.api.admin.preExamActivity.dto.PreExamActivityCreateDTO
+import io.uvera.eobrazovanje.api.admin.preExamActivity.dto.PreExamActivityResultCreateDTO
 import io.uvera.eobrazovanje.api.admin.preExamActivity.dto.PreExamActivityViewDTO
-import io.uvera.eobrazovanje.common.repository.PreExamActivity
-import io.uvera.eobrazovanje.common.repository.PreExamActivityRepository
-import io.uvera.eobrazovanje.util.extensions.invoke
-import io.uvera.eobrazovanje.util.extensions.notFoundById
-import io.uvera.eobrazovanje.util.extensions.save
-import io.uvera.eobrazovanje.util.extensions.update
+import io.uvera.eobrazovanje.common.repository.*
+import io.uvera.eobrazovanje.util.extensions.*
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -16,7 +13,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
-class PreExamActivityService(protected val repo: PreExamActivityRepository) {
+class PreExamActivityService(
+    protected val repo: PreExamActivityRepository,
+    protected val resultRepo: PreExamActivityResultRepository,
+    protected val studentRepo: StudentRepository
+    ) {
     @Transactional(propagation = Propagation.NEVER)
     fun createPreExamActivity(acDTO: PreExamActivityCreateDTO): PreExamActivityViewDTO = repo {
         getPreExamActivity(preExamDTOToEntity(acDTO).save().id)
@@ -30,6 +31,17 @@ class PreExamActivityService(protected val repo: PreExamActivityRepository) {
             points = dto.points
         }
         return@repo getPreExamActivity(id)
+    }
+
+    @Transactional
+    fun createResults(preExamActivities: List<PreExamActivityResultCreateDTO>) = resultRepo {
+        preExamActivities.forEach {
+            PreExamActivityResult(
+                score = it.score,
+                preExamActivity = repo { findByIdOrNull(it.preExamActivityId) ?: notFoundById<PreExamActivity>(it.preExamActivityId) },
+                student = studentRepo { findByIdOrNull(it.studentId) ?: notFoundById<Student>(it.studentId) }
+            ).save()
+        }
     }
 
     fun deletePreExamActivity(id: UUID) = repo {
@@ -50,6 +62,14 @@ class PreExamActivityService(protected val repo: PreExamActivityRepository) {
     fun getAllPreExamActivitiesPaged(page: Int, records: Int): Any = repo {
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)
+    }
+
+    fun getStudentPreExamActivities(studentId: UUID, subjectExId: UUID): Any {
+        val preExamActivities = repo.findAllPreExamActivitiesBySubject(subjectExId)
+        val results = resultRepo.findAllByStudent(studentId, preExamActivities.map { it.id })
+        return results.ifEmpty {
+            preExamActivities
+        }
     }
 
     fun getAllPreExamActivities(): Any = repo {

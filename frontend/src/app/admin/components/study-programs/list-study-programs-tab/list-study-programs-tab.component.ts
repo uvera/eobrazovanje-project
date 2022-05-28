@@ -143,6 +143,7 @@ export interface StudyProgramsViewDTO {
 @Pipe({ name: 'subjectsNamePipe' })
 export class SubjectsNamePipe implements PipeTransform {
   transform(value: SubjectViewDTO[]): any {
-    return value.map((v) => v.name).join(',');
+    let newValue =  value.map((v) => v.name);
+    return Array.from(new Set(newValue)).join(',');
   }
 }

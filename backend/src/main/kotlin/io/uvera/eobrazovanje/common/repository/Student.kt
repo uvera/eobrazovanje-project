@@ -12,6 +12,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "student")
+@NamedEntityGraph(
+    name = "student-graph",
+    attributeNodes = [
+        NamedAttributeNode("preExamActivityResults"),
+    ]
+)
 class Student(
     @Column(name = "transcript_number", nullable = false, unique = true)
     var transcriptNumber: String,
