@@ -27,6 +27,7 @@ import { AddPreExamActivityResultDialogComponent } from './components/student-pr
 import { MyExamPeriodsComponent } from './components/my-exam-periods/my-exam-periods.component';
 import { ListExamPeriodsComponent } from './components/my-exam-periods/list-exam-periods/list-exam-periods.component';
 import { ScheduleExamDialogComponent } from './components/my-exam-periods/schedule-exam-dialog/schedule-exam-dialog.component';
+import { AddStudentGradesComponent } from './components/my-exam-periods/add-student-grades/add-student-grades.component';
 
 const routes: Routes = [
   {
@@ -90,7 +91,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent, MyExamPeriodsComponent, ListExamPeriodsComponent, ScheduleExamDialogComponent],
+  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent, MyExamPeriodsComponent, ListExamPeriodsComponent, ScheduleExamDialogComponent, AddStudentGradesComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

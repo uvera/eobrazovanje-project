@@ -57,15 +57,11 @@ export class AddPreExamActivityResultDialogComponent implements OnInit {
     })
     this.service.createResults(formValues).subscribe({
       next: (_) => {
-        this.snack.open('Results created');
-        of(
-          this.router.navigate(['view-students'], {
-            relativeTo: this.ar.parent,
-          })
-        );
+        this.snack.open('Pre exam activity results added successfully');
+        this.dialogRef.close('success');
       },
       error: (_) => {
-        this.snack.open('Error occurred');
+        this.snack.open('Error occured adding results');
       },
     });
   }

@@ -43,15 +43,11 @@ export class ScheduleExamDialogComponent implements OnInit {
   submitForm(form: Record<string, unknown>) {
     this.service.createHeldExam(this.dialogData.examPeriodId, this.dialogData.subjectExecutionId, form['date'] as Date).subscribe({
       next: (_) => {
-        this.snack.open('Held exam created');
-        of(
-          this.router.navigate(['list-exam-periods'], {
-            relativeTo: this.ar.parent,
-          })
-        );
+        this.snack.open('Exam scheduled successfully');
+        this.dialogRef.close('success');
       },
       error: (_) => {
-        this.snack.open('Error occurred');
+        this.snack.open('Error occurred scheduling exam');
       },
     });
   }

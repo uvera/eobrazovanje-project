@@ -8,6 +8,5 @@ import java.util.*
 interface PreExamActivityResultViewDTO {
     var id: UUID
     var score: Int
-    var created: Boolean
     var preExamActivity: PreExamActivityViewDTO
 }

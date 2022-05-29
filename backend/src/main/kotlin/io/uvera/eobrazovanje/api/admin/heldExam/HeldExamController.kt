@@ -34,4 +34,11 @@ class HeldExamController(
     fun createHeldExam(
         @Validated @RequestBody heldExam: CreateHeldExamDTO
     ) = service.createHeldExam(heldExam).ok
+
+    @GetMapping("/{examPeriodID}/{subjExId}/enrolled-students")
+    @PreAuthorize("hasRole('TEACHER')")
+    fun getStudentsEnrolledInExam(
+        @PathVariable("examPeriodID") examPeriodID: UUID,
+        @PathVariable("subjExId") subjExId: UUID,
+    ) = service.getEnrolledStudents(examPeriodID, subjExId).ok
 }
