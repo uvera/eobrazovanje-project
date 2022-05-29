@@ -42,10 +42,12 @@ class HeldExamService(
         val returnList = mutableListOf<StudentEnrollmentViewDTO>()
         // need to check if held exam entity is created before accessing students for marking grades, should break if not
         val heldExam = repo.findByExamPeriodAndSubjectExecution(examPeriodID, subjExID) ?: notFoundById<HeldExam>(examPeriodID)
+        // TODO is list empty or not? HeldExamResults
         studentEnrollments.forEach { enrollment ->
             returnList.add(StudentEnrollmentViewDTO(
                 studentId = enrollment.student.id,
-                preExamActivitiesSum = resultRepo.findAllByStudentAndSubjEx(enrollment.student.id, subjExID).sumOf { it.points }
+                preExamActivitiesSum = resultRepo.findAllByStudentAndSubjEx(enrollment.student.id, subjExID).sumOf { it.points },
+                studentTranscriptNumber = enrollment.student.transcriptNumber
             ))
         }
         return returnList
