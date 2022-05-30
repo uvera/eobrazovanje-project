@@ -74,6 +74,7 @@ export class ListExamPeriodsComponent implements OnInit {
           const responseBody = res?.body;
           if (responseBody) {
             const { content, totalElements } = responseBody;
+            console.log(content)
             this.total.next(totalElements);
             this.dataSet.next(content);
           }
@@ -112,33 +113,40 @@ export class ListExamPeriodsComponent implements OnInit {
       });
   };
 
-  completeExam(id: string) {
-    this.dialog
-      .open(AreYouSureDialogComponent, {
-        data: {
-          dialogTitle: 'Are you sure you want to enroll in this exam?',
-          yesButtonText: 'Enroll',
-        },
-      })
-      .afterClosed()
+  completeExam(subjectExecutionID: string) {
+    this.service.fetchHeldExamIfExists(this.form.get('id')?.value, subjectExecutionID)
       .pipe(first())
-      .subscribe({
-        next: (value) => {
-          if (value === 'yes') {
-            this.service
-              .enrollInExam(this.form.get('id')?.value, id)
-              .pipe(first())
-              .subscribe({
-                next: (_) => {
-                  this.snack.open('Successfully enrolled in exam');
-                  this.reloadFromApi();
-                },
-                error: (error: HttpErrorResponse) => {
-                  this.snack.open(error.error.message);
-                },
-              });
-          }
-        },
+      .subscribe((res) => {
+        const responseBody = res?.body;
+        console.log(responseBody)
+
+        //enrolledStudentDataSet
+        
+        this.service.fetchEnrolledStudents(this.form.get('id')?.value, subjectExecutionID)
+        .pipe(first())
+        .subscribe((res) => {console.log(res?.body)})
+
+
+        this.dialog
+        .open(AreYouSureDialogComponent, {
+          data: {
+            dialogTitle: 'Registered students',
+            yesButtonText: 'Complete',
+          },
+        })
+        .afterClosed()
+        .pipe(first())
+        .subscribe({
+          next: (value) => {
+            if (value === 'yes') {
+  
+            }
+          },
+        });
+      }, (err) => {
+        this.snack.open('You first need to verify this exam');
       });
+
+
   }
 }

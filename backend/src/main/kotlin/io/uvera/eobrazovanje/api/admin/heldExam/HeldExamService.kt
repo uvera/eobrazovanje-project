@@ -43,9 +43,14 @@ class HeldExamService(
         // need to check if held exam entity is created before accessing students for marking grades, should break if not
         val heldExam = repo.findByExamPeriodAndSubjectExecution(examPeriodID, subjExID) ?: notFoundById<HeldExam>(examPeriodID)
         studentEnrollments.forEach { enrollment ->
+            val studentResults = resultRepo.findAllByStudentAndSubjEx(enrollment.student.id, subjExID)
+            var preExamActivitiesScore = 0
+            studentResults.forEach {result -> preExamActivitiesScore += result.score}
             returnList.add(StudentEnrollmentViewDTO(
                 studentId = enrollment.student.id,
-                preExamActivitiesSum = resultRepo.findAllByStudentAndSubjEx(enrollment.student.id, subjExID).sumOf { it.points }
+                name = enrollment.student.user.firstName + ' ' + enrollment.student.user.lastName,
+                transcriptNumber = enrollment.student.transcriptNumber,
+                preExamActivitiesSum = preExamActivitiesScore
             ))
         }
         return returnList

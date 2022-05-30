@@ -30,4 +30,12 @@ export class ListExamPeriodsService {
   getExamPeriods() {
     return this.api.get<ExamPeriodsViewDTO[]>('/api/admin/exam-period/all');
   }
+  
+  fetchHeldExamIfExists(examPeriodID: string, subjExId: string) {
+    return this.api.get<any>(`/api/held-exam/${examPeriodID}/${subjExId}`);
+  }
+
+  fetchEnrolledStudents(examPeriodID: string, subjExId: string) {
+    return this.api.get<any>(`/api/held-exam/${examPeriodID}/${subjExId}/enrolled-students`)
+  }
 }
