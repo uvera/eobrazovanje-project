@@ -52,10 +52,3 @@ export class ScheduleExamDialogComponent implements OnInit {
     });
   }
 }
-
-
-// interface ResultViewDTO {
-//   id: string;
-//   preExamActivity: PreExamActivityViewDTO;
-//   score: number;
-// }

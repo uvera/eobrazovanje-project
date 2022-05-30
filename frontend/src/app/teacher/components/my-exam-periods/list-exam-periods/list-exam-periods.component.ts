@@ -6,8 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { ExamPeriodsViewDTO } from 'src/app/admin/components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
+import { StudentsViewDTO } from 'src/app/admin/components/students/list-students-tab/list-students-tab.component';
 import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { AreYouSureDialogComponent } from 'src/app/common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { AddStudentGradesComponent } from '../add-student-grades/add-student-grades.component';
 import { ScheduleExamDialogComponent } from '../schedule-exam-dialog/schedule-exam-dialog.component';
 import { ListExamPeriodsService } from './list-exam-periods.service';
 
@@ -117,36 +119,39 @@ export class ListExamPeriodsComponent implements OnInit {
     this.service.fetchHeldExamIfExists(this.form.get('id')?.value, subjectExecutionID)
       .pipe(first())
       .subscribe((res) => {
-        const responseBody = res?.body;
-        console.log(responseBody)
-
-        //enrolledStudentDataSet
-        
-        this.service.fetchEnrolledStudents(this.form.get('id')?.value, subjectExecutionID)
-        .pipe(first())
-        .subscribe((res) => {console.log(res?.body)})
-
-
         this.dialog
-        .open(AreYouSureDialogComponent, {
-          data: {
-            dialogTitle: 'Registered students',
-            yesButtonText: 'Complete',
-          },
-        })
-        .afterClosed()
-        .pipe(first())
-        .subscribe({
-          next: (value) => {
-            if (value === 'yes') {
-  
-            }
-          },
-        });
+          .open(AddStudentGradesComponent, {
+            data: {
+              examPeriodId: this.form.get('id')?.value,
+              subjectExecutionId: subjectExecutionID,
+              heldExam: res?.body
+            },
+          })
+          .afterClosed()
+          .pipe(first())
+          .subscribe({
+            next: (value) => {
+              if (value === 'success') {
+                this.reloadFromApi()
+              }
+            },
+          });
+
       }, (err) => {
         this.snack.open('You first need to verify this exam');
       });
 
 
   }
+}
+
+export interface HeldExamViewDTO {
+  id: string;
+  date: Date;
+  heldExamResults: HeldExamResultDTO[] 
+}
+
+export interface HeldExamResultDTO {
+  student: StudentsViewDTO;
+  score: string;
 }

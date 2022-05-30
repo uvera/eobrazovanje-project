@@ -1,14 +1,12 @@
 package io.uvera.eobrazovanje.api.admin.heldExam
 
-import io.uvera.eobrazovanje.api.admin.examPeriod.ExamPeriodService
 import io.uvera.eobrazovanje.api.admin.heldExam.dto.CreateHeldExamDTO
+import io.uvera.eobrazovanje.api.admin.heldExam.dto.CreateHeldExamResultsDTO
 import io.uvera.eobrazovanje.api.admin.heldExam.dto.HeldExamViewDTO
 import io.uvera.eobrazovanje.api.admin.heldExam.dto.StudentEnrollmentViewDTO
-import io.uvera.eobrazovanje.api.admin.subjectExecution.SubjectExecutionService
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.notFoundById
-import io.uvera.eobrazovanje.util.extensions.save
 import io.uvera.eobrazovanje.util.principalDelegate
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -21,8 +19,10 @@ class HeldExamService(
     protected val examPeriodRepository: ExamPeriodRepository,
     protected val subjectExecutionRepository: SubjectExecutionRepository,
     protected val teacherRepository: TeacherRepository,
+    protected val studentRepo: StudentRepository,
     protected val examEnrollmentRepository: ExamEnrollmentRepository,
-    protected val resultRepo: PreExamActivityResultRepository
+    protected val resultRepo: PreExamActivityResultRepository,
+    protected val heldExamResultRepo: HeldExamResultRepository
 ) {
     fun getHeldExamById(examPeriodID: UUID, subjExID: UUID): HeldExamViewDTO {
         return repo.findByExamPeriodAndSubjectExecution(examPeriodID, subjExID) ?: notFoundById<HeldExam>(examPeriodID)
@@ -37,7 +37,18 @@ class HeldExamService(
         repo.save(HeldExam(heldExamDTO.date, examPeriod, subjEx, teacher = teacher))
     }
 
-    fun getEnrolledStudents(examPeriodID: UUID, subjExID: UUID): MutableList<StudentEnrollmentViewDTO> {
+    @Transactional
+    fun createHeldExamResults(results: List<CreateHeldExamResultsDTO>) {
+        results.forEach {
+            heldExamResultRepo.save(HeldExamResult(
+                score = it.score,
+                heldExam = repo.findByIdOrNull(it.heldExamId) ?: notFoundById<HeldExam>(it.heldExamId),
+                student = studentRepo.findByIdOrNull(it.studentId) ?: notFoundById<Student>(it.studentId)
+            ))
+        }
+    }
+
+    fun getEnrolledStudents(examPeriodID: UUID, subjExID: UUID): Any {
         val studentEnrollments = examEnrollmentRepository.findByExamPeriodAndSubjectExecution(examPeriodID, subjExID)
         val returnList = mutableListOf<StudentEnrollmentViewDTO>()
         // need to check if held exam entity is created before accessing students for marking grades, should break if not

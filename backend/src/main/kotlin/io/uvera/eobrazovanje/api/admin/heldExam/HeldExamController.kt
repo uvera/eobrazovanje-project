@@ -3,6 +3,7 @@ package io.uvera.eobrazovanje.api.admin.heldExam
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.uvera.eobrazovanje.api.admin.examPeriod.ExamPeriodService
 import io.uvera.eobrazovanje.api.admin.heldExam.dto.CreateHeldExamDTO
+import io.uvera.eobrazovanje.api.admin.heldExam.dto.CreateHeldExamResultsDTO
 import io.uvera.eobrazovanje.util.extensions.ok
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
@@ -28,6 +29,12 @@ class HeldExamController(
         @PathVariable("examPeriodID") examPeriodID: UUID,
         @PathVariable("subjExId") subjExId: UUID
     ) = service.getHeldExamById(examPeriodID, subjExId).ok
+
+    @PostMapping("/results")
+    @PreAuthorize("hasRole('TEACHER')")
+    fun addResultsToHeldExam(
+        @Validated @RequestBody results: List<CreateHeldExamResultsDTO>
+    ) = service.createHeldExamResults(results).ok
 
     @PostMapping
     @PreAuthorize("hasRole('TEACHER')")
