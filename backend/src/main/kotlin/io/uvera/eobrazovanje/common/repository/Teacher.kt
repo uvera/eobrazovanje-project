@@ -68,8 +68,8 @@ interface TeacherRepository : JpaSpecificationRepository<Teacher, UUID> {
     @Query("select t from Teacher t")
     fun findAllTeachers(): List<TeacherResponseDTO>
 
-    @Query("select t from Teacher t where t.user.id = :id")
-    fun findByTeacherUser(id: UUID): Teacher?
+    @Query("select t from Teacher t where t.user.email = :email")
+    fun findByTeacherUserEmail(email: String): Teacher?
 
     @Query("select t from Teacher t where t.id = :id")
     @org.springframework.data.jpa.repository.EntityGraph("teacher-graph")

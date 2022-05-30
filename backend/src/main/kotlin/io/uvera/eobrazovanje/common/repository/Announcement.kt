@@ -1,5 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.stereotype.Repository
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -18,3 +21,6 @@ class Announcement(
     @OneToMany(mappedBy = "announcement", orphanRemoval = true)
     var announcementComments: MutableList<AnnouncementComment> = mutableListOf(),
 ) : BaseEntity()
+
+@Repository
+interface AnnouncementRepository : JpaSpecificationRepository<Announcement, UUID>

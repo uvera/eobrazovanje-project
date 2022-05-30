@@ -11,18 +11,6 @@ import java.util.UUID
 
 @EntityView(Announcement::class)
 interface AnnouncementViewDTO {
-
     var id: UUID
-    var post_text: String
-    @get:CollectionMapping
-    val subjectExecutions: Set<ExamPeriodViewDTO.SubjectExecutionViewDTO>
-
-    @EntityView(SubjectExecution::class)
-    interface SubjectExecutionViewDTO {
-        var id: UUID
-        var place: String
-        var time: LocalTime
-        var weekDay: String
-        var subject: SubjectViewDTO
-    }
+    var postText: String
 }
