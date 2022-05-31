@@ -1,0 +1,42 @@
+<h1>Exam results</h1>
+<div>
+    <form [formGroup]="form">
+      <mat-form-field appearance="standard">
+        <mat-label>Select exam period</mat-label>
+        <mat-select formControlName="id">
+          <mat-option
+            *ngFor="let examPeriod of opExamPeriods"
+            [value]="examPeriod.id"
+          >
+            {{ examPeriod.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <nz-table
+        #dataTable
+        [nzData]="dataSet.value"
+    >
+    <thead>
+      <tr>
+        <th>Subject name</th>
+        <th>Time of exam</th>
+        <th>Points</th>
+        <th>Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of dataTable.data">
+        <td>{{ i.subject }}</td>
+        <td>{{ i.date }}</td>
+        <td>{{ i.score }}</td>
+        <td *ngIf="i.score > 50; else elseBlock">{{ math.ceil(i.score / 10) }}</td>
+        <ng-template #elseBlock>
+            <td>
+                You did not pass this exam
+            </td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
