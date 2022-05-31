@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
@@ -48,4 +49,13 @@ class HeldExamController(
         @PathVariable("examPeriodID") examPeriodID: UUID,
         @PathVariable("subjExId") subjExId: UUID,
     ) = service.getEnrolledStudents(examPeriodID, subjExId).ok
+
+    @GetMapping("/results")
+    @PreAuthorize("hasAnyRole('STUDENT', 'TEACHER')")
+    fun getStudentHeldExamResultsByExamPeriod(
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
+        @RequestParam(value = "examPeriodID", required = true) examPeriodID: UUID,
+        @RequestParam(value = "studentId", required = true) studentId: UUID
+    ) = service.getStudentExamResults(page, records, examPeriodID, studentId).ok
 }
