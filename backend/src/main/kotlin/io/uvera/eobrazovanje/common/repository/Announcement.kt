@@ -1,5 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
+import org.springframework.data.jpa.repository.Query
+import io.uvera.eobrazovanje.api.admin.announcement.dto.AnnouncementViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -7,6 +9,13 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "announcement")
+@NamedEntityGraph(
+    name = "announcement-graph",
+    attributeNodes = [
+        NamedAttributeNode("subjectExecution"),
+        NamedAttributeNode("teacher")
+    ]
+)
 class Announcement(
     @Lob @Column(name = "post_text", nullable = false) var postText: String,
 
@@ -23,4 +32,9 @@ class Announcement(
 ) : BaseEntity()
 
 @Repository
-interface AnnouncementRepository : JpaSpecificationRepository<Announcement, UUID>
+interface AnnouncementRepository : JpaSpecificationRepository<Announcement, UUID> {
+
+    @org.springframework.data.jpa.repository.EntityGraph("announcement-graph")
+    @Query("select t from Announcement t where t.subjectExecution.id = :id")
+    fun findAllBySubjectExecutionId(id: UUID): List<AnnouncementViewDTO>
+}
