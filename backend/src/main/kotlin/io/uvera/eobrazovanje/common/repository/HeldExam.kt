@@ -1,7 +1,12 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.admin.heldExam.dto.HeldExamViewDTO
+import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import java.time.LocalDate
+import java.util.UUID
 import javax.persistence.*
+import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 
 @Entity
 @Table(name = "held_exam")
@@ -24,3 +29,9 @@ class HeldExam(
     @JoinColumn(name = "teacher_id", nullable = false)
     var teacher: Teacher,
 ) : BaseEntity()
+
+@Repository
+interface HeldExamRepository : JpaSpecificationRepository<HeldExam, UUID> {
+    @Query("select t from HeldExam t where t.examPeriod.id = :examPeriodID and t.subjectExecution.id = :subjExId")
+    fun findByExamPeriodAndSubjectExecution(examPeriodID: UUID, subjExId: UUID): HeldExamViewDTO?
+}

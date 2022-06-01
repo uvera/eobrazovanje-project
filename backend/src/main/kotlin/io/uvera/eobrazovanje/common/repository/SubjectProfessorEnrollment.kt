@@ -2,6 +2,7 @@ package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.stereotype.Repository
+import org.springframework.data.jpa.repository.Query
 import java.util.*
 import javax.persistence.*
 
@@ -18,4 +19,8 @@ class SubjectProfessorEnrollment(
 ) : BaseEntity()
 
 @Repository
-interface SubjectProfessorEnrollmentRepository : JpaSpecificationRepository<SubjectProfessorEnrollment, UUID>
+interface SubjectProfessorEnrollmentRepository : JpaSpecificationRepository<SubjectProfessorEnrollment, UUID> {
+
+    @Query("select t from SubjectProfessorEnrollment t where t.teacher.id = :id")
+    fun findByProfessorId(id: UUID): List<SubjectProfessorEnrollment>
+}

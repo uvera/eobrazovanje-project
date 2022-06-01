@@ -42,4 +42,8 @@ interface ExamPeriodRepository : JpaSpecificationRepository<ExamPeriod, UUID> {
     @org.springframework.data.jpa.repository.EntityGraph("exam-graph")
     @Query("select t from ExamPeriod t")
     fun findAllPaged(page: Pageable): Page<ExamPeriodViewDTO>
+
+    @Query("select t from ExamPeriod t where t.id = :examPeriodID")
+    @org.springframework.data.jpa.repository.EntityGraph("exam-graph")
+    fun findByExamPeriodID(examPeriodID: UUID): ExamPeriod?
 }
