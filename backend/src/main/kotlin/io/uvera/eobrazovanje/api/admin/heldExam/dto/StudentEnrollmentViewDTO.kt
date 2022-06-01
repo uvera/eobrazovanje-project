@@ -6,7 +6,9 @@ class StudentEnrollmentViewDTO (
 
     var studentId: UUID,
 
-    var studentTranscriptNumber: String,
+    var name: String,
+
+    var transcriptNumber: String,
 
     var preExamActivitiesSum: Int
 

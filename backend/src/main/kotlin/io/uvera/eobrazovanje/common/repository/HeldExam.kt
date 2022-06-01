@@ -10,6 +10,12 @@ import org.springframework.stereotype.Repository
 
 @Entity
 @Table(name = "held_exam")
+@NamedEntityGraph(
+    name = "held-exam-graph",
+    attributeNodes = [
+        NamedAttributeNode("heldExamResults"),
+    ]
+)
 class HeldExam(
     @Column(name = "date", nullable = false) var date: LocalDate,
     @ManyToOne(optional = false) @JoinColumn(
@@ -33,5 +39,10 @@ class HeldExam(
 @Repository
 interface HeldExamRepository : JpaSpecificationRepository<HeldExam, UUID> {
     @Query("select t from HeldExam t where t.examPeriod.id = :examPeriodID and t.subjectExecution.id = :subjExId")
+    @org.springframework.data.jpa.repository.EntityGraph("held-exam-graph")
     fun findByExamPeriodAndSubjectExecution(examPeriodID: UUID, subjExId: UUID): HeldExamViewDTO?
+
+    @Query("select t from HeldExam t")
+    @org.springframework.data.jpa.repository.EntityGraph("held-exam-graph")
+    fun findByIdAsDto(heldExamId: UUID): HeldExamViewDTO
 }
