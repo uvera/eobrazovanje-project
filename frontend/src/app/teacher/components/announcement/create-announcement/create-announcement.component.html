@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
   <div
     fxLayout="column"
     fxLayoutAlign="flex-start flex-end"
@@ -6,7 +6,7 @@
   >
   <mat-form-field appearance="standard" fxFlexFill>
     <mat-label>Select subject executions</mat-label>
-    <mat-select formControlName="subjectExecutionIds" multiple>
+    <mat-select formControlName="subjectExecutionId">
       <mat-option *ngFor="let subject of opSubjects" [value]="subject.id">
         {{
           subject.subject.name +

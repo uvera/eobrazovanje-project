@@ -23,9 +23,9 @@ export class CreateAnnouncementService {
     return this.api.get<CurrentTeacherDTO>('/api/teacher/whoami', params);
   }
 
-  getSubjectExecutions() {
+  getSubjectExecutions(id: string) {
     return this.api.get<TeacherEnrollmentViewDTO[]>(
-      '/api/teacher/subjects-all'
+      '/api/teacher/subjects-all', {id: id}
     );
   }
 }

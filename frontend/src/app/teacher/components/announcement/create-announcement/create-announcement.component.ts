@@ -20,24 +20,17 @@ export class CreateAnnouncementComponent implements OnInit {
     private readonly snack: MatSnackBar,
     private readonly router: Router,
     private readonly ar: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.service
-      .getSubjectExecutions()
-      .pipe(first())
-      .subscribe((res) => {
-        this.opSubjects = res?.body!!;
-      });
+    this.fetchTeacher()
     this.form = this.fb.group({
-      name: [null, [Validators.required]],
-      startDate: [null, [Validators.required]],
-      endDate: [null, [Validators.required]],
-      subjectExecutionIds: [null, Validators.required],
+      postText: [null, [Validators.required]],
+      subjectExecutionId: [null, [Validators.required]],
     });
   }
 
-  submitForm() {
+  fetchTeacher() {
     this.service
       .fetchCurrentUser()
       .pipe()
@@ -49,26 +42,38 @@ export class CreateAnnouncementComponent implements OnInit {
             const responseBody = res?.body;
             if (responseBody) {
               const { id } = responseBody;
-              this.form.controls['teacherId'].setValue(id);
-              this.service.createAnnouncement(this.form.value).subscribe({
-                next: (_) => {
-                  this.snack.open('Announcement created');
-                  of(
-                    this.router.navigate(['list-announcement-tab'], {
-                      relativeTo: this.ar.parent,
+              this.service
+                .getSubjectExecutions(id)
+                .pipe(first())
+                .subscribe((res) => {
+                  if (res.body) {
+                    let values = res.body[0]
+                    this.opSubjects = values.subjectProfessorEnrollments.map((val) => {
+                      return val.subjectExecution
                     })
-                  );
-                },
-                error: (_) => {
-                  this.snack.open('Error occurred');
-                },
-              });
+                  }
+                });
             }
           });
         }
       });
   }
 
+  submitForm(form: Record<string, unknown>) {
+    this.service.createAnnouncement(form).subscribe({
+      next: (_) => {
+        this.snack.open('Announcement created');
+        of(
+          this.router.navigate(['list-announcement'], {
+            relativeTo: this.ar.parent,
+          })
+        );
+      },
+      error: (_) => {
+        this.snack.open('Error occurred');
+      },
+    });
+  }
 }
 
 export interface SubjectExecutionViewDTO {
