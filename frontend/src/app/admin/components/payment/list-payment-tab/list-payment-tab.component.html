@@ -25,7 +25,6 @@
   >
     <thead>
       <tr>
-        <th>ID</th>
         <th>Amount</th>
         <th>Deposited At</th>
         <th>Student</th>
@@ -35,7 +34,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let i of dataTable.data">
-        <td>{{ i.id }}</td>
         <td>{{ i.amount }}</td>
         <td>{{ i.depositedAt | date: "short" }}</td>
         <td>{{ i.student.user.firstName + " " + i.student.user.lastName }}</td>

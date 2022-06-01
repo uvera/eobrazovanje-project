@@ -15,7 +15,6 @@
   >
     <thead>
       <tr>
-        <th>ID</th>
         <th>Teacher Type</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -25,7 +24,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let i of dataTable.data">
-        <td>{{ i.id }}</td>
         <td>{{ i.teacherType }}</td>
         <td>{{ i.user.firstName }}</td>
         <td>{{ i.user.lastName }}</td>
