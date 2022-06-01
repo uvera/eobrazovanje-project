@@ -38,4 +38,8 @@ interface PreExamActivityResultRepository : JpaSpecificationRepository<PreExamAc
     @Query("select t from PreExamActivityResult t where t.student.id = :id and t.preExamActivity.id in :preExamIds")
     @org.springframework.data.jpa.repository.EntityGraph("pre-exam-graph")
     fun findAllByStudent(id: UUID, preExamIds: List<UUID>): List<PreExamActivityResultViewDTO>
+
+    @Query("select t from PreExamActivityResult t where t.student.id = :id and t.preExamActivity.subjectExecution.id = :subjExId")
+    @org.springframework.data.jpa.repository.EntityGraph("pre-exam-graph")
+    fun findAllByStudentAndSubjEx(id: UUID, subjExId: UUID): List<PreExamActivityResult>
 }

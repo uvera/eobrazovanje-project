@@ -126,3 +126,8 @@ export interface SubjectExecutionViewDTO {
     teacher: TeacherViewDTO;
   }[];
 }
+
+export interface StudentEnrollmentViewDTO {
+  studentId: string;
+  preExamActivitiesSum: number;
+}

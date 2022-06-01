@@ -34,6 +34,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { ListExamResultsTabComponent } from './components/exams/list-exam-results-tab/list-exam-results-tab.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,10 @@ const routes: Routes = [
           {
             path: 'list-student-all-exam-enrollments-tab',
             component: ListEnrolledExamsTabComponent,
+          },
+          {
+            path: 'list-student-all-exam-results-tab',
+            component: ListExamResultsTabComponent,
           },
           {
             path: '',
@@ -138,6 +143,7 @@ const routes: Routes = [
     DocumentsComponent,
     ListDocumentsTabComponent,
     CreateDocumentTabComponent,
+    ListExamResultsTabComponent,
   ],
   imports: [
     CommonModule,

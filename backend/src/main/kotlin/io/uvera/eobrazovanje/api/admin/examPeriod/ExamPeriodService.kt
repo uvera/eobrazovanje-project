@@ -22,7 +22,9 @@ class ExamPeriodService(
     protected val subjectExRepo: SubjectExecutionRepository,
     protected val studentRepo: StudentRepository,
     protected val enrollmentRepo: ExamEnrollmentRepository,
-    protected val subjectEnRepo: SubjectEnrollmentRepository
+    protected val subjectEnRepo: SubjectEnrollmentRepository,
+    protected val profRepo: TeacherRepository,
+    protected val profEnrollRepo: SubjectProfessorEnrollmentRepository
 ) {
 
     @Transactional
@@ -60,24 +62,37 @@ class ExamPeriodService(
 
     @Transactional
     fun getStudentAvailableEnrollments(page: Int, records: Int, examPeriodID: UUID, principal: CustomUserDetails): Page<SubjectExecutionViewDTO> {
-        val studentEnrollments = enrollmentRepo.findByExamPeriodForStudent(examPeriodID)
+        val studentEnrollments = enrollmentRepo.findByExamPeriodForStudent(examPeriodID).map { it.subjectExecution.id }
         val student = studentRepo.findByUserEmailOrNull(principal.email) ?: notFoundByEmail<Student>(principal.email)
-        val studentSubjects = subjectEnRepo.findAllByStudentId(student.id)
+        val studentSubjects = subjectEnRepo.findAllByStudentId(student.id).map { it.subjectExecution.id }
         val req = PageRequest.of(page - 1, records)
-        val executions = studentSubjects.map { it.subjectExecution }
         return if (studentEnrollments.isEmpty()) {
-            subjectExRepo.findAllWithIds(req, executions.map { it.id })
+            subjectExRepo.findAllWithIds(req, studentSubjects)
         } else {
-            val newAvailableList = mutableListOf<SubjectExecution>()
-            executions.forEach { subjectEn ->
-                studentEnrollments.forEach { enrol ->
-                    if (enrol.subjectExecution.id != subjectEn.id) {
-                        newAvailableList.add(subjectEn)
-                    }
+            val newAvailableList = mutableListOf<UUID>()
+            studentSubjects.forEach { enrol ->
+                if (!studentEnrollments.contains(enrol)) {
+                    newAvailableList.add(enrol)
                 }
             }
-            subjectExRepo.findAllWithIds(req, newAvailableList.map { it.id })
+            subjectExRepo.findAllWithIds(req, newAvailableList)
         }
+    }
+
+    @Transactional
+    fun getProfessorAvailableExamPeriodExecutions(page: Int, records: Int, examPeriodID: UUID, principal: CustomUserDetails): Page<SubjectExecutionViewDTO> {
+        val examPeriod = repo { findByExamPeriodID(examPeriodID) ?: notFoundById<ExamPeriod>(examPeriodID) }
+        val examPeriodSubjEXids = examPeriod.subjectExecutions.map { it.id }
+        val professor = profRepo { findByUserEmail(principal.email) ?: notFoundByEmail<Teacher>(principal.email) }
+        val professorEnrollmentsSubjExIds = profEnrollRepo { findByProfessorId(professor.id)}.map { it.subjectExecution.id }
+        val newList = mutableListOf<UUID>()
+        val req = PageRequest.of(page - 1, records)
+        professorEnrollmentsSubjExIds.forEach { enrolEx ->
+            if (examPeriodSubjEXids.contains(enrolEx)) {
+                newList.add(enrolEx)
+            }
+        }
+        return subjectExRepo.findAllWithIds(req, newList)
     }
 
     @Transactional
