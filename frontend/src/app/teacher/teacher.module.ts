@@ -28,6 +28,9 @@ import { MyExamPeriodsComponent } from './components/my-exam-periods/my-exam-per
 import { ListExamPeriodsComponent } from './components/my-exam-periods/list-exam-periods/list-exam-periods.component';
 import { ScheduleExamDialogComponent } from './components/my-exam-periods/schedule-exam-dialog/schedule-exam-dialog.component';
 import { AddStudentGradesComponent } from './components/my-exam-periods/add-student-grades/add-student-grades.component';
+import { AnnouncementComponent } from './components/announcement/announcement.component';
+import { CreateAnnouncementComponent } from './components/announcement/create-announcement/create-announcement.component';
+import { ListAnnouncementComponent } from './components/announcement/list-announcement/list-announcement.component';
 
 const routes: Routes = [
   {
@@ -69,6 +72,25 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'announcement',
+        component: AnnouncementComponent,
+        children: [
+          {
+            path: 'list-announcement',
+            component: ListAnnouncementComponent
+          },
+          {
+            path: 'create-announcement',
+            component: CreateAnnouncementComponent
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-announcement'
+          }
+        ]
+      },
+      {
         path: 'logout',
         component: LogoutComponent,
       },
@@ -91,7 +113,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent, MyExamPeriodsComponent, ListExamPeriodsComponent, ScheduleExamDialogComponent, AddStudentGradesComponent],
+  declarations: [TeacherDashboardComponent, MySubjectsComponent, StudentPreExamActivitiesComponent, ListStudentsComponent, AddPreExamActivityResultDialogComponent, MyExamPeriodsComponent, ListExamPeriodsComponent, ScheduleExamDialogComponent, AddStudentGradesComponent, AnnouncementComponent, CreateAnnouncementComponent, ListAnnouncementComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
