@@ -16,8 +16,8 @@ import java.util.*
 class PreExamActivityService(
     protected val repo: PreExamActivityRepository,
     protected val resultRepo: PreExamActivityResultRepository,
-    protected val studentRepo: StudentRepository
-    ) {
+    protected val studentRepo: StudentRepository,
+) {
     @Transactional(propagation = Propagation.NEVER)
     fun createPreExamActivity(acDTO: PreExamActivityCreateDTO): PreExamActivityViewDTO = repo {
         getPreExamActivity(preExamDTOToEntity(acDTO).save().id)
@@ -38,7 +38,9 @@ class PreExamActivityService(
         preExamActivities.forEach {
             PreExamActivityResult(
                 score = it.score,
-                preExamActivity = repo { findByIdOrNull(it.preExamActivityId) ?: notFoundById<PreExamActivity>(it.preExamActivityId) },
+                preExamActivity = repo {
+                    findByIdOrNull(it.preExamActivityId) ?: notFoundById<PreExamActivity>(it.preExamActivityId)
+                },
                 student = studentRepo { findByIdOrNull(it.studentId) ?: notFoundById<Student>(it.studentId) }
             ).save()
         }
@@ -64,12 +66,10 @@ class PreExamActivityService(
         return@repo findAllAsDto(req)
     }
 
-    fun getStudentPreExamActivities(studentId: UUID, subjectExId: UUID): Any {
+    fun getStudentPreExamActivities(studentId: UUID, subjectExId: UUID): List<Any> {
         val preExamActivities = repo.findAllPreExamActivitiesBySubject(subjectExId)
         val results = resultRepo.findAllByStudent(studentId, preExamActivities.map { it.id })
-        return results.ifEmpty {
-            preExamActivities
-        }
+        return results.ifEmpty { preExamActivities }
     }
 
     fun getAllPreExamActivities(): Any = repo {

@@ -57,12 +57,6 @@ class PaymentService(
         return@paymentRepo findAllByStudentId(id, req)
     }
 
-    fun getStudentPaymentsByEmail(page: Int, records: Int, email: String): Page<PaymentViewDTO> = paymentRepo {
-        val req = PageRequest.of(page - 1, records)
-
-        return@paymentRepo findAllByStudentEmail(email, req)
-    }
-
     fun paymentDTOToEntity(dto: PaymentCreateDTO): Payments {
         return Payments(
             amount = dto.amount,
