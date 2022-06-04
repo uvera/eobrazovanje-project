@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, of } from 'rxjs';
+import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
+import { CurrentUserService } from 'src/app/common/service/current-user.service';
 import { CreateAnnouncementService } from './create-announcement.service';
 
 @Component({
@@ -19,7 +21,8 @@ export class CreateAnnouncementComponent implements OnInit {
     private readonly service: CreateAnnouncementService,
     private readonly snack: MatSnackBar,
     private readonly router: Router,
-    private readonly ar: ActivatedRoute
+    private readonly ar: ActivatedRoute,
+    private readonly currentUserService: CurrentUserService
   ) { }
 
   ngOnInit(): void {
@@ -31,33 +34,26 @@ export class CreateAnnouncementComponent implements OnInit {
   }
 
   fetchTeacher() {
-    this.service
-      .fetchCurrentUser()
+    this.currentUserService
+      .currentUser$
       .pipe()
       .subscribe((res) => {
-        const responseBody = res?.body;
-        if (responseBody) {
-          const { email } = responseBody;
-          this.service.fetchCurrentTeacher(email).subscribe((res) => {
-            const responseBody = res?.body;
-            if (responseBody) {
-              const { id } = responseBody;
-              this.service
-                .getSubjectExecutions(id)
-                .pipe(first())
-                .subscribe((res) => {
-                  if (res.body) {
-                    let values = res.body[0]
-                    this.opSubjects = values.subjectProfessorEnrollments.map((val) => {
-                      return val.subjectExecution
-                    })
-                  }
-                });
+        console.log(res)
+        const id = res?.obj?.id
+        this.service
+          .getSubjectExecutions(id)
+          .pipe(first())
+          .subscribe((res) => {
+            if (res.body) {
+              let values = res.body[0]
+              this.opSubjects = values.subjectProfessorEnrollments.map((val) => {
+                return val.subjectExecution
+              })
             }
           });
-        }
-      });
+      })
   }
+
 
   submitForm(form: Record<string, unknown>) {
     this.service.createAnnouncement(form).subscribe({
@@ -76,25 +72,7 @@ export class CreateAnnouncementComponent implements OnInit {
   }
 }
 
-export interface SubjectExecutionViewDTO {
-  id: string;
-  place: string;
-  time: string;
-  weekDay: string;
-  preExamActivities: PreExamActivityViewDTO[];
-  subject: SubjectViewDTO;
-  subjectProfessorEnrollments: {
-    teacher: TeacherViewDTO;
-  }[];
-}
 
-export interface PreExamActivityViewDTO {
-  id: string;
-  subjectProfessorEnrollments: {
-    year: number;
-    subjectExecution: SubjectExecutionViewDTO
-  }[];
-}
 
 export interface TeacherEnrollmentViewDTO {
   id: string;
@@ -102,21 +80,4 @@ export interface TeacherEnrollmentViewDTO {
     year: number;
     subjectExecution: SubjectExecutionViewDTO
   }[];
-}
-
-export interface SubjectViewDTO {
-  id: string;
-  espb: number;
-  name: string;
-  year: number;
-}
-
-export interface TeacherViewDTO {
-  id: string;
-  teacherType: string;
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
 }

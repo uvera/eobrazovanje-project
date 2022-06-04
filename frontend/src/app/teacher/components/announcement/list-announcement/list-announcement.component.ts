@@ -9,6 +9,8 @@ import { ExamPeriodsViewDTO } from 'src/app/admin/components/exam-periods/list-e
 import { StudentsViewDTO } from 'src/app/admin/components/students/list-students-tab/list-students-tab.component';
 import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { AreYouSureDialogComponent } from 'src/app/common/components/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { CurrentUserService } from 'src/app/common/service/current-user.service';
+import { CreateAnnouncementService } from '../create-announcement/create-announcement.service';
 import { ListAnnouncementService } from './list-announcement.service';
 
 @Component({
@@ -23,31 +25,47 @@ export class ListAnnouncementComponent implements OnInit {
   readonly dataSet = new BehaviorSubject<AnnouncementViewDTO[]>([]);
   opSubjects: SubjectExecutionViewDTO[] = [];
   form!: FormGroup;
-  teacherId: string = '';
 
   constructor(
     private fb: FormBuilder,
     private service: ListAnnouncementService,
     private snack: MatSnackBar,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private createService: CreateAnnouncementService,
+    private currentUserService: CurrentUserService
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [null],
     });
-    this.service
-      .getAnnouncements()
-      .pipe(first())
+    this.currentUserService
+      .currentUser$
+      .pipe()
       .subscribe((res) => {
-        this.opSubjects = res?.body ?? [];
-      });
+        console.log(res)
+        const id = res?.obj?.id
+        this.createService
+          .getSubjectExecutions(id)
+          .pipe(first())
+          .subscribe((res) => {
+            if (res.body) {
+              let values = res.body[0]
+              this.opSubjects = values.subjectProfessorEnrollments.map((val) => {
+                return val.subjectExecution
+              })
+            }
+          });
+      })
     this.pageNumberAndSizeCombined$.subscribe((value) => {
-      this.fetchFromApi(
-        this.form.get('id')?.value,
-        value.pageIndex,
-        value.pageSize,
-      );
+      let val = this.form.get('id')?.value
+      if (val) {
+        this.fetchFromApi(
+          this.form.get('id')?.value,
+          value.pageIndex,
+          value.pageSize,
+        );
+      }
     });
     this.form.valueChanges.subscribe((x) => {
       this.reloadFromApi();
@@ -104,8 +122,8 @@ export interface AnnouncementViewDTO {
     id: string;
     teacherType: string;
     user: {
-    firstName: string;
-    lastName: string;
+      firstName: string;
+      lastName: string;
     };
   }
 }

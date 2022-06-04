@@ -22,7 +22,7 @@ class AnnouncementController(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
         @PathVariable("id") subjectExecutionId: UUID
-    ) = service.getAnnouncementsByPrincipalAndSubjectExecution(subjectExecutionId).ok
+    ) = service.getAnnouncementsByPrincipalAndSubjectExecution(page, records, subjectExecutionId).ok
 
     @PostMapping
     @PreAuthorize("hasRole('TEACHER')")

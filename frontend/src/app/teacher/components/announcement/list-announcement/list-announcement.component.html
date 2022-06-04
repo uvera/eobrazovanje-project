@@ -2,7 +2,7 @@
     <form [formGroup]="form">
       <mat-form-field appearance="standard">
         <mat-label>Select subject</mat-label>
-        <mat-select formControlName="subjectExecutionId">
+        <mat-select formControlName="id">
           <mat-option *ngFor="let subject of opSubjects" [value]="subject.id">
             {{ subject.subject.name }}
           </mat-option>

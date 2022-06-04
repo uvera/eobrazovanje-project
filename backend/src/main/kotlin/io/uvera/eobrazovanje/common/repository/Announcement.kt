@@ -3,6 +3,8 @@ package io.uvera.eobrazovanje.common.repository
 import org.springframework.data.jpa.repository.Query
 import io.uvera.eobrazovanje.api.admin.announcement.dto.AnnouncementViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 import java.util.*
 import javax.persistence.*
@@ -36,5 +38,5 @@ interface AnnouncementRepository : JpaSpecificationRepository<Announcement, UUID
 
     @org.springframework.data.jpa.repository.EntityGraph("announcement-graph")
     @Query("select t from Announcement t where t.subjectExecution.id = :id")
-    fun findAllBySubjectExecutionId(id: UUID): List<AnnouncementViewDTO>
+    fun findAllBySubjectExecutionId(page: Pageable, id: UUID): Page<AnnouncementViewDTO>
 }

@@ -6,6 +6,8 @@ import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.principalDelegate
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -29,7 +31,9 @@ class AnnouncementService (
         repo.save(announcement)
     }
 
-    fun getAnnouncementsByPrincipalAndSubjectExecution(subjExId: UUID): List<AnnouncementViewDTO> {
-        return repo.findAllBySubjectExecutionId(subjExId)
+    @Transactional
+    fun getAnnouncementsByPrincipalAndSubjectExecution(page: Int, records: Int, subjExId: UUID): Page<AnnouncementViewDTO> {
+        val req = PageRequest.of(page - 1, records)
+        return repo.findAllBySubjectExecutionId(req, subjExId)
     }
 }
