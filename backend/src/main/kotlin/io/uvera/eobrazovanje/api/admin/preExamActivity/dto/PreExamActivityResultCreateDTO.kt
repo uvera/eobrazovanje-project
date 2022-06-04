@@ -5,7 +5,7 @@ import java.util.UUID
 import javax.validation.constraints.NotNull
 
 @Validated
-class PreExamActivityResultCreateDTO (
+class PreExamActivityResultCreateDTO(
     @field:NotNull
     val preExamActivityId: UUID,
 

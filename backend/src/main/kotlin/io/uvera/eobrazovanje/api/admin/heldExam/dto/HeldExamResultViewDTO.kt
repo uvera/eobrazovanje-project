@@ -6,7 +6,7 @@ import java.util.*
 import javax.validation.constraints.NotNull
 
 @Validated
-class HeldExamResultViewDTO (
+class HeldExamResultViewDTO(
 
     @field:NotNull
     var subject: String,

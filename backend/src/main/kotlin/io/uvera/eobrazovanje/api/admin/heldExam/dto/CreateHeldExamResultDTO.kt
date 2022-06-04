@@ -1,12 +1,11 @@
 package io.uvera.eobrazovanje.api.admin.heldExam.dto
 
 import org.springframework.validation.annotation.Validated
-import java.time.LocalDate
 import java.util.UUID
 import javax.validation.constraints.NotNull
 
 @Validated
-class CreateHeldExamResultDTO (
+class CreateHeldExamResultDTO(
 
     @field:NotNull
     var subjectExecutionId: UUID,

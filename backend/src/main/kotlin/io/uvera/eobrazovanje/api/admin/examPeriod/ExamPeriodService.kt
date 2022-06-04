@@ -84,7 +84,7 @@ class ExamPeriodService(
         val examPeriod = repo { findByExamPeriodID(examPeriodID) ?: notFoundById<ExamPeriod>(examPeriodID) }
         val examPeriodSubjEXids = examPeriod.subjectExecutions.map { it.id }
         val professor = profRepo { findByUserEmail(principal.email) ?: notFoundByEmail<Teacher>(principal.email) }
-        val professorEnrollmentsSubjExIds = profEnrollRepo { findByProfessorId(professor.id)}.map { it.subjectExecution.id }
+        val professorEnrollmentsSubjExIds = profEnrollRepo { findByProfessorId(professor.id) }.map { it.subjectExecution.id }
         val newList = mutableListOf<UUID>()
         val req = PageRequest.of(page - 1, records)
         professorEnrollmentsSubjExIds.forEach { enrolEx ->

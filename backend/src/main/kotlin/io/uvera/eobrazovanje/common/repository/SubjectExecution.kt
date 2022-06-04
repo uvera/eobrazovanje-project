@@ -1,6 +1,5 @@
 package io.uvera.eobrazovanje.common.repository
 
-import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionTableViewDTO
 import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page

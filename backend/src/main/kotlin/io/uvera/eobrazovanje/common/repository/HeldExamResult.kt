@@ -1,10 +1,9 @@
 package io.uvera.eobrazovanje.common.repository
 
-import io.uvera.eobrazovanje.api.admin.heldExam.dto.HeldExamViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
 import javax.persistence.*
