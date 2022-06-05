@@ -1,12 +1,9 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
-import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
-import { CurrentUserService } from 'src/app/common/service/current-user.service';
-import { CreateAnnouncementService } from 'src/app/teacher/components/announcement/create-announcement/create-announcement.service';
+import { TeacherResponseDTO } from 'src/app/admin/components/profesor/list-profesor-tab/list-profesor-tab.component';
+import { StudentViewSubjectsDTO } from '../subjects/subjects.component';
 import { ListAnnouncementService } from './list-announcement.service';
 
 @Component({
@@ -25,35 +22,21 @@ export class ListAnnouncementComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: ListAnnouncementService,
-    private snack: MatSnackBar,
-    private dialog: MatDialog,
-    private createService: CreateAnnouncementService,
     private listService: ListAnnouncementService,
-    private currentUserService: CurrentUserService
   ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [null],
     });
-    this.currentUserService
-      .currentUser$
-      .pipe()
+    this.listService
+      .fetchStudentSubjects()
+      .pipe(first())
       .subscribe((res) => {
-        console.log(res)
-        const id = res?.obj?.id
-        this.listService
-          .fetchStudentSubjects(id)
-          .pipe(first())
-          .subscribe((res) => {
-            if (res.body) {
-              let values = res.body[0]
-              this.opSubjects = values.subjectExecution.map((val) => {
-                return val.subjectExecution
-              })
-            }
-          });
-      })
+        if (res.body) {
+          this.opSubjects = res.body
+        }
+      });
     this.pageNumberAndSizeCombined$.subscribe((value) => {
       let val = this.form.get('id')?.value
       if (val) {
@@ -113,30 +96,7 @@ export class ListAnnouncementComponent implements OnInit {
 }
 
 export interface AnnouncementViewDTO {
-  id: String;
-  postText: String;
-  TeacherResponseDTO: {
-    id: string;
-    teacherType: string;
-    user: {
-      firstName: string;
-      lastName: string;
-    };
-  }
-}
-
-interface StudentViewSubjectsDTO {
   id: string;
-  year: number;
-  subjectExecution: {
-    place: string;
-    time: string;
-    weekDay: string;
-    subject: {
-      id: string;
-      espb: number;
-      name: string;
-      year: number;
-    };
-  };
+  postText: string;
+  teacher: TeacherResponseDTO;
 }

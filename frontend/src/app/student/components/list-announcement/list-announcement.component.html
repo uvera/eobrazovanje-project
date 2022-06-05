@@ -3,8 +3,8 @@
       <mat-form-field appearance="standard">
         <mat-label>Select subject</mat-label>
         <mat-select formControlName="id">
-          <mat-option *ngFor="let subject of opSubjects" [value]="subject.id">
-            {{ subject.id }}
+          <mat-option *ngFor="let subject of opSubjects" [value]="subject.subjectExecution.id">
+            {{ subject.subjectExecution.subject.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -26,11 +26,13 @@
       <thead>
         <tr>
           <th>Comment</th>
+          <th>Teacher</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let i of dataTable.data">
           <td>{{ i.postText }}</td>
+          <td>{{ i.teacher.user.firstName + " " + i.teacher.user.lastName }}</td>
         </tr>
       </tbody>
     </nz-table>

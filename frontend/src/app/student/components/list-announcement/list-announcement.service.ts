@@ -1,7 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { StudentEnrollmentViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { PageEntity } from 'src/app/common/http/page-entity';
 import { ApiService } from 'src/app/common/service/api.service';
+import { StudentViewSubjectsDTO } from '../subjects/subjects.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,41 +18,9 @@ export class ListAnnouncementService {
     return this.api.get<PageEntity>(`/api/admin/announcement/${id}`, params);
   }
 
-  fetchStudentSubjects(id: string) {
+  fetchStudentSubjects() {
     return this.api.get<StudentViewSubjectsDTO[]>(
-      '/api/student/subjects', {id: id}
+      '/api/student/subjects-display'
     );
   }
-
-  fetchCurrentStudent(email: string) {
-    const params = new HttpParams().set('email', email);
-    return this.api.get<CurrentStudentDTO>('/api/student/whoami', params);
-  }
-}
-
-export interface CurrentStudentDTO {
-  id: string;
-  transcriptNumber: string;
-  identificationNumber: string;
-  user: {
-    firstName: string;
-    email: string;
-    lastName: string;
-  };
-}
-
-interface StudentViewSubjectsDTO {
-  id: string;
-  year: number;
-  subjectExecution: {
-    place: string;
-    time: string;
-    weekDay: string;
-    subject: {
-      id: string;
-      espb: number;
-      name: string;
-      year: number;
-    };
-  };
 }

@@ -68,10 +68,11 @@ export class SubjectsComponent implements OnInit {
   }
 }
 
-interface StudentViewSubjectsDTO {
+export interface StudentViewSubjectsDTO {
   id: string;
   year: number;
   subjectExecution: {
+    id: string;
     place: string;
     time: string;
     weekDay: string;
