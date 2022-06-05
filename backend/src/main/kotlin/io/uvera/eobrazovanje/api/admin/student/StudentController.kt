@@ -30,5 +30,5 @@ class StudentController(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
         @RequestParam(value = "id", required = true, defaultValue = "") id: UUID,
-    ): Any = service.getStudentSubjects(page, records, id).ok
+    ) = service.getStudentSubjects(page, records, id).ok
 }

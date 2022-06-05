@@ -15,7 +15,7 @@ import java.util.*
 class StudyProgramService(
     protected val repo: StudyProgramRepository,
     protected val subjectRepo: SubjectRepository,
-    protected val studentRepo: StudentRepository
+    protected val studentRepo: StudentRepository,
 ) {
 
     @Transactional(propagation = Propagation.NEVER)
@@ -81,15 +81,15 @@ class StudyProgramService(
     }
 
     @Transactional
-    fun enrollStudentsToStudyProgram(studyProgramCode: String, studentIds: List<UUID>): Any = repo {
+    fun enrollStudentsToStudyProgram(studyProgramCode: String, studentIds: List<UUID>) = repo {
         val dbStudy = findByCodeName(studyProgramCode) ?: notFoundByCodeName<StudyProgram>(studyProgramCode)
         studentRepo {
-            studentIds.forEach {
-                val student = studentRepo.findByIdOrNull(it) ?: notFoundById<Student>(it)
-                student.studyProgram = dbStudy
-                student.currentYear = 1
-                student.save()
-            }
+            studentIds.map {
+                studentRepo.findByIdOrNull(it) ?: notFoundById<Student>(it)
+            }.onEach {
+                it.studyProgram = dbStudy
+                it.currentYear = 1
+            }.saveAll()
         }
     }
 }

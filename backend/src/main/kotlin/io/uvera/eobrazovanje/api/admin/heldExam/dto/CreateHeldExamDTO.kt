@@ -6,7 +6,7 @@ import java.util.UUID
 import javax.validation.constraints.NotNull
 
 @Validated
-class CreateHeldExamDTO (
+class CreateHeldExamDTO(
 
     @field:NotNull
     var subjectExecutionId: UUID,

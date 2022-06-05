@@ -6,6 +6,7 @@ import io.uvera.eobrazovanje.util.AnyResponseEntity
 import io.uvera.eobrazovanje.util.extensions.emptyOk
 import io.uvera.eobrazovanje.util.extensions.ok
 import io.uvera.eobrazovanje.util.loggerDelegate
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
@@ -29,7 +30,7 @@ class AdminStudentController(protected val service: AdminStudentService) {
     fun getStudentsByPage(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-    ): Any {
+    ): ResponseEntity<Page<StudentViewDTO>> {
         logger.info("Pagination ${Student::class.simpleName} with params: { page: $page, records: $records }")
         return service.getStudentsByPage(page, records).ok
     }
@@ -37,12 +38,12 @@ class AdminStudentController(protected val service: AdminStudentService) {
     @PutMapping("/{id}")
     fun updateStudent(
         @PathVariable("id") studentId: UUID,
-        @Validated @RequestBody studentDTO: StudentUpdateDTO
+        @Validated @RequestBody studentDTO: StudentUpdateDTO,
     ) = service.updateStudent(studentId, studentDTO).ok
 
     @DeleteMapping("/{id}")
     fun deleteStudent(
-        @PathVariable("id") studentId: UUID
+        @PathVariable("id") studentId: UUID,
     ): AnyResponseEntity = service.deleteStudent(studentId).let { emptyOk }
 
     @GetMapping("/all")

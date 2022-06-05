@@ -2,11 +2,11 @@ package io.uvera.eobrazovanje.common.repository
 
 import io.uvera.eobrazovanje.api.admin.heldExam.dto.HeldExamViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.util.UUID
 import javax.persistence.*
-import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.Repository
 
 @Entity
 @Table(name = "held_exam")

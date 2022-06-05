@@ -80,7 +80,7 @@ class SubjectExecutionService(
     }
 
     @Transactional
-    fun getAllSubjectExecutionsPaged(page: Int, records: Int): Any = repo {
+    fun getAllSubjectExecutionsPaged(page: Int, records: Int) = repo {
         val req = PageRequest.of(page - 1, records)
         return@repo findAllAsDto(req)
     }

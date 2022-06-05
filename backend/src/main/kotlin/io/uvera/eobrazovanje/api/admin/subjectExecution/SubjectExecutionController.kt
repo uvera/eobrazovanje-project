@@ -21,7 +21,7 @@ class SubjectExecutionController(protected val service: SubjectExecutionService)
 
     @PostMapping
     fun createSubjectExecution(
-        @Validated @RequestBody subjectExecutionDTO: SubjectExecutionCreateDTO
+        @Validated @RequestBody subjectExecutionDTO: SubjectExecutionCreateDTO,
     ): ResponseEntity<SubjectExecutionViewDTO> =
         service.createSubjectExecution(subjectExecutionDTO).ok
 
@@ -38,9 +38,7 @@ class SubjectExecutionController(protected val service: SubjectExecutionService)
     fun updateSubjectExecution(
         @PathVariable("id") id: UUID,
         @RequestBody @Validated dto: SubjectExecutionUpdateDTO,
-    ): Any {
-        return service.updateSubjectExecution(id, dto).ok
-    }
+    ): ResponseEntity<SubjectExecutionViewDTO> = service.updateSubjectExecution(id, dto).ok
 
     @GetMapping("/all")
     fun getAllSubjectExecutions() = service.getAllSubjectExecutions().ok

@@ -2,7 +2,7 @@ package io.uvera.eobrazovanje.api.admin.heldExam.dto
 
 import java.util.*
 
-class StudentEnrollmentViewDTO (
+class StudentEnrollmentViewDTO(
 
     var studentId: UUID,
 

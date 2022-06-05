@@ -32,20 +32,21 @@ class PreExamActivityController(protected val service: PreExamActivityService) {
 
     @PostMapping("/add-results")
     @PreAuthorize("hasRole('TEACHER')")
-    fun createPreExamActivityResult(@Validated @RequestBody preExamResults: List<PreExamActivityResultCreateDTO>) = service.createResults(preExamResults).ok
+    fun createPreExamActivityResult(@Validated @RequestBody preExamResults: List<PreExamActivityResultCreateDTO>) =
+        service.createResults(preExamResults).ok
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     fun updateStudyProgram(
         @PathVariable("id") preExamActivityID: UUID,
-        @Validated @RequestBody preExamActivity: PreExamActivityCreateDTO
+        @Validated @RequestBody preExamActivity: PreExamActivityCreateDTO,
     ): ResponseEntity<PreExamActivityViewDTO> =
         service.updatePreExamActivity(preExamActivityID, preExamActivity).ok
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     fun deletePreExamActivity(
-        @PathVariable("id") preExamActivityID: UUID
+        @PathVariable("id") preExamActivityID: UUID,
     ): AnyResponseEntity = service.deletePreExamActivity(preExamActivityID).let { emptyOk }
 
     @GetMapping("/paged")
@@ -60,7 +61,7 @@ class PreExamActivityController(protected val service: PreExamActivityService) {
     fun getStudentPreExamActivitiesBySubject(
         @PathVariable("studentId") studentId: UUID,
         @PathVariable("subjectExecutionId") subjectExecutionId: UUID,
-        ) = service.getStudentPreExamActivities(studentId, subjectExecutionId).ok
+    ) = service.getStudentPreExamActivities(studentId, subjectExecutionId).ok
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")

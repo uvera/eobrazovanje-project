@@ -10,6 +10,7 @@ import io.uvera.eobrazovanje.util.AnyResponseEntity
 import io.uvera.eobrazovanje.util.extensions.emptyOk
 import io.uvera.eobrazovanje.util.extensions.ok
 import io.uvera.eobrazovanje.util.loggerDelegate
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
@@ -33,7 +34,7 @@ class TeacherController(protected val service: TeacherService) {
     fun getTeachersByPage(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-    ): Any {
+    ): ResponseEntity<Page<TeacherResponseDTO>> {
         logger.info("Pagination ${Teacher::class.simpleName} with params: { page: $page, records: $records }")
         return service.getTeachersByPage(page, records).ok
     }
@@ -48,7 +49,7 @@ class TeacherController(protected val service: TeacherService) {
     fun updateTeacher(
         @PathVariable("id") id: UUID,
         @RequestBody @Validated dto: TeacherUpdateDTO,
-    ): Any {
+    ): ResponseEntity<TeacherResponseDTO> {
         return service.updateTeacher(id, dto).ok
     }
 
@@ -68,13 +69,11 @@ class TeacherController(protected val service: TeacherService) {
     @PostMapping("/subjects")
     fun addTeacherToSubjectExecutions(
         @RequestBody @Validated dto: TeacherSubjectExecutionDTO,
-    ): Any {
-        return service.addTeacherToSubject(dto).ok
-    }
+    ): ResponseEntity<Unit> = service.addTeacherToSubject(dto).ok
 
     @GetMapping("/whoami")
     fun getCurrentlyLoggedInTeacherByEmail(
-        @RequestParam(value = "email", required = true, defaultValue = "") email: String
+        @RequestParam(value = "email", required = true, defaultValue = "") email: String,
     ): ResponseEntity<TeacherResponseDTO> = service.getTeacherByEmail(email).ok
 
     @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
@@ -82,20 +81,20 @@ class TeacherController(protected val service: TeacherService) {
     fun getTeacherSubjects(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
-    ): Any = service.getTeacherSubjects(page, records, id).ok
+        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID,
+    ) = service.getTeacherSubjects(page, records, id).ok
 
     @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
     @GetMapping("/subjects-all")
     fun getTeacherSubjects(
-        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID
-    ): Any = service.getTeachersSubjects(id).ok
+        @RequestParam(value = "id", required = true, defaultValue = "") id: UUID,
+    ) = service.getTeachersSubjects(id).ok
 
     @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
     @GetMapping("/subject-students")
     fun getTeacherStudentsBySubjectExecution(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
         @RequestParam(value = "records", required = true, defaultValue = "10") records: Int,
-        @RequestParam(value = "id", required = true, defaultValue = "") subjectId: UUID
-    ): Any = service.getTeacherStudentsBySubject(page, records, subjectId).ok
+        @RequestParam(value = "id", required = true, defaultValue = "") subjectId: UUID,
+    ) = service.getTeacherStudentsBySubject(page, records, subjectId).ok
 }
