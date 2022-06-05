@@ -45,6 +45,10 @@ interface ExamEnrollmentRepository : JpaSpecificationRepository<ExamEnrollment, 
     fun findByExamPeriodForStudent(id: UUID): List<ExamEnrollment>
 
     @org.springframework.data.jpa.repository.EntityGraph("enroll-graph")
+    @Query("select t from ExamEnrollment t where t.examPeriod.id = :id and t.student.id = :studentId")
+    fun findByExamPeriodForStudent(id: UUID, studentId: UUID): List<ExamEnrollment>
+
+    @org.springframework.data.jpa.repository.EntityGraph("enroll-graph")
     @Query("select t from ExamEnrollment t where t.student.id = :id")
     fun findByExamPeriodForStudent(page: Pageable, id: UUID): Page<ExamEnrollmentDTO>
 

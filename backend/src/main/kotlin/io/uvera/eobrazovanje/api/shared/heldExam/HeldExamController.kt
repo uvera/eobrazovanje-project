@@ -49,6 +49,14 @@ class HeldExamController(
         @PathVariable("subjExId") subjExId: UUID,
     ) = service.getEnrolledStudents(examPeriodID, subjExId).ok
 
+    @GetMapping("/{examPeriodID}/upcoming-exams")
+    @PreAuthorize("hasRole('STUDENT')")
+    fun getStudentUpcomingExams(
+        @PathVariable("examPeriodID") examPeriodID: UUID,
+        @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
+        @RequestParam(value = "records", required = true, defaultValue = "10") records: Int
+    ) = service.getUpcomingExams(examPeriodID, page, records).ok
+
     @GetMapping("/results")
     @PreAuthorize("hasAnyRole('STUDENT', 'TEACHER')")
     fun getStudentHeldExamResultsByExamPeriod(

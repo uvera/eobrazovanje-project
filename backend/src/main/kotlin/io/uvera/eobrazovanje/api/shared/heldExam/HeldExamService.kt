@@ -1,14 +1,11 @@
 package io.uvera.eobrazovanje.api.shared.heldExam
 
-import io.uvera.eobrazovanje.api.shared.heldExam.dto.CreateHeldExamDTO
-import io.uvera.eobrazovanje.api.shared.heldExam.dto.CreateHeldExamResultsDTO
-import io.uvera.eobrazovanje.api.shared.heldExam.dto.HeldExamResultViewDTO
-import io.uvera.eobrazovanje.api.shared.heldExam.dto.HeldExamViewDTO
-import io.uvera.eobrazovanje.api.shared.heldExam.dto.StudentEnrollmentViewDTO
+import io.uvera.eobrazovanje.api.shared.heldExam.dto.*
 import io.uvera.eobrazovanje.common.repository.*
 import io.uvera.eobrazovanje.util.extensions.notFoundByEmail
 import io.uvera.eobrazovanje.util.extensions.notFoundById
 import io.uvera.eobrazovanje.util.principalDelegate
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -73,7 +70,7 @@ class HeldExamService(
         return returnList
     }
 
-    fun getStudentExamResults(page: Int, records: Int, examPeriodID: UUID, studentId: UUID): Any {
+    fun getStudentExamResults(page: Int, records: Int, examPeriodID: UUID, studentId: UUID): List<HeldExamResultViewDTO> {
         val req = PageRequest.of(page - 1, records)
         val resultData = heldExamResultRepo.findByStudent(examPeriodID, studentId, req)
         val returnList = mutableListOf<HeldExamResultViewDTO>()
@@ -90,5 +87,20 @@ class HeldExamService(
         }
 
         return returnList
+    }
+
+    fun getUpcomingExams(examPeriodID: UUID, page: Int, records: Int): Page<HeldExamStudentViewDTO> {
+        val req = PageRequest.of(page - 1, records)
+        val principal by principalDelegate()
+        val student = studentRepo.findByUserEmailOrNull(principal.email) ?: notFoundByEmail<Student>(principal.email)
+        val enrollments = examEnrollmentRepository.findByExamPeriodForStudent(examPeriodID, student.id)
+        val returnList: MutableList<UUID> = mutableListOf()
+        enrollments.forEach {
+            val value = repo.findByExamPeriodOrNull(examPeriodID, it.subjectExecution.id)?.id
+            if (value != null) {
+                returnList.add(value)
+            }
+        }
+        return repo.findAllByIdsAsDto(req, returnList)
     }
 }

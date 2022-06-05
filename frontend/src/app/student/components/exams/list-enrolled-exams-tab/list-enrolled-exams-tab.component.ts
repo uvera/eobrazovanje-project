@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BehaviorSubject, combineLatest, first, map } from 'rxjs';
 import { ExamPeriodsViewDTO } from 'src/app/admin/components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
 import { SubjectExecutionViewDTO } from 'src/app/admin/components/subject-executions/edit-subject-executions-dialog/edit-subject-executions-dialog.component';
 import { SubjectExecutionTableViewDTO } from 'src/app/admin/components/subject-executions/list-subject-executions-tab/list-subject-executions-tab.component';
+import { HeldExamResultDTO, HeldExamViewDTO } from 'src/app/teacher/components/my-exam-periods/list-exam-periods/list-exam-periods.component';
+import { ListExamResultsTabService } from '../list-exam-results-tab/list-exam-results-tab.service';
 import { ListEnrolledExamsTabService } from './list-enrolled-exams-tab.service';
 
 @Component({
@@ -16,12 +19,33 @@ export class ListEnrolledExamsTabComponent implements OnInit {
   readonly total = new BehaviorSubject<number>(1);
   readonly pageSize = new BehaviorSubject<number>(10);
   readonly dataSet = new BehaviorSubject<ExamEnrollmentDTO[]>([]);
+  form!: FormGroup;
+  opExamPeriods: ExamPeriodsViewDTO[] = [];
 
-  constructor(private service: ListEnrolledExamsTabService) {}
+  constructor(
+    private service: ListEnrolledExamsTabService,
+    private fb: FormBuilder,
+    private resultsService: ListExamResultsTabService
+  ) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      id: [null],
+    });
+    this.resultsService
+      .getExamPeriods()
+      .subscribe((res) => {
+        this.opExamPeriods = res?.body ?? [];
+      });
     this.pageNumberAndSizeCombined$.subscribe((value) => {
-      this.fetchFromApi(value.pageIndex, value.pageSize);
+      this.fetchFromApi(
+        value.pageIndex,
+        value.pageSize,
+        this.form.get('id')?.value,
+      );
+    });
+    this.form.valueChanges.subscribe((x) => {
+      this.reloadFromApi();
     });
   }
 
@@ -37,22 +61,26 @@ export class ListEnrolledExamsTabComponent implements OnInit {
     }))
   );
 
-  fetchFromApi(pageIndex: number, pageSize: number) {
-    this.service
-      .fetchPaged(pageIndex, pageSize)
-      .pipe(first())
-      .subscribe((res) => {
-        const responseBody = res?.body;
-        if (responseBody) {
-          const { content, totalElements } = responseBody;
-          this.total.next(totalElements);
-          this.dataSet.next(content);
-        }
-      });
+  fetchFromApi(pageIndex: number, pageSize: number, examPeriodId: string) {
+    if (examPeriodId) {
+      this.service
+        .fetchPaged(pageIndex, pageSize, examPeriodId)
+        .pipe(first())
+        .subscribe((res) => {
+          const responseBody = res?.body?.content;
+          if (responseBody) {
+            this.dataSet.next(responseBody);
+          }
+        });
+    }
   }
 
   reloadFromApi() {
-    this.fetchFromApi(this.pageIndex.value, this.pageSize.value);
+    this.fetchFromApi(
+      this.pageIndex.value,
+      this.pageSize.value,
+      this.form.get('id')?.value,
+    );
   }
 
   queryParamsChange(event: NzTableQueryParams) {
@@ -62,11 +90,6 @@ export class ListEnrolledExamsTabComponent implements OnInit {
 }
 
 interface ExamEnrollmentDTO {
-  id: string;
-  subjectExecution: SubjectExecutionTableViewDTO;
-  examPeriod: {
-    id: string;
-    startDate: Date;
-    endDate: Date;
-  };
+  date: Date;
+  subjectExecution: SubjectExecutionViewDTO;
 }

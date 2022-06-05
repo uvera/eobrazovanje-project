@@ -1,7 +1,10 @@
 package io.uvera.eobrazovanje.common.repository
 
+import io.uvera.eobrazovanje.api.shared.heldExam.dto.HeldExamStudentViewDTO
 import io.uvera.eobrazovanje.api.shared.heldExam.dto.HeldExamViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
@@ -41,6 +44,14 @@ interface HeldExamRepository : JpaSpecificationRepository<HeldExam, UUID> {
     @Query("select t from HeldExam t where t.examPeriod.id = :examPeriodID and t.subjectExecution.id = :subjExId")
     @org.springframework.data.jpa.repository.EntityGraph("held-exam-graph")
     fun findByExamPeriodAndSubjectExecution(examPeriodID: UUID, subjExId: UUID): HeldExamViewDTO?
+
+    @Query("select t from HeldExam t where t.examPeriod.id = :examPeriodID and t.subjectExecution.id = :subjExId")
+    @org.springframework.data.jpa.repository.EntityGraph("held-exam-graph")
+    fun findByExamPeriodOrNull(examPeriodID: UUID, subjExId: UUID): HeldExam?
+
+    @Query("select t from HeldExam t where t.id in :ids")
+    @org.springframework.data.jpa.repository.EntityGraph("held-exam-graph")
+    fun findAllByIdsAsDto(page: Pageable, ids: List<UUID>): Page<HeldExamStudentViewDTO>
 
     @Query("select t from HeldExam t")
     @org.springframework.data.jpa.repository.EntityGraph("held-exam-graph")
