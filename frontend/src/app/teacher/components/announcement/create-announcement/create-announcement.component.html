@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="flex-start flex-end"
+    style="width: 300px"
+  >
+  <mat-form-field appearance="standard" fxFlexFill>
+    <mat-label>Select subject executions</mat-label>
+    <mat-select formControlName="subjectExecutionId">
+      <mat-option *ngFor="let subject of opSubjects" [value]="subject.id">
+        {{
+          subject.subject.name +
+            " " +
+            subject.subject.year +
+            " " +
+            subject.place
+        }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard" fxFlexFill>
+    <mat-label>Comment</mat-label>
+    <input
+      matInput
+      inputmode="text"
+      type="text"
+      formControlName="postText"
+    />
+    <mat-error *ngIf="!!(form.get('postText'))?.errors?.['required']">
+      Comment
+    </mat-error>
+  </mat-form-field>
+
+  <div mat-dialog-actions fxFlexAlign="flex-end">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      Submit
+    </button>
+  </div>
+</div>
+</form>

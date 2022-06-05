@@ -35,6 +35,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { ListExamResultsTabComponent } from './components/exams/list-exam-results-tab/list-exam-results-tab.component';
+import { ListAnnouncementComponent } from './components/list-announcement/list-announcement.component';
 
 const routes: Routes = [
   {
@@ -112,6 +113,21 @@ const routes: Routes = [
         ],
       },
       {
+        path: 'announcements',
+        component: ListAnnouncementComponent,
+        children: [
+          {
+            path: 'list-announcements',
+            component: ListAnnouncementComponent,
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list-announcements',
+          },
+        ],
+      },
+      {
         path: 'logout',
         component: LogoutComponent,
       },
@@ -144,6 +160,7 @@ const routes: Routes = [
     ListDocumentsTabComponent,
     CreateDocumentTabComponent,
     ListExamResultsTabComponent,
+    ListAnnouncementComponent,
   ],
   imports: [
     CommonModule,

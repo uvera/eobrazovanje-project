@@ -15,7 +15,6 @@
   >
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Start date</th>
         <th>End date</th>
@@ -26,7 +25,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let i of dataTable.data">
-        <td>{{ i.id }}</td>
         <td>{{ i.name }}</td>
         <td>{{ i.startDate | date: "short" }}</td>
         <td>{{ i.endDate | date: "short" }}</td>

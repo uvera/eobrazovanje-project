@@ -40,6 +40,10 @@ interface SubjectEnrollmentRepository : JpaSpecificationRepository<SubjectEnroll
 
     @Query("select s from SubjectEnrollment s where s.student.id = :id and s.subjectExecution.subject.year = s.student.currentYear")
     @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
+    fun findAllByStudentIdForDisplay(id: UUID): List<EnrollmentViewDTO>
+
+    @Query("select s from SubjectEnrollment s where s.student.id = :id and s.subjectExecution.subject.year = s.student.currentYear")
+    @org.springframework.data.jpa.repository.EntityGraph("enrollment-graph")
     fun findAllByStudentId(id: UUID): List<SubjectEnrollment>
 
     @Query("select s from SubjectEnrollment s where s.subjectExecution.id = :id and s.subjectExecution.subject.year = s.student.currentYear")

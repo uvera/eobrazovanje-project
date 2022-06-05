@@ -3,8 +3,11 @@ package io.uvera.eobrazovanje.api.user.auth
 import io.uvera.eobrazovanje.api.user.auth.dto.AuthenticationRequestDTO
 import io.uvera.eobrazovanje.api.user.auth.dto.TokenResponseDTO
 import io.uvera.eobrazovanje.api.user.auth.dto.WhoAmIDTO
+import io.uvera.eobrazovanje.common.repository.StudentRepository
+import io.uvera.eobrazovanje.common.repository.TeacherRepository
 import io.uvera.eobrazovanje.common.repository.UserRepository
 import io.uvera.eobrazovanje.error.exception.UserNotFoundException
+import io.uvera.eobrazovanje.security.configuration.RoleEnum
 import io.uvera.eobrazovanje.security.service.JwtAccessService
 import io.uvera.eobrazovanje.security.service.JwtRefreshService
 import io.uvera.eobrazovanje.util.principalDelegate
@@ -22,6 +25,8 @@ class AuthService(
     protected val userDetailsService: UserDetailsService,
     protected val userRepository: UserRepository,
     protected val authManager: AuthenticationManager,
+    protected val teacherRepository: TeacherRepository,
+    protected val studentRepository: StudentRepository
 ) {
     fun whoAmI(): WhoAmIDTO {
         val principal by principalDelegate()
@@ -29,7 +34,14 @@ class AuthService(
         val user =
             userRepository.findByEmail(email)
                 ?: throw UserNotFoundException("User by specified email [$email] not found")
-        return WhoAmIDTO.fromUser(user)
+        val underObject: Any? = when(user.role) {
+            RoleEnum.STUDENT -> studentRepository.findByUserEmailAsDto(email)
+            RoleEnum.TEACHER -> teacherRepository.findByUserEmailAsDto(email)
+            else -> {
+                null
+            }
+        }
+        return WhoAmIDTO.fromUser(user, underObject)
     }
 
     fun authenticate(dto: AuthenticationRequestDTO) = authenticate(dto.email, dto.password)

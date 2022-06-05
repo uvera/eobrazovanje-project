@@ -122,6 +122,15 @@ class AdminStudentService(
         }
     }
 
+    fun getStudentSubjectsForDisplay(): List<EnrollmentViewDTO> {
+        val principal by principalDelegate()
+        val student = getStudentByEmail(principal.email)
+        val enrolments = subjEnrolRepo {
+            findAllByStudentIdForDisplay(student.id)
+        }
+        return enrolments
+    }
+
     fun getStudentFromPrincipal() = repo {
         val principal by principalDelegate()
         val email = principal.email

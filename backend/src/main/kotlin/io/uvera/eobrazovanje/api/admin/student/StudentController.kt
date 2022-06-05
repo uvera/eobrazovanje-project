@@ -22,6 +22,9 @@ class StudentController(
         else service.getStudentFromPrincipal().ok
     }
 
+    @GetMapping("/subjects-display")
+    fun getStudentSubjectsForDisplay() = service.getStudentSubjectsForDisplay().ok
+
     @GetMapping("/subjects")
     fun getStudentSubjects(
         @RequestParam(value = "page", required = true, defaultValue = "1") page: Int,
