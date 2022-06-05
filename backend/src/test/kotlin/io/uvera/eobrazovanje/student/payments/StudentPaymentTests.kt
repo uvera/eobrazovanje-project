@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje.student.payments
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentCreateDTO
-import io.uvera.eobrazovanje.api.admin.payment.dto.PaymentViewDTO
+import io.uvera.eobrazovanje.api.shared.payment.dto.PaymentCreateDTO
+import io.uvera.eobrazovanje.api.shared.payment.dto.PaymentViewDTO
 import io.uvera.eobrazovanje.common.repository.Payments
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.User

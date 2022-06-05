@@ -1,6 +1,6 @@
 package io.uvera.eobrazovanje.common.repository
 
-import io.uvera.eobrazovanje.api.admin.preExamActivity.dto.PreExamActivityResultViewDTO
+import io.uvera.eobrazovanje.api.shared.preExamActivity.dto.PreExamActivityResultViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository

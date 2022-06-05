@@ -1,14 +1,13 @@
 package io.uvera.eobrazovanje.admin.examperiod
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodCreateDTO
-import io.uvera.eobrazovanje.api.admin.examPeriod.dto.ExamPeriodViewDTO
+import io.uvera.eobrazovanje.api.shared.examPeriod.dto.ExamPeriodCreateDTO
+import io.uvera.eobrazovanje.api.shared.examPeriod.dto.ExamPeriodViewDTO
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.common.repository.SubjectExecution
 import io.uvera.eobrazovanje.resolve
 import io.uvera.eobrazovanje.util.extensions.invoke
 import io.uvera.eobrazovanje.util.extensions.saveAll
-import liquibase.pro.packaged.it
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.postForEntity

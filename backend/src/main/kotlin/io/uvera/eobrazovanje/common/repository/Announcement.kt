@@ -1,7 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
 import org.springframework.data.jpa.repository.Query
-import io.uvera.eobrazovanje.api.admin.announcement.dto.AnnouncementViewDTO
+import io.uvera.eobrazovanje.api.shared.announcement.dto.AnnouncementViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

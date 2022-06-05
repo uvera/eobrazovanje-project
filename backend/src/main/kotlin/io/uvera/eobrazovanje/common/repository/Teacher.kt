@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje.common.repository
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherEnrollmentViewDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.shared.teacher.dto.TeacherEnrollmentViewDTO
+import io.uvera.eobrazovanje.api.shared.teacher.dto.TeacherResponseDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

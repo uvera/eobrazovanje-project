@@ -59,7 +59,6 @@ import {
   SubjectExecutionNamePipe,
 } from './components/exam-periods/list-exam-periods-tab/list-exam-periods-tab.component';
 import { CreateExamPeriodTabComponent } from './components/exam-periods/create-exam-period-tab/create-exam-period-tab.component';
-import { EditExamPeriodDialogComponent } from './components/exam-periods/edit-exam-period-dialog/edit-exam-period-dialog.component';
 
 const routes: Routes = [
   {
@@ -243,7 +242,6 @@ const routes: Routes = [
     ExamPeriodsComponent,
     ListExamPeriodsTabComponent,
     CreateExamPeriodTabComponent,
-    EditExamPeriodDialogComponent,
   ],
   imports: [
     CommonModule,

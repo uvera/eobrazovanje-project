@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje
 
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherResponseDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherUpdateDTO
+import io.uvera.eobrazovanje.api.shared.teacher.dto.TeacherDTO
+import io.uvera.eobrazovanje.api.shared.teacher.dto.TeacherResponseDTO
+import io.uvera.eobrazovanje.api.shared.teacher.dto.TeacherUpdateDTO
 import io.uvera.eobrazovanje.common.repository.Teacher
 import io.uvera.eobrazovanje.common.repository.TeacherType
 import io.uvera.eobrazovanje.common.repository.User

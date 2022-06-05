@@ -1,10 +1,10 @@
 package io.uvera.eobrazovanje.admin.student
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.AdminCreateStudentsDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.CreatedStudentDTO
-import io.uvera.eobrazovanje.api.admin.student.dto.StudentViewDTO
+import io.uvera.eobrazovanje.api.shared.student.dto.AdminCreateStudentDTO
+import io.uvera.eobrazovanje.api.shared.student.dto.AdminCreateStudentsDTO
+import io.uvera.eobrazovanje.api.shared.student.dto.CreatedStudentDTO
+import io.uvera.eobrazovanje.api.shared.student.dto.StudentViewDTO
 import io.uvera.eobrazovanje.common.repository.Student
 import io.uvera.eobrazovanje.common.repository.User
 import io.uvera.eobrazovanje.error.dto.ApiError

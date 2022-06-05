@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje.admin.subjectExecution
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionCreateDTO
-import io.uvera.eobrazovanje.api.admin.subjectExecution.dto.SubjectExecutionViewDTO
+import io.uvera.eobrazovanje.api.shared.subjectExecution.dto.SubjectExecutionCreateDTO
+import io.uvera.eobrazovanje.api.shared.subjectExecution.dto.SubjectExecutionViewDTO
 import io.uvera.eobrazovanje.common.repository.PreExamActivity
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.util.extensions.invoke

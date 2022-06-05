@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje.admin.studyprogram
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramCreateDTO
-import io.uvera.eobrazovanje.api.admin.studyprogram.dto.StudyProgramViewDTO
+import io.uvera.eobrazovanje.api.shared.studyprogram.dto.StudyProgramCreateDTO
+import io.uvera.eobrazovanje.api.shared.studyprogram.dto.StudyProgramViewDTO
 import io.uvera.eobrazovanje.common.repository.StudyProgram
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.resolve

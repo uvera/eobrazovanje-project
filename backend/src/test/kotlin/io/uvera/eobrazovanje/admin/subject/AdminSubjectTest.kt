@@ -1,8 +1,8 @@
 package io.uvera.eobrazovanje.admin.subject
 
 import io.uvera.eobrazovanje.ApplicationTest
-import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectCreateDTO
-import io.uvera.eobrazovanje.api.admin.subject.dto.SubjectViewDTO
+import io.uvera.eobrazovanje.api.shared.subject.dto.SubjectCreateDTO
+import io.uvera.eobrazovanje.api.shared.subject.dto.SubjectViewDTO
 import io.uvera.eobrazovanje.common.repository.Subject
 import io.uvera.eobrazovanje.resolve
 import io.uvera.eobrazovanje.util.extensions.invoke

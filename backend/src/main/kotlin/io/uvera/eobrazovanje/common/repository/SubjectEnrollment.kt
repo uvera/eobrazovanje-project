@@ -1,7 +1,7 @@
 package io.uvera.eobrazovanje.common.repository
 
-import io.uvera.eobrazovanje.api.admin.student.dto.EnrollmentViewDTO
-import io.uvera.eobrazovanje.api.admin.teacher.dto.TeacherStudentViewDTO
+import io.uvera.eobrazovanje.api.shared.student.dto.EnrollmentViewDTO
+import io.uvera.eobrazovanje.api.shared.teacher.dto.TeacherStudentViewDTO
 import io.uvera.eobrazovanje.util.extensions.JpaSpecificationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
