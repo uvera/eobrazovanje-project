@@ -1,1 +1,13 @@
-json = @documents.map(&:to_jb_json)
+json = @documents.map do |document|
+  {
+    name: document.name,
+    studentId: document.student_id,
+    files: document.files.map do |file|
+      {
+        url: rails_storage_proxy_url(file),
+        filename: file.filename,
+        type: file.content_type
+      }
+    end
+  }
+end

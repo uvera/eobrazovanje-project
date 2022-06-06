@@ -10,17 +10,4 @@
 #
 class Document < ApplicationRecord
   has_many_attached :files
-
-  def to_jb_json = {
-    name: name,
-    studentId: student_id,
-    files: files.map do |document|
-      {
-        url: document.url,
-        filename: document.filename,
-        type: document.content_type
-      }
-    end
-  }
-
 end

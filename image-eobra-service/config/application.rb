@@ -11,6 +11,9 @@ module ImageEobraService
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # needed for active storage
+    config.middleware.use ActionDispatch::Flash
+
     Faraday.default_adapter = :net_http
 
     config.generators do |g|
