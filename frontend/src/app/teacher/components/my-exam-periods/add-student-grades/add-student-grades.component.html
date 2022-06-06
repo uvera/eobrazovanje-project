@@ -1,20 +1,33 @@
 <div *ngIf="isCompleted == false; else showResults">
     <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-        <div fxLayout="column" fxLayoutAlign="flex-center" style="width: auto">
-            <mat-form-field appearance="standard" style="width: 250px;" *ngFor="let student of opEnrolledStudents">
-                <h4>{{ student.transcriptNumber }} | Pre exam sum: {{ student.preExamActivitiesSum }}</h4>
-                <h4>Enter student final score(summed with pre-exam activities):</h4>
-                <input matInput inputmode="numeric" type="number" [formControlName]="student.studentId" />
-                <mat-error *ngIf="!!(form.get(student.studentId))?.errors?.['required']">
-                    Points are required
-                </mat-error>
-            </mat-form-field>
-            <div mat-dialog-actions fxFlexAlign="flex-center">
-                <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-                    Submit
-                </button>
-            </div>
-        </div>
+        <table>
+            <thead>
+                <th>Transcript number</th>
+                <th>Pre exam activities</th>
+                <th>Enter final score(summed with pre-exam acts.)</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of opEnrolledStudents">
+                    <td>{{ student.transcriptNumber }}</td>
+                    <td>{{ student.preExamActivitiesSum }}</td>
+                    <td>
+                        <mat-form-field appearance="standard" style="width: auto;">
+                            <input matInput inputmode="numeric" type="number" [formControlName]="student.studentId" />
+                            <mat-error *ngIf="!!(form.get(student.studentId))?.errors?.['required']">
+                                Points are required
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <div>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+                        Submit
+                    </button>
+                </div>
+            </tfoot>
+        </table>
     </form>
 </div>
 <ng-template #showResults>
@@ -27,7 +40,7 @@
             <tbody>
                 <tr *ngFor="let obj of opResults">
                     <td>{{ obj.student.transcriptNumber }}</td>
-                    <td>Student score: {{ obj.score }}</td>
+                    <td>{{ obj.score }}</td>
                 </tr>
             </tbody>
         </table>
