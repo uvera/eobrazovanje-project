@@ -131,6 +131,8 @@ spec:
           args:
             - bin/prod-run
           env:
+            - name: RAILS_LOG_TO_STDOUT
+              value: "yes" 
             - name: SECRET_KEY_BASE
               value: secret_key_123
             - name: MINIO_URL
